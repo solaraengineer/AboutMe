@@ -3,2476 +3,1422 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOLARA — System Architect & Backend Engineer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+<title>Solara — System Architect</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ================================================================
-   SOLARA PORTFOLIO — WHITE ON BLACK GOTHIC / A7X THEME
-   ================================================================ */
-
-/* RESET */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#444 #000;font-size:16px}
-body{background:#000;color:#ccc;font-family:'IM Fell English',serif;line-height:1.7;overflow-x:hidden;min-height:100vh}
-
-/* SCROLLBAR */
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:#000}
-::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:#555}
-
-/* SELECTION */
-::selection{background:rgba(255,255,255,0.15);color:#fff}
-
-/* ================================================================
-   FILM GRAIN + NOISE OVERLAY
-   ================================================================ */
-body::before{
-  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
-  pointer-events:none;z-index:10000;opacity:0.06;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat:repeat;background-size:256px 256px;
-}
-body::after{
-  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
-  pointer-events:none;z-index:10001;opacity:0.04;
-  animation:grainShift 0.4s steps(5) infinite;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)'/%3E%3C/svg%3E");
-  background-repeat:repeat;background-size:512px 512px;
-}
-@keyframes grainShift{
-  0%{transform:translate(0,0)}25%{transform:translate(-3px,2px)}
-  50%{transform:translate(2px,-1px)}75%{transform:translate(-1px,3px)}
-  100%{transform:translate(3px,-2px)}
-}
-
-/* CURSOR GLOW */
-.cursor-glow{
-  position:fixed;width:300px;height:300px;border-radius:50%;
-  pointer-events:none;z-index:9989;
-  background:radial-gradient(circle,rgba(255,255,255,0.03) 0%,transparent 70%);
-  transform:translate(-50%,-50%);
-  transition:left 0.15s ease,top 0.15s ease;
-}
-
-/* VIGNETTE */
-.vignette{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  pointer-events:none;z-index:9990;
-  background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,0.6) 100%);
-}
-
-/* ================================================================
-   LOADING SCREEN — ORTHODOX CROSS + SPIN + SCREEN CRACK
-   ================================================================ */
-#loading-screen{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  background:#000;z-index:99999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  perspective:1200px;
-}
-
-/* Orthodox triple-bar cross */
-.orthodox-cross{
-  position:relative;width:120px;height:200px;
-  animation:crossDraw 1.8s ease forwards, crossSpin 1.5s cubic-bezier(0.6,0,0.2,1) 2s forwards;
-  opacity:0;
-}
-@keyframes crossDraw{
-  0%{opacity:0;transform:scale(0.3)}
-  40%{opacity:1;transform:scale(1.1)}
-  60%{transform:scale(0.95)}
-  100%{opacity:1;transform:scale(1)}
-}
-@keyframes crossSpin{
-  0%{transform:rotateY(0deg)}
-  100%{transform:rotateY(360deg)}
-}
-
-/* Main vertical beam */
-.oc-vert{
-  position:absolute;left:50%;top:12%;width:6px;height:76%;
-  background:#fff;transform:translateX(-50%);
-  box-shadow:0 0 15px rgba(255,255,255,0.3),0 0 40px rgba(255,255,255,0.1);
-}
-/* Top small bar (slanted) */
-.oc-bar-top{
-  position:absolute;top:16%;left:50%;width:50px;height:4px;
-  background:#fff;transform:translateX(-50%);
-  box-shadow:0 0 10px rgba(255,255,255,0.3);
-}
-/* Middle main bar (largest) */
-.oc-bar-mid{
-  position:absolute;top:34%;left:50%;width:90px;height:5px;
-  background:#fff;transform:translateX(-50%);
-  box-shadow:0 0 12px rgba(255,255,255,0.3);
-}
-/* Bottom slanted bar (footrest) */
-.oc-bar-bot{
-  position:absolute;bottom:14%;left:50%;width:64px;height:4px;
-  background:#fff;transform:translateX(-50%) rotate(-25deg);
-  box-shadow:0 0 10px rgba(255,255,255,0.3);
-}
-/* Ornamental tips */
-.oc-tip{
-  position:absolute;width:10px;height:10px;border:2px solid #fff;
-  border-radius:50%;opacity:0;
-  animation:ocTipIn 0.5s ease forwards;
-}
-.oc-tip-t{top:8%;left:50%;transform:translateX(-50%);animation-delay:1.2s}
-.oc-tip-b{bottom:6%;left:50%;transform:translateX(-50%);animation-delay:1.3s}
-.oc-tip-l{top:32%;left:6%;animation-delay:1.4s}
-.oc-tip-r{top:32%;right:6%;animation-delay:1.5s}
-@keyframes ocTipIn{to{opacity:0.8}}
-
-/* Glow ring behind cross */
-.oc-glow{
-  position:absolute;top:50%;left:50%;width:180px;height:180px;
-  transform:translate(-50%,-50%);border-radius:50%;
-  border:1px solid rgba(255,255,255,0.08);
-  box-shadow:0 0 80px rgba(255,255,255,0.06),inset 0 0 40px rgba(255,255,255,0.03);
-  opacity:0;animation:ocGlowIn 1.5s ease 0.8s forwards;
-}
-@keyframes ocGlowIn{to{opacity:1}}
-
-.load-title{
-  font-family:'Cinzel Decorative',serif;font-size:1.8rem;
-  color:#fff;letter-spacing:0.6em;text-transform:uppercase;
-  opacity:0;animation:loadFade 1s ease 1.6s forwards;
-  margin-top:40px;
-}
-.load-sub{
-  font-family:'IM Fell English',serif;font-size:0.8rem;
-  color:#555;letter-spacing:0.3em;margin-top:10px;
-  opacity:0;animation:loadFade 1s ease 2s forwards;
-}
-@keyframes loadFade{to{opacity:1}}
-
-/* SCREEN CRACK HALVES */
-.crack-left,.crack-right{
-  position:fixed;top:0;width:50%;height:100%;
-  background:#000;z-index:99998;
-  pointer-events:none;transition:none;
-}
-.crack-left{left:0}
-.crack-right{right:0}
-.crack-left.split{
-  animation:crackSlideLeft 1.2s cubic-bezier(0.7,0,0.3,1) forwards;
-}
-.crack-right.split{
-  animation:crackSlideRight 1.2s cubic-bezier(0.7,0,0.3,1) forwards;
-}
-@keyframes crackSlideLeft{
-  0%{transform:translateX(0)}
-  15%{transform:translateX(2px)}
-  30%{transform:translateX(-3px)}
-  100%{transform:translateX(-105%)}
-}
-@keyframes crackSlideRight{
-  0%{transform:translateX(0)}
-  15%{transform:translateX(-2px)}
-  30%{transform:translateX(3px)}
-  100%{transform:translateX(105%)}
-}
-
-/* Crack line effect */
-.crack-line{
-  position:fixed;top:0;left:50%;width:2px;height:100%;
-  z-index:99999;pointer-events:none;opacity:0;
-  background:linear-gradient(180deg,
-    transparent 0%,
-    rgba(255,255,255,0.8) 10%,
-    rgba(255,255,255,0.2) 20%,
-    rgba(255,255,255,0.9) 35%,
-    rgba(255,255,255,0.3) 50%,
-    rgba(255,255,255,0.95) 65%,
-    rgba(255,255,255,0.1) 80%,
-    rgba(255,255,255,0.7) 90%,
-    transparent 100%
-  );
-  transform:translateX(-50%);
-}
-.crack-line.visible{
-  animation:crackAppear 0.3s ease forwards;
-}
-@keyframes crackAppear{
-  0%{opacity:0;filter:blur(3px)}
-  50%{opacity:1;filter:blur(0)}
-  100%{opacity:0.7;filter:blur(0)}
-}
-.crack-line.gone{animation:crackGone 0.6s ease forwards}
-@keyframes crackGone{to{opacity:0}}
-
-/* ================================================================
-   SCROLL PROGRESS
-   ================================================================ */
-#scroll-progress{
-  position:fixed;top:0;left:0;width:0%;height:1px;
-  background:linear-gradient(90deg,#333,#fff,#333);
-  z-index:100000;transition:width 0.05s linear;
-}
-
-/* ================================================================
-   NAVIGATION
-   ================================================================ */
-#main-nav{
-  position:fixed;top:0;left:0;width:100%;z-index:9999;
-  padding:20px 40px;display:flex;align-items:center;justify-content:space-between;
-  background:transparent;border-bottom:1px solid transparent;
-  transition:all 0.5s ease;transform:translateY(-100%);opacity:0;
-}
-#main-nav.visible{transform:translateY(0);opacity:1}
-#main-nav.scrolled{
-  background:rgba(0,0,0,0.95);backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(255,255,255,0.05);
-}
-.nav-brand{
-  font-family:'Cinzel Decorative',serif;font-size:1rem;
-  color:#fff;letter-spacing:0.4em;text-decoration:none;
-}
-.nav-links{display:flex;gap:30px;list-style:none}
-.nav-links a{
-  font-family:'Cinzel',serif;font-size:0.65rem;color:#555;
-  text-decoration:none;letter-spacing:0.2em;text-transform:uppercase;
-  position:relative;transition:color 0.3s ease;
-}
-.nav-links a::after{
-  content:'';position:absolute;bottom:-4px;left:0;
-  width:0;height:1px;background:#fff;transition:width 0.3s ease;
-}
-.nav-links a:hover{color:#fff}
-.nav-links a:hover::after{width:100%}
-.nav-links a.active{color:#ccc}
-.nav-links a.active::after{width:100%;background:#666}
-.nav-toggle{
-  display:none;background:none;border:1px solid #444;color:#ccc;
-  padding:6px 12px;font-family:'Cinzel',serif;font-size:0.65rem;
-  cursor:pointer;letter-spacing:0.1em;
-}
-
-/* ================================================================
-   SVG LAYERS
-   ================================================================ */
-.svg-bg-layer{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  pointer-events:none;z-index:0;
-}
-.svg-section-layer{
-  position:absolute;top:0;left:0;width:100%;height:100%;
-  pointer-events:none;z-index:0;
-}
-
-/* ================================================================
-   SECTIONS — COMMON
-   ================================================================ */
-.section{position:relative;padding:120px 40px;min-height:60vh;z-index:1}
-.section-inner{max-width:1100px;margin:0 auto;position:relative;z-index:2}
-.section-title{
-  font-family:'Cinzel Decorative',serif;font-size:2.8rem;color:#fff;
-  text-align:center;letter-spacing:0.15em;margin-bottom:12px;
-  text-shadow:0 0 60px rgba(255,255,255,0.1);
-}
-.section-subtitle{
-  font-family:'IM Fell English',serif;font-style:italic;font-size:1rem;
-  color:#555;text-align:center;margin-bottom:70px;letter-spacing:0.05em;
-}
-
-/* ================================================================
-   ORNAMENTAL DIVIDERS
-   ================================================================ */
-.ornament-divider{
-  display:flex;align-items:center;justify-content:center;gap:15px;
-  padding:40px 0;opacity:0.4;
-}
-.ornament-divider .line{
-  flex:1;max-width:200px;height:1px;
-  background:linear-gradient(90deg,transparent,#fff,transparent);
-}
-.ornament-divider .diamond{
-  width:8px;height:8px;border:1px solid #fff;transform:rotate(45deg);
-  transition:transform 0.5s ease;
-}
-.ornament-divider .dot{width:3px;height:3px;background:#fff;border-radius:50%}
-.ornament-divider:hover .diamond{transform:rotate(225deg)}
-
-/* Complex ornamental divider */
-.divider-gothic{
-  position:relative;height:80px;display:flex;align-items:center;
-  justify-content:center;overflow:visible;
-}
-.divider-gothic svg{width:100%;max-width:600px;height:80px}
-
-/* ================================================================
-   REVEAL ANIMATIONS
-   ================================================================ */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.8s ease,transform 0.8s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-delay-1{transition-delay:0.1s}
-.reveal-delay-2{transition-delay:0.2s}
-.reveal-delay-3{transition-delay:0.3s}
-.reveal-delay-4{transition-delay:0.4s}
-.reveal-delay-5{transition-delay:0.5s}
-
-/* ================================================================
-   HERO
-   ================================================================ */
-#hero{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  text-align:center;position:relative;overflow:hidden;
-}
-/* Deathbat background image behind hero */
-.hero-bg-img{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:clamp(500px,60vw,900px);height:auto;
-  opacity:0.045;
-  pointer-events:none;z-index:0;
-  filter:grayscale(100%) brightness(2) contrast(1.2);
-  animation:heroDeathbatFloat 12s ease-in-out infinite;
-  mix-blend-mode:screen;
-}
-@keyframes heroDeathbatFloat{
-  0%,100%{transform:translate(-50%,-50%) scale(1)}
-  50%{transform:translate(-50%,-50%) scale(1.03)}
-}
-#hero::before{
-  content:'';position:absolute;top:0;left:0;width:100%;height:100%;
-  background:radial-gradient(ellipse at center,transparent 20%,#000 70%);z-index:1;
-}
-.hero-frame{
-  position:absolute;top:8%;left:8%;width:84%;height:84%;
-  pointer-events:none;z-index:1;
-}
-.hero-frame-corner{position:absolute;width:80px;height:80px;opacity:0.2}
-.hero-frame-corner--tl{top:0;left:0;border-top:1px solid #fff;border-left:1px solid #fff}
-.hero-frame-corner--tr{top:0;right:0;border-top:1px solid #fff;border-right:1px solid #fff}
-.hero-frame-corner--bl{bottom:0;left:0;border-bottom:1px solid #fff;border-left:1px solid #fff}
-.hero-frame-corner--br{bottom:0;right:0;border-bottom:1px solid #fff;border-right:1px solid #fff}
-.hero-frame-line{position:absolute;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent)}
-.hero-frame-line--top{top:0;left:80px;width:calc(100% - 160px);height:1px}
-.hero-frame-line--bottom{bottom:0;left:80px;width:calc(100% - 160px);height:1px}
-.hero-frame-line--left{top:80px;left:0;width:1px;height:calc(100% - 160px);background:linear-gradient(180deg,transparent,rgba(255,255,255,0.06),transparent)}
-.hero-frame-line--right{top:80px;right:0;width:1px;height:calc(100% - 160px);background:linear-gradient(180deg,transparent,rgba(255,255,255,0.06),transparent)}
-.hero-content{position:relative;z-index:2}
-.hero-name{
-  font-family:'Cinzel Decorative',serif;font-size:clamp(3rem,10vw,8rem);
-  font-weight:900;color:#fff;letter-spacing:0.25em;text-transform:uppercase;
-  text-shadow:0 0 80px rgba(255,255,255,0.15),0 0 160px rgba(255,255,255,0.05);
-  line-height:1;margin-bottom:20px;
-}
-.hero-epithet{
-  font-family:'Cinzel',serif;font-size:clamp(0.65rem,1.5vw,0.9rem);
-  color:#666;letter-spacing:0.6em;text-transform:uppercase;margin-bottom:30px;
-}
-.hero-epithet::before,.hero-epithet::after{
-  content:'\2014\2014\2014';color:#333;margin:0 15px;font-size:0.6em;vertical-align:middle;
-}
-.hero-tagline{
-  font-family:'IM Fell English',serif;font-style:italic;
-  font-size:clamp(0.9rem,1.8vw,1.1rem);color:#555;
-  max-width:550px;margin:0 auto 40px;line-height:1.8;
-}
-.hero-cta{
-  display:inline-block;font-family:'Cinzel',serif;font-size:0.7rem;
-  color:#ccc;text-decoration:none;letter-spacing:0.3em;text-transform:uppercase;
-  border:1px solid rgba(255,255,255,0.2);padding:14px 40px;
-  transition:all 0.4s ease;position:relative;overflow:hidden;
-}
-.hero-cta::before{
-  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);
-  transition:left 0.5s ease;
-}
-.hero-cta:hover{border-color:rgba(255,255,255,0.5);color:#fff}
-.hero-cta:hover::before{left:100%}
-.hero-scroll-indicator{
-  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
-  z-index:2;animation:heroFloat 3s ease-in-out infinite;
-}
-.hero-scroll-indicator span{display:block;width:1px;height:50px;background:linear-gradient(180deg,#fff,transparent);opacity:0.3}
-@keyframes heroFloat{
-  0%,100%{transform:translateX(-50%) translateY(0);opacity:0.6}
-  50%{transform:translateX(-50%) translateY(10px);opacity:0.2}
-}
-
-/* ================================================================
-   ABOUT
-   ================================================================ */
-/* Hail to the King deathbat accent */
-.about-bg-img{
-  position:absolute;right:-10%;top:50%;
-  transform:translateY(-50%);
-  width:clamp(350px,40vw,600px);height:auto;
-  opacity:0.04;pointer-events:none;z-index:0;
-  filter:grayscale(100%) brightness(1.8);
-  mix-blend-mode:screen;
-}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-.about-text p{margin-bottom:20px;font-size:1.02rem;color:#888}
-.about-text .highlight{color:#fff;font-weight:600}
-.about-sigil{
-  width:120px;height:120px;margin:0 auto 40px;position:relative;
-  display:flex;align-items:center;justify-content:center;
-}
-.about-sigil .ring-outer{
-  position:absolute;width:100%;height:100%;
-  border:1px solid rgba(255,255,255,0.1);border-radius:50%;
-  animation:slowRotate 50s linear infinite;
-}
-.about-sigil .ring-inner{
-  position:absolute;width:70%;height:70%;
-  border:1px solid rgba(255,255,255,0.06);
-  transform:rotate(45deg);animation:slowRotate 35s linear infinite reverse;
-}
-.about-sigil .sigil-letter{
-  font-family:'Cinzel Decorative',serif;font-size:2.5rem;color:rgba(255,255,255,0.12);
-}
-@keyframes slowRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.stat-card{
-  border:1px solid rgba(255,255,255,0.06);padding:28px 20px;text-align:center;
-  background:rgba(255,255,255,0.01);position:relative;
-  transition:border-color 0.3s ease,box-shadow 0.3s ease;
-}
-.stat-card:hover{
-  border-color:rgba(255,255,255,0.15);
-  box-shadow:0 0 40px rgba(255,255,255,0.02);
-}
-.stat-card::after{
-  content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);
-  transform:scaleX(0);transition:transform 0.5s ease;
-}
-.stat-card:hover::after{transform:scaleX(1)}
-.stat-number{
-  font-family:'Cinzel Decorative',serif;font-size:2.2rem;color:#fff;
-  display:block;margin-bottom:8px;transition:text-shadow 0.3s ease;
-}
-.stat-card:hover .stat-number{text-shadow:0 0 30px rgba(255,255,255,0.2)}
-.stat-label{
-  font-family:'Cinzel',serif;font-size:0.6rem;color:#555;
-  letter-spacing:0.2em;text-transform:uppercase;
-}
-
-/* ================================================================
-   ARSENAL (TECH STACK)
-   ================================================================ */
-.arsenal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px}
-.arsenal-card{
-  border:1px solid rgba(255,255,255,0.05);padding:36px 30px;
-  background:rgba(255,255,255,0.01);position:relative;overflow:hidden;
-  transition:border-color 0.4s ease,transform 0.3s ease,box-shadow 0.4s ease;
-}
-.arsenal-card::before{
-  content:'';position:absolute;top:0;left:0;width:100%;height:1px;
-  background:linear-gradient(90deg,transparent,#fff,transparent);
-  opacity:0;transition:opacity 0.4s ease;
-}
-.arsenal-card:hover{
-  border-color:rgba(255,255,255,0.15);transform:translateY(-3px);
-  box-shadow:0 10px 40px rgba(0,0,0,0.5),0 0 30px rgba(255,255,255,0.02);
-}
-.arsenal-card:hover::before{opacity:0.3}
-.arsenal-card-title{
-  font-family:'Cinzel',serif;font-size:0.95rem;color:#fff;
-  letter-spacing:0.15em;text-transform:uppercase;
-  margin-bottom:20px;padding-bottom:12px;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-}
-.arsenal-card-title .card-icon{color:#888;margin-right:8px}
-.arsenal-tech-list{list-style:none}
-.arsenal-tech-list li{
-  padding:8px 0;font-size:0.95rem;color:#666;
-  border-bottom:1px solid rgba(255,255,255,0.02);
-  display:flex;align-items:center;gap:10px;transition:color 0.3s ease;
-  position:relative;
-}
-.arsenal-tech-list li:last-child{border-bottom:none}
-.arsenal-tech-list li:hover{color:#ccc}
-.arsenal-tech-list li::before{content:'\2726';color:#555;font-size:0.5rem}
-.arsenal-tech-list li::after{
-  content:'';position:absolute;left:0;bottom:0;width:0;height:1px;
-  background:rgba(255,255,255,0.1);transition:width 0.3s ease;
-}
-.arsenal-tech-list li:hover::after{width:100%}
-
-/* ================================================================
-   TECH ICON ROW — clear visual strip under arsenal
-   ================================================================ */
-.tech-icon-strip{margin-top:70px;padding-top:50px;border-top:1px solid rgba(255,255,255,0.04)}
-.tech-icon-strip-title{
-  font-family:'Cinzel',serif;font-size:0.65rem;color:#444;
-  letter-spacing:0.35em;text-transform:uppercase;text-align:center;
-  margin-bottom:36px;
-}
-.tech-icons{
-  display:flex;flex-wrap:wrap;justify-content:center;gap:0;
-}
-.tech-icon-box{
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-  width:100px;padding:18px 8px;
-  transition:all 0.3s ease;position:relative;
-  border:1px solid transparent;
-}
-.tech-icon-box:hover{
-  border-color:rgba(255,255,255,0.06);
-  background:rgba(255,255,255,0.015);
-  transform:translateY(-3px);
-}
-.tech-icon-box img{
-  width:36px;height:36px;object-fit:contain;
-  filter:grayscale(100%) brightness(1.8) contrast(1.1);
-  opacity:0.5;transition:all 0.3s ease;
-}
-.tech-icon-box:hover img{
-  opacity:0.9;filter:grayscale(0%) brightness(1) contrast(1);
-  transform:scale(1.15);
-}
-.tech-icon-box span{
-  font-family:'Cinzel',serif;font-size:0.52rem;color:#444;
-  letter-spacing:0.08em;text-transform:uppercase;text-align:center;
-  transition:color 0.3s ease;line-height:1.3;
-}
-.tech-icon-box:hover span{color:#ccc}
-@media(max-width:600px){
-  .tech-icon-box{width:80px;padding:14px 6px}
-  .tech-icon-box img{width:28px;height:28px}
-  .tech-icon-box span{font-size:0.45rem}
-}
-
-/* ================================================================
-   CONQUESTS (PROJECTS)
-   ================================================================ */
-.conquests-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px}
-.conquest-card{
-  border:1px solid rgba(255,255,255,0.05);padding:40px 34px;
-  background:rgba(255,255,255,0.01);position:relative;overflow:hidden;
-  transition:all 0.4s ease;
-}
-.conquest-card::before{
-  content:'';position:absolute;top:0;left:0;width:40px;height:40px;
-  border-top:1px solid #fff;border-left:1px solid #fff;
-  opacity:0;transition:opacity 0.4s ease;
-}
-.conquest-card::after{
-  content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;
-  background:linear-gradient(90deg,#fff,#666,transparent);
-  transform:scaleX(0);transform-origin:left;transition:transform 0.5s ease;
-}
-.conquest-card:hover{
-  border-color:rgba(255,255,255,0.12);
-  box-shadow:0 8px 40px rgba(0,0,0,0.4),inset 0 0 60px rgba(255,255,255,0.01);
-}
-.conquest-card:hover::before{opacity:0.2}
-.conquest-card:hover::after{transform:scaleX(1)}
-.conquest-number{
-  font-family:'Cinzel Decorative',serif;font-size:3rem;
-  color:rgba(255,255,255,0.04);position:absolute;top:15px;right:20px;line-height:1;
-}
-.conquest-title{
-  font-family:'Cinzel',serif;font-size:1.3rem;color:#fff;
-  letter-spacing:0.1em;margin-bottom:14px;
-}
-.conquest-desc{font-size:0.95rem;color:#666;margin-bottom:20px;line-height:1.8}
-.conquest-tech-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
-.conquest-tech-tags span{
-  font-family:'Cinzel',serif;font-size:0.58rem;color:#555;
-  letter-spacing:0.15em;text-transform:uppercase;
-  border:1px solid rgba(255,255,255,0.08);padding:4px 12px;
-  transition:all 0.3s ease;position:relative;overflow:hidden;
-}
-.conquest-tech-tags span:hover{border-color:rgba(255,255,255,0.3);color:#fff}
-.conquest-features{list-style:none;margin-top:12px}
-.conquest-features li{
-  font-size:0.85rem;color:#555;padding:4px 0;
-  transition:color 0.3s ease,transform 0.3s ease;
-}
-.conquest-features li:hover{color:#aaa;transform:translateX(5px)}
-.conquest-features li::before{content:'\2022';color:#666;margin-right:8px}
-
-/* ================================================================
-   NIGHTMARE PARALLAX BREAK
-   ================================================================ */
-.nightmare-break{
-  position:relative;height:45vh;min-height:300px;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-}
-.nightmare-break-img{
-  position:absolute;top:0;left:0;width:100%;height:130%;
-  object-fit:cover;object-position:center 30%;
-  filter:grayscale(40%) brightness(0.4) contrast(1.1);
-  transform:translateY(0);
-  transition:transform 0.1s linear;
-}
-.nightmare-break::before{
-  content:'';position:absolute;top:0;left:0;width:100%;height:100%;
-  background:linear-gradient(180deg,#000 0%,transparent 20%,transparent 80%,#000 100%);
-  z-index:2;pointer-events:none;
-}
-.nightmare-break::after{
-  content:'';position:absolute;top:0;left:0;width:100%;height:100%;
-  background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.7) 100%);
-  z-index:2;pointer-events:none;
-}
-.nightmare-break-text{
-  position:relative;z-index:3;text-align:center;
-}
-.nightmare-break-quote{
-  font-family:'IM Fell English',serif;font-style:italic;
-  font-size:clamp(1.2rem,3vw,2rem);color:rgba(255,255,255,0.7);
-  letter-spacing:0.05em;line-height:1.6;
-  text-shadow:0 0 40px rgba(0,0,0,0.8);
-  max-width:700px;margin:0 auto;
-}
-.nightmare-break-attrib{
-  font-family:'Cinzel',serif;font-size:0.65rem;color:rgba(255,255,255,0.25);
-  letter-spacing:0.3em;text-transform:uppercase;margin-top:20px;
-}
-
-/* ================================================================
-   CREED WATERMARK IMAGE
-   ================================================================ */
-.creed-watermark{
-  position:absolute;left:50%;top:50%;
-  transform:translate(-50%,-50%);
-  width:clamp(400px,50vw,700px);height:auto;
-  opacity:0.025;pointer-events:none;z-index:0;
-  filter:invert(1) grayscale(100%) brightness(1.5);
-  mix-blend-mode:screen;
-}
-
-/* ================================================================
-   FOOTER TRIBUTE IMAGE
-   ================================================================ */
-.footer-tribute{
-  display:flex;align-items:center;justify-content:center;
-  gap:12px;margin-top:24px;opacity:0.15;
-  transition:opacity 0.4s ease;
-}
-.footer-tribute:hover{opacity:0.4}
-.footer-tribute img{
-  height:18px;width:auto;
-  filter:invert(1) grayscale(100%);
-}
-.footer-tribute span{
-  font-family:'IM Fell English',serif;font-style:italic;
-  font-size:0.65rem;color:#444;letter-spacing:0.1em;
-}
-
-/* ================================================================
-   CHRONICLE (TIMELINE)
-   ================================================================ */
-.timeline{position:relative;max-width:700px;margin:0 auto;padding-left:40px}
-.timeline::before{
-  content:'';position:absolute;left:0;top:0;width:1px;height:100%;
-  background:linear-gradient(180deg,transparent,#444,#444,transparent);
-}
-.timeline-item{
-  position:relative;padding:0 0 50px 30px;transition:transform 0.3s ease;
-}
-.timeline-item:hover{transform:translateX(5px)}
-.timeline-item::before{
-  content:'';position:absolute;left:-4px;top:6px;width:9px;height:9px;
-  border:1px solid #fff;background:#000;transform:rotate(45deg);
-  transition:background 0.3s ease;
-}
-.timeline-item:hover::before{background:#fff}
-.timeline-year{
-  font-family:'Cinzel',serif;font-size:0.7rem;color:#666;
-  letter-spacing:0.3em;text-transform:uppercase;margin-bottom:8px;
-}
-.timeline-title{
-  font-family:'Cinzel',serif;font-size:1.1rem;color:#fff;
-  margin-bottom:8px;letter-spacing:0.05em;
-}
-.timeline-desc{font-size:0.9rem;color:#555;line-height:1.7}
-
-/* ================================================================
-   CREED (PHILOSOPHY)
-   ================================================================ */
-.creed-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:28px}
-.creed-card{
-  border:1px solid rgba(255,255,255,0.04);padding:34px 28px;
-  background:rgba(255,255,255,0.01);position:relative;
-  transition:all 0.4s ease;
-}
-.creed-card:hover{
-  border-color:rgba(255,255,255,0.12);
-  box-shadow:0 0 30px rgba(255,255,255,0.02);
-}
-.creed-card::before{
-  content:'';position:absolute;top:0;right:0;width:30px;height:30px;
-  border-top:1px solid rgba(255,255,255,0.06);
-  border-right:1px solid rgba(255,255,255,0.06);
-  transition:all 0.3s ease;
-}
-.creed-card:hover::before{border-color:rgba(255,255,255,0.2);width:40px;height:40px}
-.creed-card::after{
-  content:'';position:absolute;bottom:0;left:0;width:30px;height:30px;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  border-left:1px solid rgba(255,255,255,0.06);
-  transition:all 0.3s ease;
-}
-.creed-card:hover::after{border-color:rgba(255,255,255,0.2);width:40px;height:40px}
-.creed-numeral{
-  font-family:'Cinzel Decorative',serif;font-size:2rem;
-  color:rgba(255,255,255,0.06);margin-bottom:12px;
-  transition:color 0.4s ease;
-}
-.creed-card:hover .creed-numeral{color:rgba(255,255,255,0.15)}
-.creed-card-title{
-  font-family:'Cinzel',serif;font-size:0.9rem;color:#ccc;
-  letter-spacing:0.1em;margin-bottom:12px;text-transform:uppercase;
-}
-.creed-card-text{font-size:0.9rem;color:#555;line-height:1.7}
-
-/* ================================================================
-   SUMMON (CONTACT)
-   ================================================================ */
-.summon-content{max-width:900px;margin:0 auto;text-align:center}
-.summon-text{font-size:1.02rem;color:#666;margin-bottom:50px;line-height:1.8}
-.contact-widgets{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.contact-widget{
-  display:flex;flex-direction:column;align-items:center;gap:14px;
-  padding:40px 24px;border:1px solid rgba(255,255,255,0.06);
-  background:rgba(255,255,255,0.01);text-decoration:none;color:#ccc;
-  transition:all 0.4s ease;position:relative;overflow:hidden;
-}
-.contact-widget::before{
-  content:'';position:absolute;top:0;left:0;width:100%;height:1px;
-  background:linear-gradient(90deg,transparent,#fff,transparent);
-  opacity:0;transition:opacity 0.4s ease;
-}
-.contact-widget:hover{
-  border-color:rgba(255,255,255,0.2);
-  transform:translateY(-5px);
-  box-shadow:0 12px 40px rgba(0,0,0,0.5),0 0 30px rgba(255,255,255,0.03);
-}
-.contact-widget:hover::before{opacity:0.3}
-.widget-icon{color:#666;transition:color 0.3s ease,transform 0.3s ease}
-.contact-widget:hover .widget-icon{color:#fff;transform:scale(1.1)}
-.widget-label{
-  font-family:'Cinzel',serif;font-size:0.7rem;color:#666;
-  letter-spacing:0.25em;text-transform:uppercase;
-}
-.widget-value{
-  font-family:'IM Fell English',serif;font-size:0.85rem;color:#888;
-  transition:color 0.3s ease;
-}
-.contact-widget:hover .widget-value{color:#fff}
-@media(max-width:700px){.contact-widgets{grid-template-columns:1fr}}
-
-/* ================================================================
-   FOOTER
-   ================================================================ */
-#main-footer{
-  position:relative;border-top:1px solid rgba(255,255,255,0.04);
-  padding:50px 40px;text-align:center;z-index:1;
-}
-.footer-brand{
-  font-family:'Cinzel Decorative',serif;font-size:1rem;
-  color:#fff;letter-spacing:0.3em;margin-bottom:16px;
-}
-.footer-links{display:flex;justify-content:center;gap:30px;list-style:none;margin-bottom:20px}
-.footer-links a{
-  font-family:'Cinzel',serif;font-size:0.6rem;color:#333;
-  letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;
-  transition:color 0.3s ease;position:relative;
-}
-.footer-links a:hover{color:#fff}
-.footer-links a::after{
-  content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;
-  background:#fff;transition:width 0.3s ease;
-}
-.footer-links a:hover::after{width:100%}
-.footer-copy{font-size:0.75rem;color:#222;letter-spacing:0.1em}
-
-/* ================================================================
-   BLOOD DRIPS
-   ================================================================ */
-.blood-drip-container{
-  position:absolute;top:0;left:0;width:100%;height:80px;
-  overflow:hidden;pointer-events:none;z-index:3;
-}
-.blood-drip{
-  position:absolute;top:-10px;width:2px;
-  background:linear-gradient(180deg,#fff,#888,transparent);
-  border-radius:0 0 2px 2px;
-  animation:drip var(--drip-dur,4s) ease-in var(--drip-del,0s) infinite;opacity:0;
-}
-@keyframes drip{
-  0%{height:0;opacity:0;top:-2px}
-  10%{opacity:0.4}
-  60%{height:var(--drip-h,40px);opacity:0.2}
-  100%{height:var(--drip-h,40px);opacity:0;top:60px}
-}
-
-/* ================================================================
-   KEYFRAME EXTRAS
-   ================================================================ */
-@keyframes screenShake{
-  0%{transform:translate(0,0)}
-  20%{transform:translate(-3px,2px)}
-  40%{transform:translate(4px,-2px)}
-  60%{transform:translate(-2px,3px)}
-  80%{transform:translate(3px,-1px)}
-  100%{transform:translate(0,0)}
-}
-@keyframes textFlicker{
-  0%,100%{opacity:1}92%{opacity:1}93%{opacity:0.6}
-  94%{opacity:1}96%{opacity:0.7}97%{opacity:1}
-}
-@keyframes bloodPulse{
-  0%,100%{text-shadow:0 0 10px rgba(255,255,255,0)}
-  50%{text-shadow:0 0 40px rgba(255,255,255,0.1)}
-}
-.hero-name{animation:textFlicker 8s ease-in-out infinite,bloodPulse 6s ease-in-out infinite}
-
-/* ================================================================
-   RESPONSIVE
-   ================================================================ */
-@media(max-width:900px){
-  .about-grid{grid-template-columns:1fr}
-  .conquests-grid{grid-template-columns:1fr}
-  .about-stats{grid-template-columns:repeat(2,1fr)}
-  .section{padding:80px 24px}
-  .section-title{font-size:2rem}
-  #main-nav{padding:14px 20px}
-  #main-nav .nav-links{display:none}
-  #main-nav .nav-links.open{
-    display:flex;flex-direction:column;position:absolute;
-    top:100%;left:0;width:100%;background:rgba(0,0,0,0.98);
-    padding:20px;gap:16px;border-bottom:1px solid rgba(255,255,255,0.05);
+  :root {
+    --bg: #FCFCFC;
+    --fg: #0C0C0C;
+    --accent: #0066FF;
+    --muted: #888;
+    --faint: #C8C8C8;
+    --border: #E8E8E8;
+    --card: #FFFFFF;
+    --node: #0C0C0C;
+    --stream: #0066FF;
   }
-  .nav-toggle{display:block}
-  .hero-frame{display:none}
-}
-@media(max-width:600px){
-  .about-stats{grid-template-columns:1fr}
-  .hero-name{letter-spacing:0.1em}
-  .hero-epithet::before,.hero-epithet::after{display:none}
-  .section{padding:50px 16px}
-  .section-title{font-size:1.6rem;letter-spacing:0.08em}
-  .arsenal-grid{grid-template-columns:1fr}
-  .creed-grid{grid-template-columns:1fr}
-}
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    overflow-x: hidden;
+  }
+
+  /* ════════ STREAMING CANVAS ════════ */
+  #stream-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ════════ NAV ════════ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(24px);
+    background: rgba(252,252,252,0.8);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-nodes {
+    position: relative;
+    width: 36px;
+    height: 36px;
+  }
+
+  .logo-nodes span {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--fg);
+    border-radius: 50%;
+  }
+
+  .logo-nodes span:nth-child(1) { top: 0; left: 14px; }
+  .logo-nodes span:nth-child(2) { bottom: 0; left: 2px; }
+  .logo-nodes span:nth-child(3) { bottom: 0; right: 2px; }
+
+  .logo-nodes::before,
+  .logo-nodes::after {
+    content: '';
+    position: absolute;
+    background: var(--fg);
+    height: 1px;
+  }
+
+  .logo-nodes::before {
+    width: 20px;
+    top: 12px; left: 4px;
+    transform: rotate(55deg);
+  }
+
+  .logo-nodes::after {
+    width: 20px;
+    top: 12px; right: 4px;
+    transform: rotate(-55deg);
+  }
+
+  .logo-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--fg); }
+
+  /* ════════ HERO ════════ */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 48px;
+    padding-top: 80px;
+  }
+
+  .hero-content {
+    max-width: 720px;
+    position: relative;
+  }
+
+  .hero-pipe {
+    position: absolute;
+    right: -120px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .pipe-node {
+    width: 12px; height: 12px;
+    border: 2px solid var(--fg);
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    background: var(--bg);
+  }
+
+  .pipe-node.active { background: var(--stream); border-color: var(--stream); }
+
+  .pipe-line {
+    width: 2px;
+    height: 40px;
+    background: var(--border);
+    position: relative;
+  }
+
+  .pipe-line.active { background: var(--stream); }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--stream);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-label .dot {
+    width: 6px; height: 6px;
+    background: var(--stream);
+    border-radius: 50%;
+    animation: blink 2s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero h1 {
+    font-size: clamp(44px, 7vw, 82px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -3px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 .thin {
+    font-weight: 300;
+    color: var(--muted);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 500px;
+    margin-bottom: 48px;
+  }
+
+  .hero-metrics {
+    display: flex;
+    gap: 40px;
+  }
+
+  .metric {
+    position: relative;
+    padding-left: 16px;
+  }
+
+  .metric::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 3px; height: 100%;
+    background: var(--fg);
+  }
+
+  .metric-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .metric-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ════════ STREAM DIVIDER ════════ */
+  .stream-divider {
+    position: relative;
+    z-index: 1;
+    padding: 0 48px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+  }
+
+  .stream-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border) 10%, var(--border) 90%, transparent);
+    position: relative;
+  }
+
+  .stream-line .packet {
+    position: absolute;
+    top: -3px;
+    width: 7px; height: 7px;
+    background: var(--stream);
+    border-radius: 50%;
+    animation: streamFlow 4s linear infinite;
+  }
+
+  .stream-line .packet:nth-child(2) { animation-delay: -1.3s; }
+  .stream-line .packet:nth-child(3) { animation-delay: -2.6s; }
+
+  @keyframes streamFlow {
+    0% { left: 0; opacity: 0; }
+    5% { opacity: 1; }
+    95% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+  }
+
+  /* ════════ SECTION ════════ */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 60px 48px;
+  }
+
+  .sec-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .sec-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--stream);
+    letter-spacing: 1px;
+  }
+
+  .sec-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .sec-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ════════ STACK — KAFKA CLUSTER LAYOUT ════════ */
+  .cluster-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+  }
+
+  .broker {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    position: relative;
+    transition: all 0.3s;
+    overflow: hidden;
+  }
+
+  .broker::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--stream);
+    transition: height 0.3s;
+  }
+
+  .broker:hover::before { height: 100%; }
+
+  .broker:hover {
+    border-color: var(--stream);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(0,102,255,0.06);
+  }
+
+  .broker-name {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 3px;
+  }
+
+  .broker-topic {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ════════ PROJECTS — PIPELINE CARDS ════════ */
+  .pipeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .pipeline-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px;
+    position: relative;
+    transition: all 0.3s;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .pipeline-card + .pipeline-card { border-top: none; }
+
+  .pipeline-card:hover {
+    border-color: var(--stream);
+    box-shadow: 0 8px 40px rgba(0,102,255,0.04);
+  }
+
+  .pipeline-card::before {
+    content: '';
+    position: absolute;
+    left: -1px; top: 0;
+    width: 3px; height: 0;
+    background: var(--stream);
+    transition: height 0.4s;
+  }
+
+  .pipeline-card:hover::before { height: 100%; }
+
+  .pipe-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .pipe-status .s-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+
+  .s-dot.live { background: #22C55E; animation: blink 2s infinite; }
+  .s-dot.dev { background: var(--stream); animation: blink 2s infinite; }
+  .s-dot.tool { background: var(--muted); }
+
+  .pipe-name {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+
+  .pipe-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 520px;
+    margin-bottom: 20px;
+  }
+
+  .pipe-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .p-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+
+  .p-tag:hover {
+    border-color: var(--stream);
+    color: var(--stream);
+  }
+
+  .pipe-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding-top: 8px;
+  }
+
+  .pv-node {
+    width: 10px; height: 10px;
+    border: 2px solid var(--faint);
+    border-radius: 50%;
+    background: var(--bg);
+    z-index: 1;
+    transition: all 0.3s;
+  }
+
+  .pipeline-card:hover .pv-node {
+    border-color: var(--stream);
+    background: var(--stream);
+  }
+
+  .pv-line {
+    width: 2px; height: 30px;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+
+  .pipeline-card:hover .pv-line { background: var(--stream); }
+
+  /* ════════ DESIGNS — TOPIC LIST ════════ */
+  .topic-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .topic {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 18px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+
+  .topic + .topic { border-top: none; }
+
+  .topic:hover {
+    border-color: var(--stream);
+    padding-left: 32px;
+  }
+
+  .topic-node {
+    width: 8px; height: 8px;
+    border: 2px solid var(--faint);
+    border-radius: 50%;
+    transition: all 0.3s;
+  }
+
+  .topic:hover .topic-node {
+    border-color: var(--stream);
+    background: var(--stream);
+  }
+
+  .topic-name {
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .topic-partition {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ════════ CONTACT ════════ */
+  .contact {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 100px 48px;
+  }
+
+  .contact h2 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 16px;
+  }
+
+  .contact p {
+    color: var(--muted);
+    font-weight: 300;
+    font-size: 16px;
+    margin-bottom: 36px;
+  }
+
+  .contact-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .c-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    padding: 12px 24px;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .c-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--stream);
+    transition: width 0.3s;
+  }
+
+  .c-link:hover {
+    color: var(--fg);
+    border-color: var(--stream);
+  }
+
+  .c-link:hover::before { width: 100%; }
+
+  /* ════════ FOOTER ════════ */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 20px 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .footer-nodes {
+    display: flex;
+    gap: 6px;
+  }
+
+  .footer-nodes span {
+    width: 4px; height: 4px;
+    background: var(--faint);
+    border-radius: 50%;
+  }
+
+  /* ════════ ANIMATIONS ════════ */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.7s forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .d1 { animation-delay: 0.1s; }
+  .d2 { animation-delay: 0.2s; }
+  .d3 { animation-delay: 0.3s; }
+  .d4 { animation-delay: 0.4s; }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  @media (max-width: 768px) {
+    nav, .hero, section, .contact, footer { padding-left: 24px; padding-right: 24px; }
+    .pipeline-card { grid-template-columns: 1fr; }
+    .pipe-visual { display: none; }
+    .hero-pipe { display: none; }
+    .hero-metrics { flex-wrap: wrap; gap: 24px; }
+    .nav-links { display: none; }
+  }
 </style>
 </head>
 <body>
 
-<!-- SCROLL PROGRESS -->
-<div id="scroll-progress"></div>
-<!-- VIGNETTE -->
-<div class="vignette"></div>
-<!-- CURSOR GLOW -->
-<div class="cursor-glow" id="cursor-glow"></div>
+<!-- Streaming Background -->
+<canvas id="stream-canvas"></canvas>
 
-<!-- ================================================================
-     LOADING SCREEN — GOTHIC CROSS
-     ================================================================ -->
-<div id="loading-screen">
-  <div class="orthodox-cross">
-    <div class="oc-glow"></div>
-    <div class="oc-vert"></div>
-    <div class="oc-bar-top"></div>
-    <div class="oc-bar-mid"></div>
-    <div class="oc-bar-bot"></div>
-    <div class="oc-tip oc-tip-t"></div>
-    <div class="oc-tip oc-tip-b"></div>
-    <div class="oc-tip oc-tip-l"></div>
-    <div class="oc-tip oc-tip-r"></div>
+<!-- Nav -->
+<nav>
+  <div class="logo">
+    <div class="logo-nodes">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="logo-text">Solara</div>
   </div>
-  <div class="load-title">SOLARA</div>
-  <div class="load-sub">Forging the Dark Engine</div>
-</div>
-<div class="crack-line" id="crack-line"></div>
-<div class="crack-left" id="crack-left"></div>
-<div class="crack-right" id="crack-right"></div>
-
-<!-- ================================================================
-     NAVIGATION
-     ================================================================ -->
-<nav id="main-nav">
-  <a href="#hero" class="nav-brand">SOLARA</a>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Menu">MENU</button>
-  <ul class="nav-links" id="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#arsenal">Arsenal</a></li>
-    <li><a href="#conquests">Conquests</a></li>
-    <li><a href="#chronicle">Chronicle</a></li>
-    <li><a href="#creed">Creed</a></li>
-    <li><a href="#summon">Summon</a></li>
+  <ul class="nav-links">
+    <li><a href="#stack">Cluster</a></li>
+    <li><a href="#projects">Pipeline</a></li>
+    <li><a href="#designs">Topics</a></li>
+    <li><a href="#contact">Connect</a></li>
   </ul>
 </nav>
 
-<!-- THREE.JS PARTICLE CANVAS -->
-<canvas id="three-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.4"></canvas>
-
-<!-- FIXED BACKGROUND SVG -->
-<svg id="svg-bg" class="svg-bg-layer" xmlns="http://www.w3.org/2000/svg"></svg>
-
-<!-- ================================================================
-     HERO
-     ================================================================ -->
-<section id="hero" class="section">
-  <img src="avenged-sevenfold-fly-a7x-zoie-veum.jpg" alt="" class="hero-bg-img" loading="eager">
-  <svg class="svg-section-layer" id="svg-hero" xmlns="http://www.w3.org/2000/svg"></svg>
-  <div class="hero-frame">
-    <div class="hero-frame-corner hero-frame-corner--tl"></div>
-    <div class="hero-frame-corner hero-frame-corner--tr"></div>
-    <div class="hero-frame-corner hero-frame-corner--bl"></div>
-    <div class="hero-frame-corner hero-frame-corner--br"></div>
-    <div class="hero-frame-line hero-frame-line--top"></div>
-    <div class="hero-frame-line hero-frame-line--bottom"></div>
-    <div class="hero-frame-line hero-frame-line--left"></div>
-    <div class="hero-frame-line hero-frame-line--right"></div>
-  </div>
+<!-- Hero -->
+<div class="hero">
   <div class="hero-content">
-    <div class="hero-epithet reveal">System Architect &amp; Backend Engineer</div>
-    <h1 class="hero-name reveal reveal-delay-1">SOLARA</h1>
-    <p class="hero-tagline reveal reveal-delay-2">Forging production systems from pure code.<br>Backend architecture, infrastructure, and security &mdash; built to endure.</p>
-    <a href="#conquests" class="hero-cta reveal reveal-delay-3">View My Work</a>
-  </div>
-  <div class="hero-scroll-indicator reveal reveal-delay-4"><span></span></div>
-</section>
-
-<div class="ornament-divider"><div class="line"></div><div class="dot"></div><div class="diamond"></div><div class="dot"></div><div class="line"></div></div>
-
-<!-- ================================================================
-     ABOUT
-     ================================================================ -->
-<section id="about" class="section">
-  <img src="81EbPydBuVL._AC_UL600_SR600,600_.jpg" alt="" class="about-bg-img" loading="lazy">
-  <svg class="svg-section-layer" id="svg-about" xmlns="http://www.w3.org/2000/svg"></svg>
-  <div class="section-inner">
-    <h2 class="section-title reveal">The Architect</h2>
-    <p class="section-subtitle reveal reveal-delay-1">Who stands behind the code</p>
-    <div class="about-sigil reveal">
-      <div class="ring-outer"></div>
-      <div class="ring-inner"></div>
-      <div class="sigil-letter">S</div>
-    </div>
-    <div class="about-grid">
-      <div class="about-text reveal reveal-delay-2">
-        <p>I am <span class="highlight">Solara</span> &mdash; a 15-year-old System Architect and CTO based in Poland. I build production-grade systems that handle real money, real users, and real consequences.</p>
-        <p>My craft is <span class="highlight">backend architecture</span>: Django class-based views, PostgreSQL schemas, Redis caching layers, and Celery task queues. I serve through <span class="highlight">Nginx, Uvicorn, and Gunicorn</span>, deploy on AWS EC2 behind load balancers, orchestrated by Kubernetes, and provisioned through Terraform.</p>
-        <p>I build in <span class="highlight">Rust</span> too &mdash; <span class="highlight">Wardent</span>, my custom reverse proxy, runs as a systemd service intercepting every request before it touches the backend. Rate limiting, IP banning, bot filtering &mdash; all in raw Rust with zero framework overhead.</p>
-        <p>From <span class="highlight">banking applications</span> processing atomic transactions to <span class="highlight">real estate marketplaces</span> handling Stripe Connect payment flows with escrow and share trading &mdash; every system I build is monitored with Prometheus, Grafana, <span class="highlight">Tempo &amp; OpenTelemetry</span>, secured with <span class="highlight">RS384 JWT</span>, and built to survive.</p>
-        <p>My flagship is <span class="highlight"><a href="https://solaradocs.net" style="color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2)">SolaraDocs</a></span> &mdash; a collaborative documentation platform with tiered subscriptions, team-based RBAC, pending edit workflows, R2 backups, audit logging, and a full Stripe billing pipeline.</p>
-        <p>Frontend? Vanilla HTML, CSS, JavaScript. No frameworks. No abstractions. Pure code, full control.</p>
+    <div class="hero-label fade-up"><span class="dot"></span> System Architect — Warsaw, PL</div>
+    <h1 class="fade-up d1">Architect.<br><span class="thin">Ship.</span><br>Observe.</h1>
+    <p class="hero-sub fade-up d2">Designing distributed systems, deployment pipelines, and production infrastructure. Every system I build runs in production with real users and full observability.</p>
+    <div class="hero-metrics fade-up d3">
+      <div class="metric">
+        <div class="metric-val">2yr</div>
+        <div class="metric-label">Experience</div>
       </div>
-      <div class="about-stats reveal reveal-delay-3">
-        <div class="stat-card"><span class="stat-number">15</span><span class="stat-label">Years Old</span></div>
-        <div class="stat-card"><span class="stat-number">13,5k</span><span class="stat-label">PLN Earned</span></div>
-        <div class="stat-card"><span class="stat-number">27+</span><span class="stat-label">Technologies</span></div>
-        <div class="stat-card"><span class="stat-number">5+</span><span class="stat-label">Production Systems</span></div>
-        <div class="stat-card"><span class="stat-number">3+</span><span class="stat-label">Years Coding</span></div>
-        <div class="stat-card"><span class="stat-number">99.9%</span><span class="stat-label">Uptime SLA</span></div>
+      <div class="metric">
+        <div class="metric-val">2</div>
+        <div class="metric-label">Prod Systems</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">10+</div>
+        <div class="metric-label">Containers</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">13.5k</div>
+        <div class="metric-label">PLN Earned</div>
       </div>
     </div>
   </div>
-</section>
 
-<div class="ornament-divider"><div class="line"></div><div class="dot"></div><div class="diamond"></div><div class="dot"></div><div class="line"></div></div>
-
-<!-- ================================================================
-     ARSENAL
-     ================================================================ -->
-<section id="arsenal" class="section">
-  <svg class="svg-section-layer" id="svg-arsenal" xmlns="http://www.w3.org/2000/svg"></svg>
-  <div class="section-inner">
-    <h2 class="section-title reveal">The Arsenal</h2>
-    <p class="section-subtitle reveal reveal-delay-1">Tools of the trade, forged in production fire</p>
-    <div class="arsenal-grid">
-
-      <div class="arsenal-card reveal reveal-delay-1">
-        <div class="arsenal-card-title"><span class="card-icon">&#9876;</span> Backend &amp; API</div>
-        <ul class="arsenal-tech-list">
-          <li>Python</li>
-          <li>Django Views &amp; Class-Based Views</li>
-          <li>Django REST Framework</li>
-          <li>RESTful API Design &amp; Versioning</li>
-          <li>Celery &amp; Celery Beat</li>
-          <li>Redis</li>
-          <li>JWT Authentication</li>
-        </ul>
-      </div>
-
-      <div class="arsenal-card reveal reveal-delay-2">
-        <div class="arsenal-card-title"><span class="card-icon">&#128736;</span> Rust &amp; Systems</div>
-        <ul class="arsenal-tech-list">
-          <li>Rust</li>
-          <li>Tokio Async Runtime</li>
-          <li>Hyper (HTTP Server/Client)</li>
-          <li>Axum &amp; Warp Frameworks</li>
-          <li>Wardent &mdash; Custom Reverse Proxy</li>
-          <li>Systems-Level Programming</li>
-          <li>Memory-Safe Concurrency</li>
-        </ul>
-      </div>
-
-      <div class="arsenal-card reveal reveal-delay-3">
-        <div class="arsenal-card-title"><span class="card-icon">&#128450;</span> Databases</div>
-        <ul class="arsenal-tech-list">
-          <li>PostgreSQL</li>
-          <li>DynamoDB</li>
-          <li>AuroraDB</li>
-          <li>Redis</li>
-          <li>Database Schema Design</li>
-          <li>Migrations &amp; Query Optimization</li>
-        </ul>
-      </div>
-
-      <div class="arsenal-card reveal reveal-delay-1">
-        <div class="arsenal-card-title"><span class="card-icon">&#9881;</span> Infrastructure &amp; Cloud</div>
-        <ul class="arsenal-tech-list">
-          <li>AWS EC2</li>
-          <li>AWS Load Balancer (ALB/NLB)</li>
-          <li>Kubernetes</li>
-          <li>Docker &amp; Docker Compose</li>
-          <li>Terraform</li>
-          <li>Cloudflare R2 (Object Storage)</li>
-          <li>Helm Charts</li>
-          <li>Linux Server Administration</li>
-        </ul>
-      </div>
-
-      <div class="arsenal-card reveal reveal-delay-2">
-        <div class="arsenal-card-title"><span class="card-icon">&#128274;</span> Networking &amp; Servers</div>
-        <ul class="arsenal-tech-list">
-          <li>Nginx</li>
-          <li>Uvicorn</li>
-          <li>Gunicorn</li>
-          <li>Wardent (Rust Reverse Proxy)</li>
-          <li>Cloudflare DNS &amp; CDN</li>
-          <li>Service Mesh &amp; Internal Networking</li>
-          <li>Private Server-to-Server Communication</li>
-          <li>SSL/TLS Termination</li>
-        </ul>
-      </div>
-
-      <div class="arsenal-card reveal reveal-delay-3">
-        <div class="arsenal-card-title"><span class="card-icon">&#128065;</span> Monitoring &amp; Observability</div>
-        <ul class="arsenal-tech-list">
-          <li>Prometheus</li>
-          <li>Grafana</li>
-          <li>Tempo (Distributed Tracing)</li>
-          <li>OpenTelemetry Collector</li>
-          <li>AlertManager</li>
-          <li>Custom Metrics &amp; Dashboards</li>
-          <li>Structured Logging &amp; Log Aggregation</li>
-        </ul>
-      </div>
-
-      <div class="arsenal-card reveal reveal-delay-1">
-        <div class="arsenal-card-title"><span class="card-icon">&#9733;</span> Microservices</div>
-        <ul class="arsenal-tech-list">
-          <li>Service-Oriented Architecture</li>
-          <li>API Gateway Patterns</li>
-          <li>Inter-Service Communication (gRPC / REST)</li>
-          <li>Message Queues</li>
-          <li>Service Discovery &amp; Load Balancing</li>
-          <li>Circuit Breaker &amp; Retry Patterns</li>
-        </ul>
-      </div>
-
-      <div class="arsenal-card reveal reveal-delay-2">
-        <div class="arsenal-card-title"><span class="card-icon">&#128737;</span> Security &amp; Auth</div>
-        <ul class="arsenal-tech-list">
-          <li>RS384 JWT (Access &amp; Refresh Tokens)</li>
-          <li>OAuth 2.0</li>
-          <li>OWASP Best Practices</li>
-          <li>Rate Limiting &amp; IP Banning</li>
-          <li>Bot Filtering &amp; User-Agent Blocking</li>
-          <li>Input Validation &amp; Sanitization</li>
-          <li>CORS &amp; CSRF Protection</li>
-        </ul>
-      </div>
-
-      <div class="arsenal-card reveal reveal-delay-3">
-        <div class="arsenal-card-title"><span class="card-icon">&#8634;</span> DevOps &amp; CI/CD</div>
-        <ul class="arsenal-tech-list">
-          <li>GitHub Actions</li>
-          <li>CI/CD Pipelines</li>
-          <li>Blue-Green Deployments</li>
-          <li>Infrastructure as Code (Terraform)</li>
-          <li>Helm Charts &amp; K8s Manifests</li>
-          <li>Automated Testing Suites</li>
-          <li>Container Orchestration (K8s)</li>
-        </ul>
-      </div>
-
-      <div class="arsenal-card reveal reveal-delay-1">
-        <div class="arsenal-card-title"><span class="card-icon">&#9997;</span> Frontend</div>
-        <ul class="arsenal-tech-list">
-          <li>Vanilla HTML5</li>
-          <li>Pure CSS3 &amp; Custom Properties</li>
-          <li>Native JavaScript (ES6+)</li>
-          <li>No Frameworks &mdash; Ever</li>
-          <li>Hand-Crafted, Full Control</li>
-        </ul>
-      </div>
-
-      <div class="arsenal-card reveal reveal-delay-2">
-        <div class="arsenal-card-title"><span class="card-icon">&#128179;</span> Payments &amp; Email</div>
-        <ul class="arsenal-tech-list">
-          <li>Stripe Payments &amp; Subscriptions</li>
-          <li>Stripe Connect (Marketplace)</li>
-          <li>Stripe Webhooks &amp; Event Handling</li>
-          <li>SendGrid Email API</li>
-          <li>Async Email Pipeline (Celery + Redis)</li>
-        </ul>
-      </div>
-
-    </div>
-
-    <!-- TECH ICON STRIP -->
-    <div class="tech-icon-strip reveal">
-      <div class="tech-icon-strip-title">Technologies I Work With</div>
-      <div class="tech-icons">
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
-          <span>Python</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django">
-          <span>Django</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg" alt="Rust">
-          <span>Rust</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cpath d='M18 3L4 11v14l14 8 14-8V11L18 3zm0 2.5L29.5 12 18 18.5 6.5 12 18 5.5zM6 13.5l11 6.2V30l-11-6.3V13.5zm24 0V23.7L19 30V19.7l11-6.2z' fill='%23ffffff'/%3E%3C/svg%3E" alt="Axum">
-          <span>Axum</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
-          <span>Postgres</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis">
-          <span>Redis</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/memcached/memcached-original.svg" alt="Memcached">
-          <span>Memcached</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dynamodb/dynamodb-original.svg" alt="DynamoDB">
-          <span>DynamoDB</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/amazonrds.svg" alt="AuroraDB">
-          <span>AuroraDB</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS">
-          <span>AWS</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/amazoniam.svg" alt="AWS IAM">
-          <span>AWS IAM</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
-          <span>Docker</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes">
-          <span>Kubernetes</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform">
-          <span>Terraform</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="Nginx">
-          <span>Nginx</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.simpleicons.org/gunicorn/white" alt="Gunicorn">
-          <span>Gunicorn</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Ccircle cx='18' cy='18' r='14' fill='none' stroke='%23ffffff' stroke-width='2'/%3E%3Cpath d='M18 6v24M10 10l8 8 8-8' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='18' cy='18' r='4' fill='%23ffffff'/%3E%3C/svg%3E" alt="Uvicorn">
-          <span>Uvicorn</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg" alt="Prometheus">
-          <span>Prometheus</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" alt="Grafana">
-          <span>Grafana</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.simpleicons.org/jsonwebtokens/white" alt="JWT">
-          <span>JWT</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.simpleicons.org/stripe/white" alt="Stripe">
-          <span>Stripe</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.simpleicons.org/cloudflare/white" alt="Cloudflare">
-          <span>Cloudflare</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/awselasticloadbalancing.svg" alt="AWS ALB">
-          <span>AWS ALB</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux">
-          <span>Linux</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
-          <span>Git</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
-          <span>GitHub</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.simpleicons.org/githubactions/white" alt="GitHub Actions">
-          <span>GH Actions</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.simpleicons.org/celery/white" alt="Celery">
-          <span>Celery</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.simpleicons.org/opentelemetry/white" alt="OpenTelemetry">
-          <span>OTel</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.simpleicons.org/sendgrid/white" alt="SendGrid">
-          <span>SendGrid</span>
-        </div>
-        <div class="tech-icon-box">
-          <img src="https://cdn.simpleicons.org/helm/white" alt="Helm">
-          <span>Helm</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="ornament-divider"><div class="line"></div><div class="dot"></div><div class="diamond"></div><div class="dot"></div><div class="line"></div></div>
-
-<!-- ================================================================
-     CONQUESTS
-     ================================================================ -->
-<section id="conquests" class="section">
-  <svg class="svg-section-layer" id="svg-conquests" xmlns="http://www.w3.org/2000/svg"></svg>
-  <div class="section-inner">
-    <h2 class="section-title reveal">The Conquests</h2>
-    <p class="section-subtitle reveal reveal-delay-1">Production systems, built and deployed</p>
-    <div class="conquests-grid">
-      <div class="conquest-card reveal reveal-delay-1">
-        <div class="conquest-number">I</div>
-        <h3 class="conquest-title"><a href="https://solaradocs.net" target="_blank" style="color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);transition:border-color 0.3s ease">SolaraDocs</a></h3>
-        <p class="conquest-desc">A collaborative documentation platform with tiered subscriptions, team-based access control, pending edit workflows, automated backups to Cloudflare R2, and full audit logging. Stripe billing pipeline with webhook-driven tier management.</p>
-        <div class="conquest-tech-tags"><span>Django</span><span>PostgreSQL</span><span>Redis</span><span>Celery</span><span>Stripe</span><span>SendGrid</span><span>AWS EC2</span><span>Docker</span><span>R2</span></div>
-        <ul class="conquest-features"><li>4-tier subscription system (Free/Personal/Team/Enterprise) via Stripe</li><li>Team-based RBAC with project admins, team admins, editors &amp; viewers</li><li>Pending edit workflow &mdash; editors submit, admins approve or reject</li><li>Automated document backups to Cloudflare R2 with version history</li><li>Full audit logging: every edit, rename, delete, and revert tracked</li><li>RS384 JWT authentication with auto-refresh on expiry</li><li>Async email pipeline: Celery + Redis &rarr; SendGrid</li><li>Password reset flow with 6-digit codes &amp; attempt limiting</li><li>Granular viewer document access control</li><li>Full observability: Prometheus, Grafana, Tempo, OpenTelemetry</li></ul>
-      </div>
-      <div class="conquest-card reveal reveal-delay-2" style="grid-column:1/-1;">
-        <div class="conquest-number">II</div>
-        <h3 class="conquest-title"><a href="https://github.com/solaraengineer/wardent-rust-proxy-manager" target="_blank" style="color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);transition:border-color 0.3s ease">Wardent</a></h3>
-        <p class="conquest-desc">A lightweight, high-performance reverse proxy and API gateway written in raw Rust. No frameworks. Single binary. Sits between Nginx and your application server as a security and filtering layer. Every incoming request is intercepted &mdash; if it fails any check, it gets killed instantly. Your backend never knows it existed.</p>
-        <div class="conquest-tech-tags"><span>Rust</span><span>Tokio</span><span>Hyper</span><span>DashMap</span><span>Governor</span><span>Regex</span><span>TOML + Serde</span><span>Tracing</span><span>systemd</span></div>
-
-        <p class="conquest-desc" style="color:#888;margin-top:18px;margin-bottom:6px;font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;">What It Does</p>
-        <ul class="conquest-features">
-          <li>Rate limiting &mdash; 40 requests/minute per IP with configurable burst. In-memory token bucket algorithm</li>
-          <li>IP banning &mdash; Exceed the rate limit 3 times and you&rsquo;re banned for 1 hour. Automatic expiry, no manual intervention</li>
-          <li>Bot filtering &mdash; Blocks known crawler user-agents (Google, Microsoft, OpenAI, Meta) via compiled regex. Redirects them to a URL of your choice</li>
-          <li>Body size enforcement &mdash; Rejects payloads over 5MB before your backend wastes resources reading them</li>
-          <li>Per-path timeouts &mdash; Default 5s timeout with configurable overrides for slow routes like payment processing (300s) and webhooks (90s)</li>
-          <li>Header forwarding &mdash; Passes X-Forwarded-For and X-Forwarded-Proto, strips hop-by-hop headers</li>
-          <li>Error redirects &mdash; All errors return 302 redirects to your application&rsquo;s styled error pages instead of raw JSON</li>
-        </ul>
-
-        <p class="conquest-desc" style="color:#888;margin-top:18px;margin-bottom:6px;font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;">Architecture</p>
-        <p class="conquest-desc" style="font-family:monospace;font-size:0.82rem;color:#666;letter-spacing:0.05em;">Client &rarr; Nginx (:443) &rarr; Wardent (:8080) &rarr; Django (:8000)</p>
-        <p class="conquest-desc" style="font-size:0.85rem;">Runs as a systemd service directly on the host. Not containerized. Internal services (databases, caches, monitoring) bypass Wardent entirely and communicate with the backend directly.</p>
-
-        <p class="conquest-desc" style="color:#888;margin-top:18px;margin-bottom:6px;font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;">Request Lifecycle</p>
-        <div style="font-family:monospace;font-size:0.78rem;color:#555;line-height:1.9;padding:14px 0;">
-          <span style="color:#888;">Incoming request</span><br>
-          &nbsp;&nbsp;&#9500; IP banned? &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; &rarr; <span style="color:#888;">302 /error/403/</span><br>
-          &nbsp;&nbsp;&#9500; Rate limit exceeded? &mdash; &rarr; <span style="color:#888;">302 /error/429/</span><br>
-          &nbsp;&nbsp;&#9474;&nbsp;&nbsp;&nbsp;&#9492; 3rd violation? &mdash;&mdash; &rarr; <span style="color:#888;">ban IP for 1 hour</span><br>
-          &nbsp;&nbsp;&#9500; Blocked user-agent? &mdash; &rarr; <span style="color:#888;">301 Wikipedia</span><br>
-          &nbsp;&nbsp;&#9500; Body &gt; 5MB? &mdash;&mdash;&mdash;&mdash;&mdash;&mdash; &rarr; <span style="color:#888;">302 /error/413/</span><br>
-          &nbsp;&nbsp;&#9500; Forward to backend<br>
-          &nbsp;&nbsp;&#9474;&nbsp;&nbsp;&nbsp;&#9500; Timeout? &mdash;&mdash;&mdash;&mdash;&mdash; &rarr; <span style="color:#888;">302 /error/408/</span><br>
-          &nbsp;&nbsp;&#9474;&nbsp;&nbsp;&nbsp;&#9492; Backend down? &mdash;&mdash; &rarr; <span style="color:#888;">302 /error/502/</span><br>
-          &nbsp;&nbsp;&#9492; <span style="color:#888;">Response back to client</span>
-        </div>
-
-        <p class="conquest-desc" style="color:#888;margin-top:18px;margin-bottom:6px;font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;">Crate Stack</p>
-        <ul class="conquest-features">
-          <li><strong style="color:#ccc;">tokio</strong> &mdash; Async runtime</li>
-          <li><strong style="color:#ccc;">hyper</strong> &mdash; HTTP server and client</li>
-          <li><strong style="color:#ccc;">dashmap</strong> &mdash; Concurrent hash maps for rate limiting &amp; bans</li>
-          <li><strong style="color:#ccc;">governor</strong> &mdash; Token bucket rate limiter</li>
-          <li><strong style="color:#ccc;">regex</strong> &mdash; User-agent pattern matching</li>
-          <li><strong style="color:#ccc;">toml + serde</strong> &mdash; Config parsing</li>
-          <li><strong style="color:#ccc;">tracing</strong> &mdash; Structured logging</li>
-        </ul>
-
-        <p class="conquest-desc" style="color:#888;margin-top:18px;margin-bottom:6px;font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;">Project Structure</p>
-        <div style="font-family:monospace;font-size:0.78rem;color:#555;line-height:1.9;padding:14px 0;">
-          src/<br>
-          &nbsp;&nbsp;&#9500; main.rs &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#444;">Entry point, server loop, request handler wiring</span><br>
-          &nbsp;&nbsp;&#9500; config.rs &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#444;">TOML config parser and deserialization</span><br>
-          &nbsp;&nbsp;&#9500; proxy.rs &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#444;">Request forwarding, timeout enforcement, body size checks</span><br>
-          &nbsp;&nbsp;&#9500; filter.rs &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#444;">User-agent regex matching and bot blocking</span><br>
-          &nbsp;&nbsp;&#9500; ratelimit.rs &nbsp;&nbsp;<span style="color:#444;">Per-IP rate limiting, violation tracking, IP banning</span><br>
-          &nbsp;&nbsp;&#9492; tcp.rs &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#444;">Timeout resolution helper</span>
-        </div>
-
-        <p class="conquest-desc" style="color:#888;margin-top:18px;margin-bottom:6px;font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;">Performance</p>
-        <ul class="conquest-features">
-          <li>~0.1&ndash;0.5ms latency per request. All checks are O(1) lookups against in-memory data structures</li>
-          <li>Regex patterns compiled once at startup. Zero heap allocation in the hot path for most requests</li>
-          <li>10,000 tracked IPs consume roughly 2MB of RAM</li>
-        </ul>
-      </div>
-      <div class="conquest-card reveal reveal-delay-3">
-        <div class="conquest-number">III</div>
-        <h3 class="conquest-title">Real Estate Marketplace</h3>
-        <p class="conquest-desc">A property share trading platform with Stripe Connect integration. Sellers onboard via Express accounts, buyers purchase fractional shares through Checkout Sessions, with atomic ownership transfers and platform fee collection.</p>
-        <div class="conquest-tech-tags"><span>Django</span><span>Stripe Connect</span><span>PostgreSQL</span><span>Celery</span><span>JWT</span></div>
-        <ul class="conquest-features"><li>Stripe Connect Express onboarding with KYC verification</li><li>Fractional property shares &mdash; atomic ownership transfer</li><li>Checkout Sessions with application fees &amp; destination charges</li><li>Webhook handler: payment success, failure, refunds</li><li>Idempotent transactions with select_for_update</li><li>Automatic refunds on insufficient shares</li></ul>
-      </div>
-      <div class="conquest-card reveal reveal-delay-4">
-        <div class="conquest-number">IV</div>
-        <h3 class="conquest-title">Banking Application</h3>
-        <p class="conquest-desc">A production banking system handling real financial transactions with atomic operations, comprehensive monitoring, and security hardening.</p>
-        <div class="conquest-tech-tags"><span>Django</span><span>PostgreSQL</span><span>Prometheus</span><span>Grafana</span><span>Celery</span><span>Redis</span></div>
-        <ul class="conquest-features"><li>Atomic transaction processing</li><li>Real-time Prometheus &amp; Grafana monitoring</li><li>AlertManager anomaly detection</li><li>Multi-factor authentication</li><li>Audit logging &amp; compliance</li></ul>
-      </div>
-      <div class="conquest-card reveal reveal-delay-5">
-        <div class="conquest-number">V</div>
-        <h3 class="conquest-title">E-Commerce Platform</h3>
-        <p class="conquest-desc">Full-featured e-commerce with Stripe payment processing, real-time inventory management, order tracking, and automated notifications.</p>
-        <div class="conquest-tech-tags"><span>Django</span><span>Stripe</span><span>PostgreSQL</span><span>Celery</span><span>AWS</span><span>Docker</span></div>
-        <ul class="conquest-features"><li>Stripe payment integration</li><li>Real-time inventory management</li><li>Order tracking &amp; status updates</li><li>Automated email notifications</li><li>Admin dashboard with analytics</li></ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================================================================
-     NIGHTMARE PARALLAX BREAK
-     ================================================================ -->
-<div class="nightmare-break" id="nightmare-break">
-  <img src="nightmare.jpg" alt="" class="nightmare-break-img" id="nightmare-img" loading="lazy">
-  <div class="nightmare-break-text">
-    <p class="nightmare-break-quote">&ldquo;In the end, as you fade into the night, who will tell the story of your life?&rdquo;</p>
-    <p class="nightmare-break-attrib">&mdash; So Far Away</p>
+  <div class="hero-pipe fade-up d4">
+    <div class="pipe-node active"></div>
+    <div class="pipe-line active"></div>
+    <div class="pipe-node active"></div>
+    <div class="pipe-line active"></div>
+    <div class="pipe-node active"></div>
+    <div class="pipe-line"></div>
+    <div class="pipe-node"></div>
+    <div class="pipe-line"></div>
+    <div class="pipe-node"></div>
   </div>
 </div>
 
-<!-- ================================================================
-     CHRONICLE
-     ================================================================ -->
-<section id="chronicle" class="section">
-  <svg class="svg-section-layer" id="svg-chronicle" xmlns="http://www.w3.org/2000/svg"></svg>
-  <div class="section-inner">
-    <h2 class="section-title reveal">The Chronicle</h2>
-    <p class="section-subtitle reveal reveal-delay-1">A journey forged in darkness and determination</p>
-    <div class="timeline">
-      <div class="timeline-item reveal"><div class="timeline-year">2022 &mdash; The Awakening</div><div class="timeline-title">First Lines of Code</div><div class="timeline-desc">At 12, I discovered programming. What began as curiosity became obsession. Python was my first language, and the terminal became my cathedral.</div></div>
-      <div class="timeline-item reveal"><div class="timeline-year">2023 &mdash; The Forge</div><div class="timeline-title">Django &amp; Backend Mastery</div><div class="timeline-desc">Deep-dived into Django and backend architecture. Built my first real applications. Learned PostgreSQL, REST APIs, and production-quality code discipline.</div></div>
-      <div class="timeline-item reveal"><div class="timeline-year">2023 &mdash; The First Clients</div><div class="timeline-title">Freelance Beginnings</div><div class="timeline-desc">Started taking freelance work. Built banking applications, e-commerce platforms, and real estate marketplaces. Production code serves people, not just compilers.</div></div>
-      <div class="timeline-item reveal"><div class="timeline-year">2024 &mdash; The Expansion</div><div class="timeline-title">Infrastructure &amp; DevOps</div><div class="timeline-desc">Expanded into AWS, Docker, Kubernetes, and Terraform. Built CI/CD pipelines. Great software needs great infrastructure beneath it.</div></div>
-      <div class="timeline-item reveal"><div class="timeline-year">2024 &mdash; The Ascension</div><div class="timeline-title">Production Banking &amp; E-Commerce</div><div class="timeline-desc">Built production banking and e-commerce systems. Implemented monitoring with Prometheus and Grafana. Every system hardened, every transaction secured.</div></div>
-      <div class="timeline-item reveal"><div class="timeline-year">2025 &mdash; The Reign</div><div class="timeline-title">SolaraDocs &amp; Wardent</div><div class="timeline-desc">Launched SolaraDocs with full Stripe billing, team RBAC, and audit logging. Built Wardent &mdash; a custom Rust reverse proxy protecting the entire stack. Full observability with Prometheus, Grafana, Tempo &amp; OpenTelemetry.</div></div>
-      <div class="timeline-item reveal"><div class="timeline-year">2026 &mdash; The Next Chapter</div><div class="timeline-title">Rust, Systems &amp; Beyond</div><div class="timeline-desc">Building deeper into Rust and systems programming. Wardent is just the beginning. Every conquered peak reveals a higher summit &mdash; the architecture never stops evolving.</div></div>
-    </div>
+<!-- Stream Divider -->
+<div class="stream-divider">
+  <div class="stream-line">
+    <div class="packet"></div>
+    <div class="packet"></div>
+    <div class="packet"></div>
   </div>
-</section>
+</div>
 
-<div class="ornament-divider"><div class="line"></div><div class="dot"></div><div class="diamond"></div><div class="dot"></div><div class="line"></div></div>
-
-<!-- ================================================================
-     CREED
-     ================================================================ -->
-<section id="creed" class="section">
-  <img src="61KGqeewnFL.jpg" alt="" class="creed-watermark" loading="lazy">
-  <svg class="svg-section-layer" id="svg-creed" xmlns="http://www.w3.org/2000/svg"></svg>
-  <div class="section-inner">
-    <h2 class="section-title reveal">The Creed</h2>
-    <p class="section-subtitle reveal reveal-delay-1">Principles carved in stone, not written in sand</p>
-    <div class="creed-grid">
-      <div class="creed-card reveal"><div class="creed-numeral">I</div><div class="creed-card-title">Understand, Then Build</div><p class="creed-card-text">Never write a line of code before understanding the problem. Study the domain, map the requirements, then architect the solution.</p></div>
-      <div class="creed-card reveal"><div class="creed-numeral">II</div><div class="creed-card-title">Fail Fast, Recover Faster</div><p class="creed-card-text">Build systems that detect failure immediately and recover automatically. Errors are inevitable; unhandled errors are unacceptable.</p></div>
-      <div class="creed-card reveal"><div class="creed-numeral">III</div><div class="creed-card-title">Security Is the Foundation</div><p class="creed-card-text">Security is not a feature to be bolted on &mdash; it is the bedrock upon which everything else is built. Authentication, encryption, validation: first, not last.</p></div>
-      <div class="creed-card reveal"><div class="creed-numeral">IV</div><div class="creed-card-title">Measure Everything</div><p class="creed-card-text">If you cannot measure it, you cannot improve it. Prometheus for metrics, Grafana for visualization, alerts for anomalies. Data-driven decisions.</p></div>
-      <div class="creed-card reveal"><div class="creed-numeral">V</div><div class="creed-card-title">Automate the Mundane</div><p class="creed-card-text">Every repetitive task is a candidate for automation. CI/CD pipelines, infrastructure as code, automated testing &mdash; free the mind for creative work.</p></div>
-      <div class="creed-card reveal"><div class="creed-numeral">VI</div><div class="creed-card-title">Simplicity Is Power</div><p class="creed-card-text">The most elegant solution is the simplest one that works. Complexity is the enemy of reliability. Write code a stranger can read at midnight during an outage.</p></div>
-    </div>
+<!-- KAFKA SHRINE -->
+<section id="kafka">
+  <div class="sec-head">
+    <span class="sec-num">00</span>
+    <span class="sec-title">Why Kafka</span>
+    <div class="sec-line"></div>
   </div>
-</section>
 
-<div class="ornament-divider"><div class="line"></div><div class="dot"></div><div class="diamond"></div><div class="dot"></div><div class="line"></div></div>
+  <div class="kafka-shrine">
+    <div class="kafka-logo-wrap">
+      <!-- REAL Kafka logo topology: center circle, 3 right nodes, 3 leaf nodes -->
+      <svg class="kafka-logo" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Center broker node -->
+        <circle cx="70" cy="150" r="20" fill="none" stroke="var(--fg)" stroke-width="2.5"/>
+        <circle cx="70" cy="150" r="7" fill="var(--stream)"/>
+        <!-- Pulse -->
+        <circle cx="70" cy="150" r="20" fill="none" stroke="var(--stream)" stroke-width="1" opacity="0.4">
+          <animate attributeName="r" from="20" to="34" dur="2.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" from="0.4" to="0" dur="2.5s" repeatCount="indefinite"/>
+        </circle>
 
-<!-- ================================================================
-     SUMMON
-     ================================================================ -->
-<section id="summon" class="section">
-  <svg class="svg-section-layer" id="svg-summon" xmlns="http://www.w3.org/2000/svg"></svg>
-  <div class="blood-drip-container" id="blood-drips"></div>
-  <div class="section-inner">
-    <h2 class="section-title reveal">Summon Me</h2>
-    <p class="section-subtitle reveal reveal-delay-1">Reach into the void &mdash; I shall answer</p>
-    <div class="summon-content">
-      <p class="summon-text reveal reveal-delay-2">Whether you need a production backend built from the ground up, infrastructure designed and deployed, or a technical partner who understands both code and consequence &mdash; I am here.</p>
-      <div class="contact-widgets reveal reveal-delay-3">
-        <a href="https://github.com/asolara-engineer" target="_blank" class="contact-widget">
-          <div class="widget-icon">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.603-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10Z"/></svg>
-          </div>
-          <div class="widget-label">GitHub</div>
-          <div class="widget-value">asolara-engineer</div>
-        </a>
-        <a href="mailto:solaradeveloper@mail.com" class="contact-widget">
-          <div class="widget-icon">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
-          </div>
-          <div class="widget-label">Email</div>
-          <div class="widget-value">solaradeveloper@mail.com</div>
-        </a>
-        <a href="https://discord.gg/solaradevs" target="_blank" class="contact-widget">
-          <div class="widget-icon">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03Z"/><circle cx="9" cy="13.5" r="1.5"/><circle cx="15" cy="13.5" r="1.5"/></svg>
-          </div>
-          <div class="widget-label">Discord</div>
-          <div class="widget-value">solaradevs</div>
-        </a>
+        <!-- Top right node -->
+        <line x1="86" y1="138" x2="118" y2="78" stroke="var(--fg)" stroke-width="1.8"/>
+        <circle cx="125" cy="65" r="16" fill="none" stroke="var(--fg)" stroke-width="2.2" class="k-node" data-idx="0"/>
+        <circle cx="125" cy="65" r="5.5" fill="var(--fg)" class="k-dot"/>
+        <!-- Leaf: top-right upward -->
+        <line x1="138" y1="56" x2="168" y2="28" stroke="var(--fg)" stroke-width="1.3"/>
+        <circle cx="175" cy="22" r="11" fill="none" stroke="var(--fg)" stroke-width="1.8" class="k-node" data-idx="1"/>
+        <circle cx="175" cy="22" r="4" fill="var(--fg)" class="k-dot"/>
+
+        <!-- Middle right node -->
+        <line x1="90" y1="150" x2="120" y2="150" stroke="var(--fg)" stroke-width="1.8"/>
+        <circle cx="135" cy="150" r="16" fill="none" stroke="var(--fg)" stroke-width="2.2" class="k-node" data-idx="2"/>
+        <circle cx="135" cy="150" r="5.5" fill="var(--fg)" class="k-dot"/>
+        <!-- Leaf: middle-right outward -->
+        <line x1="151" y1="150" x2="178" y2="150" stroke="var(--fg)" stroke-width="1.3"/>
+        <circle cx="186" cy="150" r="11" fill="none" stroke="var(--fg)" stroke-width="1.8" class="k-node" data-idx="3"/>
+        <circle cx="186" cy="150" r="4" fill="var(--fg)" class="k-dot"/>
+
+        <!-- Bottom right node -->
+        <line x1="86" y1="162" x2="118" y2="222" stroke="var(--fg)" stroke-width="1.8"/>
+        <circle cx="125" cy="235" r="16" fill="none" stroke="var(--fg)" stroke-width="2.2" class="k-node" data-idx="4"/>
+        <circle cx="125" cy="235" r="5.5" fill="var(--fg)" class="k-dot"/>
+        <!-- Leaf: bottom-right downward -->
+        <line x1="138" y1="244" x2="168" y2="272" stroke="var(--fg)" stroke-width="1.3"/>
+        <circle cx="175" cy="278" r="11" fill="none" stroke="var(--fg)" stroke-width="1.8" class="k-node" data-idx="5"/>
+        <circle cx="175" cy="278" r="4" fill="var(--fg)" class="k-dot"/>
+      </svg>
+
+      <div class="kafka-title">Apache Kafka</div>
+      <div class="kafka-subtitle">The architecture I respect the most.</div>
+    </div>
+
+    <div class="kafka-takes">
+      <div class="k-take" data-idx="0">
+        <div class="k-take-num">01</div>
+        <div class="k-take-title">Sequential Disk I/O</div>
+        <div class="k-take-body">Kafka writes to disk sequentially — not randomly. This is faster than in-memory random writes on modern hardware. It exploits the OS page cache and the way SSDs and HDDs are physically built. Most people don't realize disk I/O can beat network I/O when you write sequentially. Kafka did.</div>
+      </div>
+      <div class="k-take" data-idx="1">
+        <div class="k-take-num">02</div>
+        <div class="k-take-title">Persistent Recovery</div>
+        <div class="k-take-body">When Kafka goes down, nothing is lost. Messages are persisted to disk volumes. When brokers come back, consumers pick up exactly where they left off using committed offsets. Tasks that arrived during an outage are still there, waiting. No silent drops, no lost work.</div>
+      </div>
+      <div class="k-take" data-idx="2">
+        <div class="k-take-num">03</div>
+        <div class="k-take-title">One Tool, Not Two</div>
+        <div class="k-take-body">Without Kafka you need Redis as a message broker AND Celery as the async task processor — two systems to configure, monitor, and debug. Kafka IS the broker. It handles message queuing, persistence, ordering, and consumer group coordination in a single system. Less moving parts, less failure surface.</div>
+      </div>
+      <div class="k-take" data-idx="3">
+        <div class="k-take-num">04</div>
+        <div class="k-take-title">Distributed by Design</div>
+        <div class="k-take-body">Kafka isn't distributed as an afterthought — it was built for it from day one. Partitioning, replication, ISR sets, leader election via KRaft (bye ZooKeeper). Every design decision assumes multiple nodes, network failures, and split-brain scenarios. It's a distributed systems textbook in production code.</div>
+      </div>
+      <div class="k-take" data-idx="4">
+        <div class="k-take-num">05</div>
+        <div class="k-take-title">The Logo</div>
+        <div class="k-take-body">Look at it. The connected nodes, the central broker, the producer-consumer topology visible in a single glyph. It's not just a logo — it's a system diagram. You can literally explain Kafka's architecture by pointing at different parts of its own logo. No other tool does that.</div>
+      </div>
+      <div class="k-take" data-idx="5">
+        <div class="k-take-num">06</div>
+        <div class="k-take-title">The Name</div>
+        <div class="k-take-body">Named after Franz Kafka — the author who wrote about incomprehensible, labyrinthine systems that trap people inside them. The LinkedIn engineer who created it said he "just liked the name." That's the most engineer thing ever said about naming a distributed messaging system after an existential horror author.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================================================================
-     FOOTER
-     ================================================================ -->
-<footer id="main-footer">
-  <svg class="svg-section-layer" id="svg-footer" xmlns="http://www.w3.org/2000/svg"></svg>
-  <div class="footer-brand">SOLARA</div>
-  <ul class="footer-links">
-    <li><a href="#about">About</a></li><li><a href="#arsenal">Arsenal</a></li>
-    <li><a href="#conquests">Conquests</a></li><li><a href="#chronicle">Chronicle</a></li>
-    <li><a href="#creed">Creed</a></li><li><a href="#summon">Summon</a></li>
-  </ul>
-  <p class="footer-copy">&copy; 2026 Solara. All rights reserved. Built with pure code and dark intent.</p>
-  <div class="footer-tribute">
-    <img src="4121ca2a76c8bfa969b514edf71cf8b6.jpg" alt="A7X">
-    <span>Inspired by the sound</span>
+<style>
+  .kafka-shrine {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .kafka-logo-wrap {
+    text-align: center;
+    position: sticky;
+    top: 120px;
+  }
+
+  .kafka-logo {
+    width: 200px;
+    height: 240px;
+    margin-bottom: 20px;
+  }
+
+  .kafka-logo .k-node {
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .kafka-logo .k-node:hover {
+    stroke: var(--stream);
+    stroke-width: 2.5;
+  }
+
+  .kafka-title {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .kafka-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .kafka-takes {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .k-take {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    position: relative;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .k-take + .k-take { border-top: none; }
+
+  .k-take::before {
+    content: '';
+    position: absolute;
+    left: -1px; top: 0;
+    width: 3px; height: 0;
+    background: var(--stream);
+    transition: height 0.4s;
+  }
+
+  .k-take:hover::before { height: 100%; }
+  .k-take:hover { border-color: var(--stream); }
+
+  .k-take-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--stream);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .k-take-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+  }
+
+  .k-take-body {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.8;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s, padding-top 0.3s;
+  }
+
+  .k-take:hover .k-take-body {
+    max-height: 200px;
+    padding-top: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .kafka-shrine { grid-template-columns: 1fr; }
+    .kafka-logo-wrap { position: static; }
+  }
+</style>
+
+<!-- Stream Divider -->
+<div class="stream-divider">
+  <div class="stream-line">
+    <div class="packet"></div>
+    <div class="packet"></div>
+    <div class="packet"></div>
   </div>
+</div>
+
+<!-- Stack -->
+<section id="stack">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <span class="sec-title">Cluster</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="cluster-grid">
+    <div class="broker"><div class="broker-name">Python</div><div class="broker-topic">Language</div></div>
+    <div class="broker"><div class="broker-name">Rust</div><div class="broker-topic">Language</div></div>
+    <div class="broker"><div class="broker-name">SQL</div><div class="broker-topic">Language</div></div>
+    <div class="broker"><div class="broker-name">HTML/CSS</div><div class="broker-topic">Language</div></div>
+    <div class="broker"><div class="broker-name">Django</div><div class="broker-topic">Framework</div></div>
+    <div class="broker"><div class="broker-name">Docker</div><div class="broker-topic">Infra</div></div>
+    <div class="broker"><div class="broker-name">Docker Compose</div><div class="broker-topic">Infra</div></div>
+    <div class="broker"><div class="broker-name">nginx</div><div class="broker-topic">Infra</div></div>
+    <div class="broker"><div class="broker-name">systemd</div><div class="broker-topic">Infra</div></div>
+    <div class="broker"><div class="broker-name">Linux</div><div class="broker-topic">Infra</div></div>
+    <div class="broker"><div class="broker-name">AWS EC2/RDS</div><div class="broker-topic">Cloud</div></div>
+    <div class="broker"><div class="broker-name">PostgreSQL</div><div class="broker-topic">Database</div></div>
+    <div class="broker"><div class="broker-name">Redis</div><div class="broker-topic">Database</div></div>
+    <div class="broker"><div class="broker-name">NeonDB</div><div class="broker-topic">Database</div></div>
+    <div class="broker"><div class="broker-name">Kafka</div><div class="broker-topic">Streaming</div></div>
+    <div class="broker"><div class="broker-name">Cassandra</div><div class="broker-topic">Database</div></div>
+    <div class="broker"><div class="broker-name">CockroachDB</div><div class="broker-topic">Database</div></div>
+    <div class="broker"><div class="broker-name">PgBouncer</div><div class="broker-topic">Pooling</div></div>
+    <div class="broker"><div class="broker-name">Grafana</div><div class="broker-topic">Observe</div></div>
+    <div class="broker"><div class="broker-name">Prometheus</div><div class="broker-topic">Observe</div></div>
+    <div class="broker"><div class="broker-name">Tempo</div><div class="broker-topic">Observe</div></div>
+    <div class="broker"><div class="broker-name">OpenTelemetry</div><div class="broker-topic">Observe</div></div>
+    <div class="broker"><div class="broker-name">Alertmanager</div><div class="broker-topic">Observe</div></div>
+    <div class="broker"><div class="broker-name">Cloudflare</div><div class="broker-topic">Network</div></div>
+    <div class="broker"><div class="broker-name">Cloudflare Tunnels</div><div class="broker-topic">Network</div></div>
+    <div class="broker"><div class="broker-name">Stripe</div><div class="broker-topic">Payments</div></div>
+    <div class="broker"><div class="broker-name">Stripe Connect</div><div class="broker-topic">Payments</div></div>
+    <div class="broker"><div class="broker-name">GitHub Actions</div><div class="broker-topic">CI/CD</div></div>
+    <div class="broker"><div class="broker-name">Wardent</div><div class="broker-topic">Custom Proxy</div></div>
+    <div class="broker"><div class="broker-name">SendGrid</div><div class="broker-topic">Email</div></div>
+    <div class="broker"><div class="broker-name">WebSockets</div><div class="broker-topic">Real-time</div></div>
+    <div class="broker"><div class="broker-name">CRDTs</div><div class="broker-topic">Distributed</div></div>
+    <div class="broker"><div class="broker-name">ZooKeeper</div><div class="broker-topic">Distributed</div></div>
+    <div class="broker"><div class="broker-name">SSH</div><div class="broker-topic">Access</div></div>
+    <div class="broker"><div class="broker-name">Let's Encrypt</div><div class="broker-topic">SSL</div></div>
+    <div class="broker"><div class="broker-name">k3s</div><div class="broker-topic">Orchestration</div></div>
+    <div class="broker"><div class="broker-name">Helm</div><div class="broker-topic">Orchestration</div></div>
+    <div class="broker"><div class="broker-name">Git</div><div class="broker-topic">Version Control</div></div>
+    <div class="broker"><div class="broker-name">AWS RDS</div><div class="broker-topic">Cloud</div></div>
+    <div class="broker"><div class="broker-name">AWS Security Groups</div><div class="broker-topic">Cloud</div></div>
+    <div class="broker"><div class="broker-name">Cloudflare R2</div><div class="broker-topic">Storage</div></div>
+  </div>
+
+  <!-- Icon Grid -->
+  <div class="icon-grid-label">
+    <span class="sec-line" style="width:40px;display:inline-block;height:1px;background:var(--border);vertical-align:middle;margin-right:12px;"></span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);">Visual Stack</span>
+  </div>
+  <div class="icon-pyramid">
+    <!-- Row 1: The GOAT -->
+    <div class="pyramid-row">
+      <div class="icon-item crown" title="Kafka"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" alt="Kafka"/></div>
+    </div>
+    <!-- Row 2 -->
+    <div class="pyramid-row">
+      <div class="icon-item" title="Kubernetes"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="k3s"/></div>
+      <div class="icon-item" title="Rust"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg" alt="Rust"/></div>
+    </div>
+    <!-- Row 3 -->
+    <div class="pyramid-row">
+      <div class="icon-item" title="Helm"><img src="https://cdn.simpleicons.org/helm" alt="Helm"/></div>
+      <div class="icon-item" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"/></div>
+      <div class="icon-item" title="Cassandra"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cassandra/cassandra-original.svg" alt="Cassandra"/></div>
+    </div>
+    <!-- Row 4: Observability -->
+    <div class="pyramid-row">
+      <div class="icon-item" title="Grafana"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" alt="Grafana"/></div>
+      <div class="icon-item" title="Prometheus"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg" alt="Prometheus"/></div>
+      <div class="icon-item" title="OTel"><img src="https://cdn.simpleicons.org/opentelemetry" alt="OpenTelemetry"/></div>
+      <div class="icon-item" title="SendGrid"><img src="https://cdn.simpleicons.org/sendgrid" alt="SendGrid"/></div>
+    </div>
+    <!-- Row 5 -->
+    <div class="pyramid-row">
+      <div class="icon-item" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"/></div>
+      <div class="icon-item" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"/></div>
+      <div class="icon-item" title="Django"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django"/></div>
+      <div class="icon-item" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"/></div>
+      <div class="icon-item" title="nginx"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx"/></div>
+    </div>
+    <!-- Row 6 -->
+    <div class="pyramid-row">
+      <div class="icon-item" title="Git"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"/></div>
+      <div class="icon-item" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"/></div>
+      <div class="icon-item" title="GH Actions"><img src="https://cdn.simpleicons.org/githubactions" alt="GitHub Actions"/></div>
+      <div class="icon-item" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"/></div>
+      <div class="icon-item" title="Cloudflare"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"/></div>
+      <div class="icon-item" title="Stripe"><img src="https://cdn.simpleicons.org/stripe" alt="Stripe"/></div>
+    </div>
+    <!-- Row 7 -->
+    <div class="pyramid-row">
+      <div class="icon-item" title="pytest"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytest/pytest-original.svg" alt="pytest"/></div>
+      <div class="icon-item" title="GitHub"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"/></div>
+      <div class="icon-item" title="Terraform"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform"/></div>
+      <div class="icon-item" title="Gunicorn"><img src="https://cdn.simpleicons.org/gunicorn" alt="Gunicorn"/></div>
+      <div class="icon-item" title="JWT"><img src="https://cdn.simpleicons.org/jsonwebtokens" alt="JWT"/></div>
+      <div class="icon-item" title="Celery"><img src="https://cdn.simpleicons.org/celery" alt="Celery"/></div>
+      <div class="icon-item" title="DynamoDB"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dynamodb/dynamodb-original.svg" alt="DynamoDB"/></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .icon-grid-label {
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+
+  .icon-pyramid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .pyramid-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .icon-item {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    background: var(--card);
+    padding: 14px;
+    border-radius: 16px;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .icon-item.crown {
+    width: 80px;
+    height: 80px;
+    padding: 16px;
+    border-color: var(--stream);
+    box-shadow: 0 0 24px rgba(0,102,255,0.12);
+  }
+
+  .icon-item.crown::before {
+    content: '♛';
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: var(--stream);
+  }
+
+  .icon-item:hover {
+    border-color: var(--stream);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,102,255,0.1);
+  }
+
+  .icon-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%) brightness(0.4);
+    transition: filter 0.3s;
+  }
+
+  .icon-item.crown img {
+    filter: grayscale(0%) brightness(1);
+  }
+
+  .icon-item:hover img {
+    filter: grayscale(0%) brightness(1);
+  }
+
+  .icon-item::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--stream);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .icon-item.crown::after {
+    opacity: 1;
+    bottom: -20px;
+    font-size: 9px;
+  }
+
+  .icon-item:hover::after {
+    opacity: 1;
+  }
+</style>
+
+<!-- Stream Divider -->
+<div class="stream-divider">
+  <div class="stream-line">
+    <div class="packet"></div>
+    <div class="packet"></div>
+    <div class="packet"></div>
+  </div>
+</div>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <span class="sec-title">Pipeline</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="pipeline">
+    <div class="pipeline-card">
+      <div>
+        <div class="pipe-status"><span class="s-dot live"></span> Production</div>
+        <div class="pipe-name"><a href="https://github.com/solaraengineer/solaradocs" target="_blank" style="text-decoration:none;color:inherit;">SolaraDocs <span style="font-size:12px;color:var(--muted);font-weight:400;">↗</span></a></div>
+        <div class="pipe-desc">Document collaboration platform. Full infra chain: Cloudflare → nginx → Wardent (custom Rust proxy) → Django. Complete observability with Prometheus, Grafana, Tempo, OTel, and automated alerting via Alertmanager → SendGrid.</div>
+        <div class="pipe-tags">
+          <span class="p-tag">Django</span>
+          <span class="p-tag">Rust</span>
+          <span class="p-tag">Docker</span>
+          <span class="p-tag">AWS</span>
+          <span class="p-tag">Stripe</span>
+          <span class="p-tag">OTel</span>
+          <span class="p-tag">NeonDB</span>
+        </div>
+      </div>
+      <div class="pipe-visual">
+        <div class="pv-node"></div>
+        <div class="pv-line"></div>
+        <div class="pv-node"></div>
+        <div class="pv-line"></div>
+        <div class="pv-node"></div>
+      </div>
+    </div>
+    <div class="pipeline-card">
+      <div>
+        <div class="pipe-status"><span class="s-dot live"></span> Production</div>
+        <div class="pipe-name"><a href="https://github.com/solaraengineer/realestate" target="_blank" style="text-decoration:none;color:inherit;">Homiverse <span style="font-size:12px;color:var(--muted);font-weight:400;">↗</span></a></div>
+        <div class="pipe-desc">Real estate platform with Stripe Connect payments, 3D property mapping, real-time chat via WebSockets, and full JWT authentication system.</div>
+        <div class="pipe-tags">
+          <span class="p-tag">Django</span>
+          <span class="p-tag">Stripe Connect</span>
+          <span class="p-tag">WebSockets</span>
+          <span class="p-tag">3D Mapping</span>
+        </div>
+      </div>
+      <div class="pipe-visual">
+        <div class="pv-node"></div>
+        <div class="pv-line"></div>
+        <div class="pv-node"></div>
+        <div class="pv-line"></div>
+        <div class="pv-node"></div>
+      </div>
+    </div>
+    <div class="pipeline-card">
+      <div>
+        <div class="pipe-status"><span class="s-dot dev"></span> Building</div>
+        <div class="pipe-name"><a href="https://github.com/solaraengineer/solarahub" target="_blank" style="text-decoration:none;color:inherit;">SolaraHub <span style="font-size:12px;color:var(--muted);font-weight:400;">↗</span></a></div>
+        <div class="pipe-desc">Custom deployment orchestrator. Rust CLI (sol) communicates with Python service on Mac Mini via Cloudflare Tunnel. Push to pre-prod → validate → soak test → auto merge to production.</div>
+        <div class="pipe-tags">
+          <span class="p-tag">Rust CLI</span>
+          <span class="p-tag">Python</span>
+          <span class="p-tag">Cloudflare Tunnel</span>
+          <span class="p-tag">CI/CD</span>
+        </div>
+      </div>
+      <div class="pipe-visual">
+        <div class="pv-node"></div>
+        <div class="pv-line"></div>
+        <div class="pv-node"></div>
+        <div class="pv-line"></div>
+        <div class="pv-node"></div>
+      </div>
+    </div>
+    <div class="pipeline-card">
+      <div>
+        <div class="pipe-status"><span class="s-dot tool"></span> Custom Tool</div>
+        <div class="pipe-name"><a href="https://github.com/solaraengineer/wardent" target="_blank" style="text-decoration:none;color:inherit;">Wardent <span style="font-size:12px;color:var(--muted);font-weight:400;">↗</span></a></div>
+        <div class="pipe-desc">Custom reverse proxy in Rust. Rate limiting with real client IP extraction via CF-Connecting-IP, cryptographic secret middleware, and request forwarding to Django.</div>
+        <div class="pipe-tags">
+          <span class="p-tag">Rust</span>
+          <span class="p-tag">systemd</span>
+          <span class="p-tag">Security</span>
+          <span class="p-tag">Networking</span>
+        </div>
+      </div>
+      <div class="pipe-visual">
+        <div class="pv-node"></div>
+        <div class="pv-line"></div>
+        <div class="pv-node"></div>
+        <div class="pv-line"></div>
+        <div class="pv-node"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stream Divider -->
+<div class="stream-divider">
+  <div class="stream-line">
+    <div class="packet"></div>
+    <div class="packet"></div>
+    <div class="packet"></div>
+  </div>
+</div>
+
+<!-- System Designs -->
+<section id="designs">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <span class="sec-title">Topics</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="topic-list">
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">Apache Kafka</div>
+      <div class="topic-partition">Streaming</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">CRDTs & Conflict Resolution</div>
+      <div class="topic-partition">Distributed</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">Database Clustering & Sharding</div>
+      <div class="topic-partition">Databases</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">Merge Conflicts & Write Ordering</div>
+      <div class="topic-partition">Consistency</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">WebSocket Architecture</div>
+      <div class="topic-partition">Real-time</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">Concurrent Writes & Race Conditions</div>
+      <div class="topic-partition">Concurrency</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">Leaderless vs Leader-Based Replication</div>
+      <div class="topic-partition">Replication</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">Quorum Reads & Writes</div>
+      <div class="topic-partition">Consensus</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">Byzantine Fault Tolerance</div>
+      <div class="topic-partition">Faults</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">Clock Skew & Sequence Ordering</div>
+      <div class="topic-partition">Ordering</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">ZooKeeper & Split Brain</div>
+      <div class="topic-partition">Coordination</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">Redis Pub/Sub & Cross-Node Delivery</div>
+      <div class="topic-partition">Messaging</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">SSI, MVCC & Transaction Isolation</div>
+      <div class="topic-partition">Transactions</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">Cascading OOM & Pod Failures</div>
+      <div class="topic-partition">Failure Modes</div>
+    </div>
+  </div>
+</section>
+
+<div class="contact" id="contact">
+  <h2>Let's connect.</h2>
+  <p>Available for freelance architecture and system design work.</p>
+  <div class="contact-row">
+    <a href="https://github.com/solaraengineer" target="_blank" class="c-link">GitHub</a>
+    <a href="#" class="c-link">Email</a>
+    <a href="#" class="c-link">Discord</a>
+    <a href="https://solaradocs.net" class="c-link">SolaraDocs</a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <span>© 2026 Solara</span>
+  <div class="footer-nodes">
+    <span></span><span></span><span></span>
+  </div>
+  <span>Warsaw, PL</span>
 </footer>
 
+<!-- Streaming Background Script -->
 <script>
-/* ================================================================
-   SOLARA — PROCEDURAL SVG FILIGREE ENGINE
-   White-on-black gothic ornament system. 50 generators.
-   Every reload = unique artwork.
-   ================================================================ */
-(function(){
-'use strict';
+const canvas = document.getElementById('stream-canvas');
+const ctx = canvas.getContext('2d');
+let w, h, nodes = [], connections = [];
 
-/* CORE UTILS */
-const R=(lo,hi)=>Math.random()*(hi-lo)+lo;
-const RI=(lo,hi)=>Math.floor(R(lo,hi+1));
-const PI=Math.PI, TAU=PI*2;
-let totalEl=0, totalSVG=0;
-
-function E(tag,a){
-  const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
-  if(a){
-    if(a['stroke-width']) a['stroke-width']=parseFloat(a['stroke-width'])*1.6;
-    Object.keys(a).forEach(k=>el.setAttribute(k,a[k]));
-  }
-  return el;
-}
-function S(svg){
-  if(!svg) return null;
-  const p=svg.parentElement||document.body;
-  const r=p.getBoundingClientRect();
-  const w=r.width||window.innerWidth, h=r.height||window.innerHeight;
-  svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
-  svg.setAttribute('width',w);svg.setAttribute('height',h);
-  svg.setAttribute('preserveAspectRatio','none');
-  return{el:svg,w,h};
-}
-function add(c,el){c.el.appendChild(el);totalEl++;return el}
-function G(c,cx,cy,rot,op){
-  const g=E('g',{transform:`translate(${cx},${cy}) rotate(${rot||0})`,opacity:op||0.1});
-  c.el.appendChild(g);totalEl++;return g;
-}
-function A(g,el){g.appendChild(el);totalEl++;return el}
-
-/* WHITE/SILVER PALETTE — visible on black */
-const PAL=['#ffffff','#e0e0e0','#c0c0c0','#a0a0a0','#888888','#d0d0d0'];
-function C(){return PAL[RI(0,PAL.length-1)]}
-
-/* ================================================================
-   GENERATOR 1: GOTHIC CROSS — ornate with filigree
-   ================================================================ */
-function gothicCross(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-15,15),op),s=sc;
-  A(g,E('rect',{x:-3*s,y:-35*s,width:6*s,height:70*s,fill:'none',stroke:C(),'stroke-width':0.8}));
-  A(g,E('rect',{x:-20*s,y:-14*s,width:40*s,height:6*s,fill:'none',stroke:C(),'stroke-width':0.8}));
-  A(g,E('circle',{cx:0,cy:-11*s,r:10*s,fill:'none',stroke:C(),'stroke-width':0.4}));
-  A(g,E('path',{d:`M0,${-35*s} L${-5*s},${-40*s} L0,${-48*s} L${5*s},${-40*s} Z`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  for(let i=0;i<4;i++){const a=i*90,ex=Math.cos(a*PI/180)*22*s,ey=Math.sin(a*PI/180)*22*s-11*s;
-    A(g,E('line',{x1:ex-3*s,y1:ey,x2:ex+3*s,y2:ey,stroke:C(),'stroke-width':0.3}));
-    A(g,E('line',{x1:ex,y1:ey-3*s,x2:ex,y2:ey+3*s,stroke:C(),'stroke-width':0.3}));
-  }
-  for(let i=0;i<8;i++){const a=R(0,TAU),r=R(12,28)*s;
-    A(g,E('circle',{cx:Math.cos(a)*r,cy:Math.sin(a)*r-11*s,r:R(0.5,1.5)*s,fill:C(),opacity:R(0.3,0.7)}));
-  }
-  // Filigree curls at cross ends
-  A(g,E('path',{d:`M${-20*s},${-11*s} Q${-26*s},${-18*s} ${-22*s},${-22*s}`,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('path',{d:`M${20*s},${-11*s} Q${26*s},${-18*s} ${22*s},${-22*s}`,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('path',{d:`M${-20*s},${-11*s} Q${-26*s},${-4*s} ${-22*s},0`,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('path',{d:`M${20*s},${-11*s} Q${26*s},${-4*s} ${22*s},0`,fill:'none',stroke:C(),'stroke-width':0.3}));
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
 }
 
-/* ================================================================
-   GENERATOR 2: SKULL
-   ================================================================ */
-function skull(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-10,10),op),s=sc;
-  A(g,E('ellipse',{cx:0,cy:-5*s,rx:16*s,ry:18*s,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('path',{d:`M${-12*s},${6*s} Q${-9*s},${20*s} 0,${22*s} Q${9*s},${20*s} ${12*s},${6*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('ellipse',{cx:-6*s,cy:-7*s,rx:5*s,ry:6*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('ellipse',{cx:6*s,cy:-7*s,rx:5*s,ry:6*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M${-2.5*s},${2*s} L0,${7*s} L${2.5*s},${2*s}`,fill:'none',stroke:C(),'stroke-width':0.4}));
-  for(let i=-3;i<=3;i++) A(g,E('line',{x1:i*3*s,y1:13*s,x2:i*3*s,y2:17*s,stroke:C(),'stroke-width':0.4}));
-  for(let i=0;i<4;i++){const sx=R(-10,10)*s,sy=R(-18,-5)*s;
-    A(g,E('path',{d:`M${sx},${sy} l${R(-6,6)*s},${R(-6,6)*s} l${R(-4,4)*s},${R(-4,4)*s}`,fill:'none',stroke:C(),'stroke-width':0.25}));
-  }
-}
-
-/* ================================================================
-   GENERATOR 3: THORNED VINE
-   ================================================================ */
-function thornedVine(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc;
-  const seg=RI(10,20);let x=0,y=0,ang=R(-PI/4,PI/4);
-  for(let i=0;i<seg;i++){
-    const len=R(8,22)*s,nx=x+Math.cos(ang)*len,ny=y+Math.sin(ang)*len;
-    A(g,E('line',{x1:x,y1:y,x2:nx,y2:ny,stroke:C(),'stroke-width':R(0.4,1)}));
-    if(Math.random()>0.35){const ta=ang+(Math.random()>0.5?PI/3:-PI/3),tl=R(4,9)*s;
-      A(g,E('line',{x1:nx,y1:ny,x2:nx+Math.cos(ta)*tl,y2:ny+Math.sin(ta)*tl,stroke:C(),'stroke-width':0.3}));
-    }
-    if(Math.random()>0.65){const la=ang+(Math.random()>0.5?PI/2:-PI/2),lr=R(3,7)*s;
-      A(g,E('ellipse',{cx:nx+Math.cos(la)*lr,cy:ny+Math.sin(la)*lr,rx:lr*0.7,ry:lr*0.3,fill:'none',stroke:C(),'stroke-width':0.3,transform:`rotate(${la*180/PI},${nx+Math.cos(la)*lr},${ny+Math.sin(la)*lr})`}));
-    }
-    x=nx;y=ny;ang+=R(-0.5,0.5);
-  }
-}
-
-/* ================================================================
-   GENERATOR 4: BLEEDING ROSE
-   ================================================================ */
-function bleedingRose(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-20,20),op),s=sc;
-  const pet=RI(5,9);
-  for(let i=0;i<pet;i++){const a=(TAU/pet)*i+R(-0.2,0.2),pr=R(9,16)*s,px=Math.cos(a)*pr*0.5,py=Math.sin(a)*pr*0.5;
-    A(g,E('ellipse',{cx:px,cy:py,rx:pr*0.7,ry:pr*0.4,fill:'none',stroke:C(),'stroke-width':0.5,transform:`rotate(${a*180/PI},${px},${py})`}));
-  }
-  A(g,E('circle',{cx:0,cy:0,r:3.5*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:0,cy:0,r:1.5*s,fill:C(),opacity:0.4}));
-  A(g,E('line',{x1:0,y1:12*s,x2:R(-3,3)*s,y2:40*s,stroke:C(),'stroke-width':0.5}));
-  for(let i=0;i<RI(2,5);i++){const dx=R(-7,7)*s,dy=R(5,16)*s,dl=R(10,25)*s;
-    A(g,E('line',{x1:dx,y1:dy,x2:dx+R(-1,1)*s,y2:dy+dl,stroke:C(),'stroke-width':R(0.2,0.6)}));
-    A(g,E('circle',{cx:dx+R(-1,1)*s,cy:dy+dl,r:R(0.5,2)*s,fill:C(),opacity:R(0.2,0.5)}));
-  }
-}
-
-/* ================================================================
-   GENERATOR 5: GARGOYLE
-   ================================================================ */
-function gargoyle(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-5,5),op),s=sc;
-  A(g,E('path',{d:`M0,${-18*s} Q${-14*s},${-12*s} ${-12*s},${5*s} L${-17*s},${22*s} L${-6*s},${16*s} L0,${22*s} L${6*s},${16*s} L${17*s},${22*s} L${12*s},${5*s} Q${14*s},${-12*s} 0,${-18*s}`,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('circle',{cx:-5*s,cy:-7*s,r:2.5*s,fill:C(),opacity:0.4}));
-  A(g,E('circle',{cx:5*s,cy:-7*s,r:2.5*s,fill:C(),opacity:0.4}));
-  A(g,E('path',{d:`M${-7*s},${-15*s} Q${-12*s},${-25*s} ${-5*s},${-28*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M${7*s},${-15*s} Q${12*s},${-25*s} ${5*s},${-28*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M${-12*s},0 Q${-32*s},${-12*s} ${-28*s},${5*s} Q${-22*s},${12*s} ${-12*s},${6*s}`,fill:'none',stroke:C(),'stroke-width':0.4}));
-  A(g,E('path',{d:`M${12*s},0 Q${32*s},${-12*s} ${28*s},${5*s} Q${22*s},${12*s} ${12*s},${6*s}`,fill:'none',stroke:C(),'stroke-width':0.4}));
-}
-
-/* ================================================================
-   GENERATOR 6: CATHEDRAL WINDOW (ROSE WINDOW)
-   ================================================================ */
-function cathedralWindow(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc;
-  const sp=RI(6,12);
-  A(g,E('circle',{cx:0,cy:0,r:28*s,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('circle',{cx:0,cy:0,r:18*s,fill:'none',stroke:C(),'stroke-width':0.4}));
-  A(g,E('circle',{cx:0,cy:0,r:7*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  for(let i=0;i<sp;i++){const a=(TAU/sp)*i;
-    A(g,E('line',{x1:0,y1:0,x2:Math.cos(a)*28*s,y2:Math.sin(a)*28*s,stroke:C(),'stroke-width':0.3}));
-    const a2=(TAU/sp)*(i+1),mx=Math.cos((a+a2)/2)*22*s,my=Math.sin((a+a2)/2)*22*s;
-    A(g,E('path',{d:`M${Math.cos(a)*18*s},${Math.sin(a)*18*s} Q${mx},${my} ${Math.cos(a2)*18*s},${Math.sin(a2)*18*s}`,fill:'none',stroke:C(),'stroke-width':0.3}));
-  }
-  for(let i=0;i<sp;i++){const a=(TAU/sp)*i+(TAU/sp/2);
-    A(g,E('circle',{cx:Math.cos(a)*12*s,cy:Math.sin(a)*12*s,r:2*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-  }
-}
-
-/* ================================================================
-   GENERATOR 7: IRON GATE
-   ================================================================ */
-function ironGate(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-5,5),op),s=sc;
-  const bars=RI(5,9),w=bars*7*s,h=45*s;
-  A(g,E('rect',{x:-w/2,y:-h/2,width:w,height:h,fill:'none',stroke:C(),'stroke-width':0.6}));
-  for(let i=0;i<bars;i++){const bx=-w/2+(i+0.5)*(w/bars);
-    A(g,E('line',{x1:bx,y1:-h/2,x2:bx,y2:h/2,stroke:C(),'stroke-width':0.4}));
-    A(g,E('path',{d:`M${bx},${-h/2} l${-2*s},${4*s} l${2*s},${2*s} l${2*s},${-2*s} Z`,fill:'none',stroke:C(),'stroke-width':0.4}));
-  }
-  A(g,E('line',{x1:-w/2,y1:-h/4,x2:w/2,y2:-h/4,stroke:C(),'stroke-width':0.5}));
-  A(g,E('line',{x1:-w/2,y1:h/4,x2:w/2,y2:h/4,stroke:C(),'stroke-width':0.5}));
-  for(let i=0;i<RI(3,7);i++){
-    A(g,E('circle',{cx:R(-w/2+5*s,w/2-5*s),cy:R(-h/4,h/4),r:R(3,9)*s,fill:'none',stroke:C(),'stroke-width':0.25}));
-  }
-}
-
-/* ================================================================
-   GENERATOR 8: DAGGER
-   ================================================================ */
-function dagger(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc;
-  A(g,E('path',{d:`M0,${-35*s} L${4*s},${-5*s} L${2*s},0 L${-2*s},0 L${-4*s},${-5*s} Z`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('line',{x1:0,y1:-33*s,x2:0,y2:-3*s,stroke:C(),'stroke-width':0.25}));
-  A(g,E('path',{d:`M${-10*s},0 Q${-7*s},${-3*s} 0,${-1*s} Q${7*s},${-3*s} ${10*s},0 Q${7*s},${2*s} 0,${1*s} Q${-7*s},${2*s} ${-10*s},0`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('rect',{x:-2*s,y:1*s,width:4*s,height:14*s,fill:'none',stroke:C(),'stroke-width':0.4}));
-  for(let i=0;i<5;i++) A(g,E('line',{x1:-2*s,y1:2*s+i*3*s,x2:2*s,y2:3.5*s+i*3*s,stroke:C(),'stroke-width':0.2}));
-  A(g,E('circle',{cx:0,cy:17*s,r:3*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:0,cy:17*s,r:1.2*s,fill:C(),opacity:0.4}));
-}
-
-/* ================================================================
-   GENERATOR 9: RAVEN
-   ================================================================ */
-function raven(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-15,15),op),s=sc,f=Math.random()>0.5?1:-1;
-  A(g,E('ellipse',{cx:0,cy:0,rx:12*s,ry:8*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:12*s*f,cy:-6*s,r:6*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M${16*s*f},${-7*s} L${25*s*f},${-6*s} L${16*s*f},${-4*s}`,fill:'none',stroke:C(),'stroke-width':0.4}));
-  A(g,E('circle',{cx:13*s*f,cy:-7*s,r:1.2*s,fill:C(),opacity:0.5}));
-  A(g,E('path',{d:`M${-4*s*f},${-3*s} Q${-22*s*f},${-18*s} ${-30*s*f},${-6*s} Q${-24*s*f},${3*s} ${-10*s*f},${4*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  for(let i=0;i<5;i++){const fa=R(-0.8,0.2),fx=(-12-i*5)*s*f,fy=(-10+i*2)*s;
-    A(g,E('line',{x1:fx,y1:fy,x2:fx+Math.cos(fa)*10*s*(-f),y2:fy+Math.sin(fa)*10*s,stroke:C(),'stroke-width':0.25}));
-  }
-  A(g,E('path',{d:`M${-10*s*f},${3*s} L${-18*s*f},${7*s} M${-10*s*f},${4*s} L${-16*s*f},${9*s}`,fill:'none',stroke:C(),'stroke-width':0.3}));
-}
-
-/* ================================================================
-   GENERATOR 10: BAT
-   ================================================================ */
-function bat(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-10,10),op),s=sc;
-  A(g,E('ellipse',{cx:0,cy:0,rx:5*s,ry:7*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:0,cy:-8*s,r:4*s,fill:'none',stroke:C(),'stroke-width':0.4}));
-  A(g,E('path',{d:`M${-3*s},${-10*s} L${-5*s},${-16*s} L${-1*s},${-11*s}`,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('path',{d:`M${3*s},${-10*s} L${5*s},${-16*s} L${1*s},${-11*s}`,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('path',{d:`M${-5*s},${-3*s} Q${-24*s},${-14*s} ${-32*s},${-5*s} L${-26*s},${3*s} L${-19*s},${-1*s} L${-12*s},${5*s} L${-5*s},${3*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M${5*s},${-3*s} Q${24*s},${-14*s} ${32*s},${-5*s} L${26*s},${3*s} L${19*s},${-1*s} L${12*s},${5*s} L${5*s},${3*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-}
-
-/* ================================================================
-   GENERATORS 11-20: CANDELABRA, COFFIN, PENTAGRAM, BONE HAND,
-   CHAINS, HOURGLASS, OUROBOROS, SWORD, POINTED ARCH, RIBCAGE
-   ================================================================ */
-function candelabra(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-3,3),op),s=sc,arms=RI(3,7);
-  A(g,E('path',{d:`M${-9*s},${28*s} Q${-5*s},${22*s} 0,${24*s} Q${5*s},${22*s} ${9*s},${28*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('line',{x1:0,y1:24*s,x2:0,y2:-5*s,stroke:C(),'stroke-width':0.5}));
-  for(let i=0;i<arms;i++){const side=i%2===0?-1:1,ay=-5*s,spread=(i+1)*6*s*side;
-    A(g,E('path',{d:`M0,${ay} Q${spread*0.5},${ay-6*s} ${spread},${ay-9*s}`,fill:'none',stroke:C(),'stroke-width':0.4}));
-    A(g,E('rect',{x:spread-2.5*s,y:ay-14*s,width:5*s,height:5*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-    A(g,E('ellipse',{cx:spread,cy:ay-17*s,rx:2*s,ry:3.5*s,fill:C(),opacity:R(0.15,0.35)}));
-  }
-  A(g,E('rect',{x:-2.5*s,y:-14*s,width:5*s,height:9*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('ellipse',{cx:0,cy:-17*s,rx:2*s,ry:3.5*s,fill:C(),opacity:R(0.2,0.4)}));
-}
-
-function coffin(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-10,10),op),s=sc;
-  A(g,E('path',{d:`M0,${-28*s} L${12*s},${-18*s} L${12*s},${16*s} L${6*s},${28*s} L${-6*s},${28*s} L${-12*s},${16*s} L${-12*s},${-18*s} Z`,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('line',{x1:0,y1:-18*s,x2:0,y2:8*s,stroke:C(),'stroke-width':0.4}));
-  A(g,E('line',{x1:-6*s,y1:-8*s,x2:6*s,y2:-8*s,stroke:C(),'stroke-width':0.4}));
-  for(let i=0;i<4;i++){const ny=-14*s+i*10*s;
-    A(g,E('circle',{cx:-10*s,cy:ny,r:1*s,fill:C(),opacity:0.4}));
-    A(g,E('circle',{cx:10*s,cy:ny,r:1*s,fill:C(),opacity:0.4}));
-  }
-}
-
-function pentagram(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc,r=22*s;
-  A(g,E('circle',{cx:0,cy:0,r:r,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:0,cy:0,r:r+2.5*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-  const pts=[];for(let i=0;i<5;i++){const a=(TAU/5)*i-PI/2;pts.push({x:Math.cos(a)*r,y:Math.sin(a)*r})}
-  A(g,E('path',{d:`M${pts[0].x},${pts[0].y} L${pts[2].x},${pts[2].y} L${pts[4].x},${pts[4].y} L${pts[1].x},${pts[1].y} L${pts[3].x},${pts[3].y} Z`,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('circle',{cx:0,cy:0,r:2*s,fill:C(),opacity:0.3}));
-}
-
-function boneHand(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-20,20),op),s=sc;
-  A(g,E('path',{d:`M${-9*s},0 Q${-11*s},${12*s} ${-7*s},${20*s} L${7*s},${20*s} Q${11*s},${12*s} ${9*s},0 Z`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  [{x:-8,l:20,a:-0.3},{x:-3,l:24,a:-0.1},{x:1,l:26,a:0},{x:5,l:22,a:0.15},{x:10,l:16,a:0.5}].forEach(f=>{
-    let fy=0;for(let j=0;j<3;j++){const sl=(f.l/3)*s,ny=fy-sl,nx=f.x*s+Math.sin(f.a)*sl*j*0.3;
-      A(g,E('line',{x1:f.x*s+Math.sin(f.a)*sl*(j-1)*0.3,y1:fy,x2:nx,y2:ny,stroke:C(),'stroke-width':0.3}));
-      if(j<2) A(g,E('circle',{cx:nx,cy:ny,r:1.2*s,fill:'none',stroke:C(),'stroke-width':0.2}));fy=ny;
-    }
-  });
-}
-
-function chains(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc,links=RI(7,16);let y=0;
-  for(let i=0;i<links;i++){const lw=6*s,lh=9*s,off=i%2===0?0:lw*0.3;
-    A(g,E('ellipse',{cx:off,cy:y,rx:lw,ry:lh*0.5,fill:'none',stroke:C(),'stroke-width':R(0.4,0.7)}));y+=lh*0.7;
-  }
-}
-
-function hourglass(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-5,5),op),s=sc;
-  A(g,E('line',{x1:-14*s,y1:-24*s,x2:14*s,y2:-24*s,stroke:C(),'stroke-width':0.6}));
-  A(g,E('line',{x1:-14*s,y1:24*s,x2:14*s,y2:24*s,stroke:C(),'stroke-width':0.6}));
-  A(g,E('path',{d:`M${-12*s},${-22*s} Q${-12*s},${-5*s} 0,0 Q${12*s},${-5*s} ${12*s},${-22*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M${-12*s},${22*s} Q${-12*s},${5*s} 0,0 Q${12*s},${5*s} ${12*s},${22*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  for(let i=0;i<RI(10,18);i++) A(g,E('circle',{cx:R(-7,7)*s,cy:R(5,20)*s,r:R(0.3,1)*s,fill:C(),opacity:R(0.2,0.5)}));
-  A(g,E('line',{x1:0,y1:-2*s,x2:0,y2:5*s,stroke:C(),'stroke-width':0.3,opacity:0.5}));
-}
-
-function ouroboros(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc,r=22*s;
-  A(g,E('circle',{cx:0,cy:0,r:r,fill:'none',stroke:C(),'stroke-width':1}));
-  A(g,E('circle',{cx:0,cy:0,r:r-2.5*s,fill:'none',stroke:C(),'stroke-width':0.4}));
-  const hx=0,hy=-r;A(g,E('ellipse',{cx:hx,cy:hy,rx:5*s,ry:3.5*s,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('circle',{cx:hx+1.5*s,cy:hy-1*s,r:1*s,fill:C(),opacity:0.5}));
-  for(let i=0;i<RI(14,28);i++){const a=(TAU/28)*i,sx=Math.cos(a)*r,sy=Math.sin(a)*r;
-    A(g,E('line',{x1:sx,y1:sy,x2:sx+Math.cos(a)*2.5*s,y2:sy+Math.sin(a)*2.5*s,stroke:C(),'stroke-width':0.25}));
-  }
-}
-
-function sword(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc;
-  A(g,E('path',{d:`M0,${-45*s} L${5*s},${-5*s} L${2.5*s},0 L${-2.5*s},0 L${-5*s},${-5*s} Z`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('line',{x1:0,y1:-43*s,x2:0,y2:-8*s,stroke:C(),'stroke-width':0.25}));
-  A(g,E('path',{d:`M${-14*s},0 Q${-14*s},${-3*s} 0,${-2*s} Q${14*s},${-3*s} ${14*s},0 Q${14*s},${2.5*s} 0,${2*s} Q${-14*s},${2.5*s} ${-14*s},0`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('rect',{x:-2.5*s,y:2*s,width:5*s,height:16*s,fill:'none',stroke:C(),'stroke-width':0.4}));
-  A(g,E('circle',{cx:0,cy:20*s,r:3.5*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-}
-
-function pointedArch(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-3,3),op),s=sc,w=22*s,h=40*s;
-  A(g,E('path',{d:`M${-w},${h} L${-w},0 Q${-w},${-h*0.8} 0,${-h} Q${w},${-h*0.8} ${w},0 L${w},${h}`,fill:'none',stroke:C(),'stroke-width':0.6}));
-  const iw=w*0.75,ih=h*0.85;
-  A(g,E('path',{d:`M${-iw},${h} L${-iw},${h*0.1} Q${-iw},${-ih*0.7} 0,${-ih} Q${iw},${-ih*0.7} ${iw},${h*0.1} L${iw},${h}`,fill:'none',stroke:C(),'stroke-width':0.35}));
-  A(g,E('rect',{x:-4*s,y:-h-3*s,width:8*s,height:6*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('line',{x1:0,y1:-h+4*s,x2:0,y2:h,stroke:C(),'stroke-width':0.25}));
-  for(let side=-1;side<=1;side+=2) A(g,E('circle',{cx:side*w*0.4,cy:-h*0.3,r:5*s,fill:'none',stroke:C(),'stroke-width':0.25}));
-}
-
-function ribcage(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-5,5),op),s=sc;
-  A(g,E('line',{x1:0,y1:-28*s,x2:0,y2:28*s,stroke:C(),'stroke-width':0.6}));
-  for(let i=0;i<11;i++) A(g,E('rect',{x:-2.5*s,y:-25*s+i*5*s,width:5*s,height:2.5*s,fill:'none',stroke:C(),'stroke-width':0.2}));
-  const rc=RI(5,8);
-  for(let i=0;i<rc;i++){const ry=-20*s+i*7*s,rw=(14+(rc-i)*1.8)*s;
-    A(g,E('path',{d:`M${-2.5*s},${ry} Q${-rw},${ry-3.5*s} ${-rw},${ry+5*s}`,fill:'none',stroke:C(),'stroke-width':0.4}));
-    A(g,E('path',{d:`M${2.5*s},${ry} Q${rw},${ry-3.5*s} ${rw},${ry+5*s}`,fill:'none',stroke:C(),'stroke-width':0.4}));
-  }
-}
-
-/* ================================================================
-   GENERATORS 21-30: FILIGREE CORNER, CRESCENT, BORDER SEGMENT,
-   CELTIC KNOT, DEATH MOTH, OCCULT EYE, SCROLL, TOMBSTONE,
-   SPIDER WEB, INVERTED CROSS
-   ================================================================ */
-function filigreeCorner(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,RI(0,3)*90,op),s=sc;
-  A(g,E('path',{d:'M0,0 Q'+15*s+',0 '+22*s+','+-12*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:'M0,0 Q0,'+15*s+' '+-12*s+','+22*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  for(let i=0;i<4;i++){const sa=R(0,TAU),sr=R(5,14)*s,sx=Math.cos(sa)*sr,sy=Math.sin(sa)*sr;
-    A(g,E('path',{d:`M${sx},${sy} Q${sx+5*s},${sy-5*s} ${sx+7*s},${sy} Q${sx+5*s},${sy+5*s} ${sx+3*s},${sy+3*s}`,fill:'none',stroke:C(),'stroke-width':0.25}));
-  }
-  for(let i=0;i<6;i++) A(g,E('circle',{cx:R(-5,22)*s,cy:R(-22,5)*s,r:R(0.4,1.2)*s,fill:C(),opacity:R(0.3,0.6)}));
-}
-
-function crescentMoon(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-30,30),op),s=sc;
-  A(g,E('circle',{cx:0,cy:0,r:17*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:6*s,cy:-3*s,r:14*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-  for(let i=0;i<RI(3,7);i++){const sa=R(0,TAU),sr=R(22,32)*s,sx=Math.cos(sa)*sr,sy=Math.sin(sa)*sr,ss=R(1,3)*s;
-    A(g,E('path',{d:`M${sx},${sy-ss} L${sx+ss*0.3},${sy-ss*0.3} L${sx+ss},${sy} L${sx+ss*0.3},${sy+ss*0.3} L${sx},${sy+ss} L${sx-ss*0.3},${sy+ss*0.3} L${sx-ss},${sy} L${sx-ss*0.3},${sy-ss*0.3} Z`,fill:C(),opacity:R(0.3,0.6)}));
-  }
-}
-
-function borderSegment(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,1)>0.5?0:90,op),s=sc,w=65*s;
-  A(g,E('line',{x1:-w,y1:0,x2:w,y2:0,stroke:C(),'stroke-width':0.5}));
-  for(let i=-6;i<=6;i++){const wx=i*10*s,dir=i%2===0?-1:1;
-    A(g,E('path',{d:`M${wx},0 Q${wx+5*s},${dir*6*s} ${wx+10*s},0`,fill:'none',stroke:C(),'stroke-width':0.25}));
-  }
-  for(let i=-3;i<=3;i++){const dx=i*20*s,ds=3*s;
-    A(g,E('path',{d:`M${dx},${-ds} L${dx+ds},0 L${dx},${ds} L${dx-ds},0 Z`,fill:'none',stroke:C(),'stroke-width':0.3}));
-  }
-}
-
-function celticKnot(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc,r=17*s;
-  for(let i=0;i<3;i++){const a=(TAU/3)*i-PI/2;
-    A(g,E('circle',{cx:Math.cos(a)*r*0.4,cy:Math.sin(a)*r*0.4,r:r*0.6,fill:'none',stroke:C(),'stroke-width':0.5}));
-  }
-  A(g,E('circle',{cx:0,cy:0,r:r,fill:'none',stroke:C(),'stroke-width':0.3}));
-}
-
-function deathMoth(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-10,10),op),s=sc;
-  A(g,E('ellipse',{cx:0,cy:0,rx:4*s,ry:14*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:0,cy:-16*s,r:4*s,fill:'none',stroke:C(),'stroke-width':0.4}));
-  A(g,E('path',{d:`M${-2*s},${-18*s} Q${-9*s},${-28*s} ${-6*s},${-32*s}`,fill:'none',stroke:C(),'stroke-width':0.25}));
-  A(g,E('path',{d:`M${2*s},${-18*s} Q${9*s},${-28*s} ${6*s},${-32*s}`,fill:'none',stroke:C(),'stroke-width':0.25}));
-  A(g,E('path',{d:`M${-4*s},${-9*s} Q${-28*s},${-22*s} ${-32*s},${-6*s} Q${-28*s},${6*s} ${-4*s},${-2*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M${4*s},${-9*s} Q${28*s},${-22*s} ${32*s},${-6*s} Q${28*s},${6*s} ${4*s},${-2*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M${-4*s},${2*s} Q${-20*s},${9*s} ${-18*s},${17*s} Q${-11*s},${20*s} ${-2*s},${12*s}`,fill:'none',stroke:C(),'stroke-width':0.4}));
-  A(g,E('path',{d:`M${4*s},${2*s} Q${20*s},${9*s} ${18*s},${17*s} Q${11*s},${20*s} ${2*s},${12*s}`,fill:'none',stroke:C(),'stroke-width':0.4}));
-}
-
-function occultEye(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-10,10),op),s=sc;
-  A(g,E('path',{d:`M${-22*s},0 Q${-11*s},${-16*s} 0,${-16*s} Q${11*s},${-16*s} ${22*s},0 Q${11*s},${16*s} 0,${16*s} Q${-11*s},${16*s} ${-22*s},0`,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('circle',{cx:0,cy:0,r:9*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:0,cy:0,r:4.5*s,fill:C(),opacity:0.2}));
-  A(g,E('circle',{cx:2*s,cy:-2*s,r:2*s,fill:C(),opacity:0.3}));
-  for(let i=0;i<RI(8,14);i++){const a=R(0,TAU),r1=18*s,r2=R(24,32)*s;
-    A(g,E('line',{x1:Math.cos(a)*r1,y1:Math.sin(a)*r1,x2:Math.cos(a)*r2,y2:Math.sin(a)*r2,stroke:C(),'stroke-width':0.2}));
-  }
-  A(g,E('path',{d:`M0,${-24*s} L${-22*s},${18*s} L${22*s},${18*s} Z`,fill:'none',stroke:C(),'stroke-width':0.35}));
-}
-
-function scrollBanner(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-5,5),op),s=sc;
-  A(g,E('path',{d:`M${-32*s},${-6*s} L${-27*s},${-9*s} L${27*s},${-9*s} L${32*s},${-6*s} L${32*s},${6*s} L${27*s},${9*s} L${-27*s},${9*s} L${-32*s},${6*s} Z`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M${-32*s},${-6*s} Q${-38*s},0 ${-32*s},${6*s}`,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('path',{d:`M${32*s},${-6*s} Q${38*s},0 ${32*s},${6*s}`,fill:'none',stroke:C(),'stroke-width':0.3}));
-}
-
-function tombstone(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-5,5),op),s=sc;
-  A(g,E('path',{d:`M${-12*s},${22*s} L${-12*s},${-9*s} Q${-12*s},${-22*s} 0,${-22*s} Q${12*s},${-22*s} ${12*s},${-9*s} L${12*s},${22*s} Z`,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('line',{x1:0,y1:-16*s,x2:0,y2:2*s,stroke:C(),'stroke-width':0.4}));
-  A(g,E('line',{x1:-6*s,y1:-9*s,x2:6*s,y2:-9*s,stroke:C(),'stroke-width':0.4}));
-  for(let i=0;i<3;i++) A(g,E('line',{x1:-7*s,y1:7*s+i*4*s,x2:7*s,y2:7*s+i*4*s,stroke:C(),'stroke-width':0.2}));
-  A(g,E('line',{x1:-16*s,y1:22*s,x2:16*s,y2:22*s,stroke:C(),'stroke-width':0.4}));
-}
-
-function spiderWeb(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc,sp=RI(6,10),rings=RI(4,7),maxR=28*s;
-  for(let i=0;i<sp;i++){const a=(TAU/sp)*i;
-    A(g,E('line',{x1:0,y1:0,x2:Math.cos(a)*maxR,y2:Math.sin(a)*maxR,stroke:C(),'stroke-width':0.3}));
-  }
-  for(let r=1;r<=rings;r++){const rr=(maxR/rings)*r;let d='';
-    for(let i=0;i<=sp;i++){const a=(TAU/sp)*(i%sp);d+=(i===0?'M':'L')+`${Math.cos(a)*rr+R(-1,1)*s},${Math.sin(a)*rr+R(-1,1)*s} `}
-    A(g,E('path',{d:d+'Z',fill:'none',stroke:C(),'stroke-width':0.25}));
-  }
-}
-
-function invertedCross(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-5,5),op),s=sc;
-  A(g,E('line',{x1:0,y1:-22*s,x2:0,y2:28*s,stroke:C(),'stroke-width':0.6}));
-  A(g,E('line',{x1:-14*s,y1:12*s,x2:14*s,y2:12*s,stroke:C(),'stroke-width':0.6}));
-  A(g,E('path',{d:`M0,${-22*s} L${-4*s},${-18*s} L0,${-28*s} L${4*s},${-18*s} Z`,fill:'none',stroke:C(),'stroke-width':0.4}));
-  [[-14,12],[14,12],[0,28]].forEach(([ex,ey])=>A(g,E('circle',{cx:ex*s,cy:ey*s,r:2.5*s,fill:'none',stroke:C(),'stroke-width':0.3})));
-}
-
-/* ================================================================
-   GENERATORS 31-40: ANKH, FLAME, LETTER FRAME, SERPENT, CHALICE,
-   WREATH, SCATTER DOTS, CONCENTRIC, CROSSHATCH, DIAMONDS
-   ================================================================ */
-function ankh(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-10,10),op),s=sc;
-  A(g,E('ellipse',{cx:0,cy:-20*s,rx:9*s,ry:12*s,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('line',{x1:0,y1:-8*s,x2:0,y2:28*s,stroke:C(),'stroke-width':0.6}));
-  A(g,E('line',{x1:-12*s,y1:-2*s,x2:12*s,y2:-2*s,stroke:C(),'stroke-width':0.6}));
-}
-
-function flame(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-8,8),op),s=sc;
-  A(g,E('path',{d:`M0,${-28*s} Q${9*s},${-17*s} ${7*s},${-5*s} Q${12*s},${5*s} ${6*s},${14*s} Q${2*s},${17*s} 0,${16*s} Q${-2*s},${17*s} ${-6*s},${14*s} Q${-12*s},${5*s} ${-7*s},${-5*s} Q${-9*s},${-17*s} 0,${-28*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M0,${-20*s} Q${5*s},${-12*s} ${4*s},${-3*s} Q${6*s},${4*s} ${3*s},${9*s} Q0,${11*s} ${-3*s},${9*s} Q${-6*s},${4*s} ${-4*s},${-3*s} Q${-5*s},${-12*s} 0,${-20*s}`,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('ellipse',{cx:0,cy:2*s,rx:2.5*s,ry:6*s,fill:C(),opacity:0.2}));
-  for(let i=0;i<RI(3,7);i++) A(g,E('circle',{cx:R(-9,9)*s,cy:R(-22,-12)*s,r:R(0.4,1)*s,fill:C(),opacity:R(0.2,0.5)}));
-}
-
-function gothicLetterFrame(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-3,3),op),s=sc,w=20*s,h=24*s;
-  A(g,E('rect',{x:-w,y:-h,width:w*2,height:h*2,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('rect',{x:-w+3.5*s,y:-h+3.5*s,width:(w-3.5*s)*2,height:(h-3.5*s)*2,fill:'none',stroke:C(),'stroke-width':0.3}));
-  [[-w,-h],[w,-h],[w,h],[-w,h]].forEach(([ccx,ccy])=>{
-    A(g,E('circle',{cx:ccx,cy:ccy,r:2.5*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-    A(g,E('circle',{cx:ccx,cy:ccy,r:1*s,fill:C(),opacity:0.3}));
-  });
-}
-
-function serpent(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc;
-  let x=0,y=0,ang=R(0,TAU);const pts=[],seg=RI(14,22);
-  for(let i=0;i<=seg;i++){pts.push({x,y});const len=R(5,12)*s;ang+=R(-0.4,0.4);x+=Math.cos(ang)*len;y+=Math.sin(ang)*len}
-  let d=`M${pts[0].x},${pts[0].y}`;
-  for(let i=1;i<pts.length;i++){const p=pts[i-1],c2=pts[i],cpx=(p.x+c2.x)/2+R(-3,3)*s,cpy=(p.y+c2.y)/2+R(-3,3)*s;d+=` Q${cpx},${cpy} ${c2.x},${c2.y}`}
-  A(g,E('path',{d,fill:'none',stroke:C(),'stroke-width':R(0.4,0.8)}));
-  const last=pts[pts.length-1];
-  A(g,E('ellipse',{cx:last.x,cy:last.y,rx:3.5*s,ry:2.5*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:last.x+1.5*s,cy:last.y-0.5*s,r:0.8*s,fill:C(),opacity:0.5}));
-}
-
-function chalice(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-5,5),op),s=sc;
-  A(g,E('path',{d:`M${-11*s},${-17*s} Q${-13*s},${-5*s} ${-9*s},0 L${-3.5*s},${6*s} L${3.5*s},${6*s} L${9*s},0 Q${13*s},${-5*s} ${11*s},${-17*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('ellipse',{cx:0,cy:-17*s,rx:11*s,ry:3.5*s,fill:'none',stroke:C(),'stroke-width':0.4}));
-  A(g,E('line',{x1:0,y1:6*s,x2:0,y2:20*s,stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:0,cy:12*s,r:3*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('ellipse',{cx:0,cy:22*s,rx:9*s,ry:3*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-}
-
-function wreath(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc,r=20*s;
-  A(g,E('path',{d:`M0,${r} Q${-r*1.2},${r*0.3} ${-r*0.3},${-r*0.8} Q0,${-r*1.1} ${r*0.3},${-r*0.8} Q${r*1.2},${r*0.3} 0,${r}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  for(let i=0;i<RI(10,20);i++){const a=R(0,TAU),lx=Math.cos(a)*r,ly=Math.sin(a)*r,lr=R(2.5,5)*s;
-    A(g,E('ellipse',{cx:lx,cy:ly,rx:lr,ry:lr*0.4,fill:'none',stroke:C(),'stroke-width':0.25,transform:`rotate(${a*180/PI+R(-20,20)},${lx},${ly})`}));
-  }
-}
-
-function scatterDots(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,0,op),s=sc;
-  for(let i=0;i<RI(10,25);i++) A(g,E('circle',{cx:R(-35,35)*s,cy:R(-35,35)*s,r:R(0.3,1.5)*s,fill:C(),opacity:R(0.2,0.6)}));
-}
-
-function concentricCircles(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,0,op),s=sc;
-  for(let i=1;i<=RI(3,8);i++) A(g,E('circle',{cx:0,cy:0,r:i*5.5*s,fill:'none',stroke:C(),'stroke-width':R(0.15,0.5)}));
-  A(g,E('circle',{cx:0,cy:0,r:1.2*s,fill:C(),opacity:0.4}));
-}
-
-function crosshatch(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,90),op),s=sc,sz=22*s,n=RI(4,9);
-  for(let i=0;i<n;i++){const o=-sz+(2*sz/n)*i;
-    A(g,E('line',{x1:o,y1:-sz,x2:o,y2:sz,stroke:C(),'stroke-width':0.2}));
-    A(g,E('line',{x1:-sz,y1:o,x2:sz,y2:o,stroke:C(),'stroke-width':0.2}));
-  }
-}
-
-function diamondPattern(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,45),op),s=sc;
-  for(let i=0;i<RI(3,7);i++){const dx=R(-22,22)*s,dy=R(-22,22)*s,ds=R(3,9)*s;
-    A(g,E('path',{d:`M${dx},${dy-ds} L${dx+ds},${dy} L${dx},${dy+ds} L${dx-ds},${dy} Z`,fill:'none',stroke:C(),'stroke-width':0.35}));
-  }
-}
-
-/* ================================================================
-   GENERATORS 41-50: TRISKELION, CROWN, BELL, LANTERN, SIGIL CIRCLE,
-   GOTHIC ARCH WINDOW, ANCHOR, POISON BOTTLE, SKELETON KEY, COMPASS
-   ================================================================ */
-function triskelion(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc;
-  for(let arm=0;arm<3;arm++){const ba=(TAU/3)*arm;let d='';
-    for(let i=0;i<=22;i++){const t=i/22,a=ba+t*PI*1.5,r=t*20*s;d+=(i===0?'M':'L')+`${Math.cos(a)*r},${Math.sin(a)*r} `}
-    A(g,E('path',{d,fill:'none',stroke:C(),'stroke-width':0.5}));
-  }
-  A(g,E('circle',{cx:0,cy:0,r:2.5*s,fill:'none',stroke:C(),'stroke-width':0.4}));
-  A(g,E('circle',{cx:0,cy:0,r:22*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-}
-
-function crown(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-5,5),op),s=sc;
-  A(g,E('rect',{x:-17*s,y:0,width:34*s,height:6*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  const pts=RI(5,7);let p=`M${-17*s},0 `;
-  for(let i=0;i<pts;i++){const bx=-17*s+(34*s/pts)*i,bx2=-17*s+(34*s/pts)*(i+0.5),bx3=-17*s+(34*s/pts)*(i+1);
-    p+=`L${bx},0 L${bx2},${-R(14,22)*s} L${bx3},0 `}
-  A(g,E('path',{d:p+`L${17*s},0`,fill:'none',stroke:C(),'stroke-width':0.6}));
-  for(let i=0;i<pts;i++){const bx2=-17*s+(34*s/pts)*(i+0.5);A(g,E('circle',{cx:bx2,cy:-18*s,r:1.8*s,fill:C(),opacity:R(0.2,0.5)}))}
-}
-
-function bell(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-5,5),op),s=sc;
-  A(g,E('path',{d:`M${-3.5*s},${-20*s} Q${-4.5*s},${-13*s} ${-14*s},${-4*s} Q${-16*s},${3*s} ${-16*s},${9*s} L${16*s},${9*s} Q${16*s},${3*s} ${14*s},${-4*s} Q${4.5*s},${-13*s} ${3.5*s},${-20*s}`,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('path',{d:`M${-3.5*s},${-24*s} Q${-3.5*s},${-30*s} 0,${-30*s} Q${3.5*s},${-30*s} ${3.5*s},${-24*s}`,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('line',{x1:0,y1:-9*s,x2:0,y2:7*s,stroke:C(),'stroke-width':0.3}));
-  A(g,E('circle',{cx:0,cy:8*s,r:2.5*s,fill:C(),opacity:0.3}));
-}
-
-function lantern(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-5,5),op),s=sc;
-  for(let i=0;i<4;i++) A(g,E('ellipse',{cx:0,cy:-30*s+i*6*s,rx:2.5*s,ry:3.5*s,fill:'none',stroke:C(),'stroke-width':0.25}));
-  A(g,E('path',{d:`M${-7*s},${-14*s} L0,${-18*s} L${7*s},${-14*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M${-7*s},${-14*s} L${-9*s},0 L${-7*s},${12*s} L${7*s},${12*s} L${9*s},0 L${7*s},${-14*s} Z`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('ellipse',{cx:0,cy:-2*s,rx:2.5*s,ry:5*s,fill:C(),opacity:R(0.15,0.3)}));
-  A(g,E('path',{d:`M${-7*s},${12*s} L0,${17*s} L${7*s},${12*s}`,fill:'none',stroke:C(),'stroke-width':0.3}));
-}
-
-function sigilCircle(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc,r1=24*s,r2=20*s,r3=16*s;
-  A(g,E('circle',{cx:0,cy:0,r:r1,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:0,cy:0,r:r2,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('circle',{cx:0,cy:0,r:r3,fill:'none',stroke:C(),'stroke-width':0.25}));
-  const rc=RI(8,16);
-  for(let i=0;i<rc;i++){const a=(TAU/rc)*i,rx=Math.cos(a)*(r1+r2)/2,ry=Math.sin(a)*(r1+r2)/2;
-    if(RI(0,2)===0) A(g,E('circle',{cx:rx,cy:ry,r:1.2*s,fill:'none',stroke:C(),'stroke-width':0.2}));
-    else A(g,E('line',{x1:rx-1.2*s,y1:ry-2*s,x2:rx+1.2*s,y2:ry+2*s,stroke:C(),'stroke-width':0.2}));
-  }
-  for(let i=0;i<6;i++){const a1=(TAU/6)*i,a2=(TAU/6)*((i+2)%6);
-    A(g,E('line',{x1:Math.cos(a1)*r3,y1:Math.sin(a1)*r3,x2:Math.cos(a2)*r3,y2:Math.sin(a2)*r3,stroke:C(),'stroke-width':0.2}));
-  }
-  A(g,E('circle',{cx:0,cy:0,r:3.5*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-}
-
-function gothicArchWindow(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-3,3),op),s=sc,w=18*s,h=38*s;
-  A(g,E('path',{d:`M${-w},${h} L${-w},0 Q${-w},${-h*0.7} 0,${-h} Q${w},${-h*0.7} ${w},0 L${w},${h}`,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('line',{x1:0,y1:h,x2:0,y2:-h*0.6,stroke:C(),'stroke-width':0.3}));
-  A(g,E('line',{x1:-w*0.9,y1:h*0.1,x2:w*0.9,y2:h*0.1,stroke:C(),'stroke-width':0.3}));
-  A(g,E('circle',{cx:0,cy:-h*0.45,r:6*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('line',{x1:-w*1.1,y1:h,x2:w*1.1,y2:h,stroke:C(),'stroke-width':0.5}));
-}
-
-function anchor(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-10,10),op),s=sc;
-  A(g,E('circle',{cx:0,cy:-24*s,r:5*s,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('line',{x1:0,y1:-19*s,x2:0,y2:20*s,stroke:C(),'stroke-width':0.6}));
-  A(g,E('line',{x1:-12*s,y1:-15*s,x2:12*s,y2:-15*s,stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M${-18*s},${9*s} Q${-16*s},${20*s} 0,${20*s} Q${16*s},${20*s} ${18*s},${9*s}`,fill:'none',stroke:C(),'stroke-width':0.6}));
-}
-
-function poisonBottle(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(-8,8),op),s=sc;
-  A(g,E('rect',{x:-3.5*s,y:-24*s,width:7*s,height:9*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('rect',{x:-2.5*s,y:-28*s,width:5*s,height:4.5*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-  A(g,E('path',{d:`M${-3.5*s},${-15*s} Q${-11*s},${-11*s} ${-11*s},0 L${-11*s},${15*s} Q${-11*s},${20*s} 0,${20*s} Q${11*s},${20*s} ${11*s},${15*s} L${11*s},0 Q${11*s},${-11*s} ${3.5*s},${-15*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  A(g,E('circle',{cx:0,cy:4*s,r:6*s,fill:'none',stroke:C(),'stroke-width':0.3}));
-}
-
-function skeletonKey(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc;
-  A(g,E('circle',{cx:0,cy:-20*s,r:9*s,fill:'none',stroke:C(),'stroke-width':0.6}));
-  A(g,E('circle',{cx:0,cy:-20*s,r:5.5*s,fill:'none',stroke:C(),'stroke-width':0.25}));
-  A(g,E('line',{x1:0,y1:-11*s,x2:0,y2:20*s,stroke:C(),'stroke-width':0.5}));
-  A(g,E('path',{d:`M0,${20*s} L${7*s},${20*s} L${7*s},${17*s} L${5*s},${17*s} L${5*s},${14*s} L${8*s},${14*s} L${8*s},${11*s} L${4*s},${11*s} L${4*s},${7*s} L${6*s},${7*s} L${6*s},${4*s} L0,${4*s}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-}
-
-function gothicCompass(c,cx,cy,sc,op){
-  const g=G(c,cx,cy,R(0,360),op),s=sc,r=22*s;
-  A(g,E('circle',{cx:0,cy:0,r:r,fill:'none',stroke:C(),'stroke-width':0.5}));
-  [0,PI/2,PI,PI*1.5].forEach((a,i)=>{
-    const len=i%2===0?r*1.35:r*1.2;
-    A(g,E('path',{d:`M${Math.cos(a+0.15)*r*0.2},${Math.sin(a+0.15)*r*0.2} L${Math.cos(a)*len},${Math.sin(a)*len} L${Math.cos(a-0.15)*r*0.2},${Math.sin(a-0.15)*r*0.2}`,fill:'none',stroke:C(),'stroke-width':0.5}));
-  });
-  A(g,E('circle',{cx:0,cy:0,r:3.5*s,fill:'none',stroke:C(),'stroke-width':0.4}));
-  A(g,E('circle',{cx:0,cy:0,r:r*0.5,fill:'none',stroke:C(),'stroke-width':0.25}));
-  for(let i=0;i<16;i++){const a=(TAU/16)*i;
-    A(g,E('line',{x1:Math.cos(a)*r*0.9,y1:Math.sin(a)*r*0.9,x2:Math.cos(a)*r,y2:Math.sin(a)*r,stroke:C(),'stroke-width':0.2}));
-  }
-}
-
-/* ================================================================
-   GENERATOR REGISTRY — ALL 50
-   ================================================================ */
-const GEN=[
-  gothicCross,skull,thornedVine,bleedingRose,gargoyle,
-  cathedralWindow,ironGate,dagger,raven,bat,
-  candelabra,coffin,pentagram,boneHand,chains,
-  hourglass,ouroboros,sword,pointedArch,ribcage,
-  filigreeCorner,crescentMoon,borderSegment,celticKnot,deathMoth,
-  occultEye,scrollBanner,tombstone,spiderWeb,invertedCross,
-  ankh,flame,gothicLetterFrame,serpent,chalice,
-  wreath,scatterDots,concentricCircles,crosshatch,diamondPattern,
-  triskelion,crown,bell,lantern,sigilCircle,
-  gothicArchWindow,anchor,poisonBottle,skeletonKey,gothicCompass
-];
-
-/* ================================================================
-   PLACEMENT ENGINE — DENSE, VISIBLE
-   ================================================================ */
-function populateLayer(svg,density,minOp,maxOp){
-  const c=S(svg);if(!c||c.w<10||c.h<10)return;totalSVG++;
-  const count=Math.max(Math.floor((c.w*c.h)/(density||35000)),6);
-  for(let i=0;i<count;i++){
-    GEN[RI(0,GEN.length-1)](c,R(0,c.w),R(0,c.h),R(0.4,1.2),R(minOp||0.04,maxOp||0.14));
-  }
-}
-
-function populateCorners(svg,op){
-  const c=S(svg);if(!c||c.w<10)return;totalSVG++;
-  const m=100;
-  [[m,m],[c.w-m,m],[m,c.h-m],[c.w-m,c.h-m]].forEach(([cx,cy])=>{
-    GEN[RI(0,GEN.length-1)](c,cx,cy,R(0.7,1.4),op||0.10);
-  });
-}
-
-function populateBorders(svg,op){
-  const c=S(svg);if(!c||c.w<10)return;totalSVG++;
-  const step=R(120,200);
-  for(let x=step/2;x<c.w;x+=step){
-    GEN[RI(0,GEN.length-1)](c,x,R(10,35),R(0.4,0.8),op||0.08);
-    GEN[RI(0,GEN.length-1)](c,x,c.h-R(10,35),R(0.4,0.8),op||0.08);
-  }
-  for(let y=step/2;y<c.h;y+=step){
-    GEN[RI(0,GEN.length-1)](c,R(10,35),y,R(0.4,0.8),op||0.08);
-    GEN[RI(0,GEN.length-1)](c,c.w-R(10,35),y,R(0.4,0.8),op||0.08);
-  }
-}
-
-function drawOrnateFrame(svg){
-  const c=S(svg);if(!c||c.w<100)return;totalSVG++;
-  const w=c.w,h=c.h,m=18,m2=34,col='#ffffff',op=0.08;
-  add(c,E('rect',{x:m,y:m,width:w-m*2,height:h-m*2,fill:'none',stroke:col,'stroke-width':0.6,opacity:op}));
-  add(c,E('rect',{x:m2,y:m2,width:w-m2*2,height:h-m2*2,fill:'none',stroke:col,'stroke-width':0.3,opacity:op*0.7}));
-  const m3=(m+m2)/2;
-  add(c,E('rect',{x:m3,y:m3,width:w-m3*2,height:h-m3*2,fill:'none',stroke:col,'stroke-width':0.3,'stroke-dasharray':'2,5',opacity:op*0.5}));
-  [[m2+5,m2+5],[w-m2-5,m2+5],[m2+5,h-m2-5],[w-m2-5,h-m2-5]].forEach(([cx,cy],idx)=>{
-    const cg=E('g',{transform:`translate(${cx},${cy}) rotate(${idx*90})`,opacity:op*2});c.el.appendChild(cg);totalEl++;
-    A(cg,E('path',{d:'M0,0 Q12,-6 18,-16 Q20,-10 14,0',fill:'none',stroke:col,'stroke-width':0.5}));
-    A(cg,E('path',{d:'M0,0 Q-6,12 -16,18 Q-10,20 0,14',fill:'none',stroke:col,'stroke-width':0.5}));
-    A(cg,E('circle',{cx:0,cy:0,r:2.5,fill:'none',stroke:col,'stroke-width':0.4}));
-    A(cg,E('path',{d:'M3,-3 Q10,-10 16,-8',fill:'none',stroke:col,'stroke-width':0.25}));
-    A(cg,E('path',{d:'M-3,3 Q-10,10 -8,16',fill:'none',stroke:col,'stroke-width':0.25}));
-  });
-}
-
-/* ================================================================
-   BLOOD DRIPS GENERATOR
-   ================================================================ */
-function generateBloodDrips(){
-  const el=document.getElementById('blood-drips');if(!el)return;
-  for(let i=0;i<RI(6,14);i++){
-    const d=document.createElement('div');d.className='blood-drip';
-    d.style.left=R(5,95)+'%';d.style.setProperty('--drip-dur',R(3,8)+'s');
-    d.style.setProperty('--drip-del',R(0,6)+'s');d.style.setProperty('--drip-h',R(20,55)+'px');
-    el.appendChild(d);
-  }
-}
-
-/* ================================================================
-   LOADING SCREEN — CROSS ANIMATION
-   ================================================================ */
-function runLoading(cb){
-  const scr=document.getElementById('loading-screen');
-  const crackLine=document.getElementById('crack-line');
-  const crackL=document.getElementById('crack-left');
-  const crackR=document.getElementById('crack-right');
-
-  // Phase 1: Cross draws + spins (0-3.5s)
-  // Phase 2: Flash white + crack line appears (3.5s)
-  // Phase 3: Screen halves split apart (3.8s)
-  // Phase 4: Cleanup + show site (5s)
-
-  setTimeout(()=>{
-    // Hide loading screen content
-    scr.style.opacity='0';
-    scr.style.transition='opacity 0.3s ease';
-
-    // Show crack line
-    crackLine.classList.add('visible');
-
-    // Small screen shake
-    document.body.style.animation='screenShake 0.3s ease';
-
-    setTimeout(()=>{
-      // Split the screen halves
-      crackL.classList.add('split');
-      crackR.classList.add('split');
-      crackLine.classList.add('gone');
-
-      // Show nav
-      document.getElementById('main-nav').classList.add('visible');
-
-      setTimeout(()=>{
-        // Cleanup all loading elements
-        scr.style.display='none';
-        crackL.style.display='none';
-        crackR.style.display='none';
-        crackLine.style.display='none';
-        document.body.style.animation='';
-        if(cb) cb();
-      },1300);
-    },350);
-  },3800);
-}
-
-/* ================================================================
-   SCROLL REVEAL (IntersectionObserver)
-   ================================================================ */
-function initReveal(){
-  const els=document.querySelectorAll('.reveal');
-  if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('visible'));return}
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible')});
-  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-  els.forEach(e=>obs.observe(e));
-}
-
-/* ================================================================
-   SCROLL PROGRESS + NAV BEHAVIOR
-   ================================================================ */
-function initScroll(){
-  const nav=document.getElementById('main-nav');
-  const prog=document.getElementById('scroll-progress');
-  const sections=document.querySelectorAll('.section[id]');
-  const links=document.querySelectorAll('#nav-links a');
-
-  const nmImg=document.getElementById('nightmare-img');
-  const nmBreak=document.getElementById('nightmare-break');
-
-  window.addEventListener('scroll',()=>{
-    const y=window.scrollY;
-    nav.classList.toggle('scrolled',y>80);
-
-    // Progress bar
-    const docH=document.documentElement.scrollHeight-window.innerHeight;
-    if(prog&&docH>0) prog.style.width=(y/docH*100)+'%';
-
-    // Active nav link
-    let current='';
-    sections.forEach(s=>{if(y>=s.offsetTop-200)current=s.id});
-    links.forEach(a=>{
-      a.classList.toggle('active',a.getAttribute('href')==='#'+current);
+function initNodes() {
+  nodes = [];
+  const count = Math.floor((w * h) / 25000);
+  for (let i = 0; i < count; i++) {
+    nodes.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: 1.5
     });
+  }
+}
 
-    // Nightmare parallax
-    if(nmImg&&nmBreak){
-      const rect=nmBreak.getBoundingClientRect();
-      if(rect.top<window.innerHeight&&rect.bottom>0){
-        const pct=(window.innerHeight-rect.top)/(window.innerHeight+rect.height);
-        nmImg.style.transform=`translateY(${(pct-0.5)*-80}px)`;
+function draw() {
+  ctx.clearRect(0, 0, w, h);
+
+  for (let i = 0; i < nodes.length; i++) {
+    const a = nodes[i];
+    a.x += a.vx;
+    a.y += a.vy;
+    if (a.x < 0 || a.x > w) a.vx *= -1;
+    if (a.y < 0 || a.y > h) a.vy *= -1;
+
+    ctx.beginPath();
+    ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.06)';
+    ctx.fill();
+
+    for (let j = i + 1; j < nodes.length; j++) {
+      const b = nodes[j];
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = `rgba(0,102,255,${0.04 * (1 - dist / 120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
       }
     }
-  },{passive:true});
-}
-
-/* ================================================================
-   MOBILE NAV + SMOOTH SCROLL
-   ================================================================ */
-function initNav(){
-  const tog=document.getElementById('nav-toggle'),lnk=document.getElementById('nav-links');
-  if(tog&&lnk){
-    tog.addEventListener('click',()=>lnk.classList.toggle('open'));
-    lnk.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>lnk.classList.remove('open')));
-  }
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click',e=>{
-      const t=document.querySelector(a.getAttribute('href'));
-      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
-    });
-  });
-}
-
-/* ================================================================
-   CURSOR GLOW FOLLOWER
-   ================================================================ */
-(function(){
-  const glow=document.getElementById('cursor-glow');
-  if(!glow)return;
-  document.addEventListener('mousemove',e=>{
-    glow.style.left=e.clientX+'px';
-    glow.style.top=e.clientY+'px';
-  },{passive:true});
-})();
-
-/* ================================================================
-   3D TILT EFFECT ON CARDS
-   ================================================================ */
-function init3DTilt(){
-  const cards=document.querySelectorAll('.arsenal-card,.conquest-card,.creed-card,.contact-widget,.stat-card');
-  cards.forEach(card=>{
-    card.style.transition='transform 0.3s ease,border-color 0.3s ease,box-shadow 0.3s ease';
-    card.style.transformStyle='preserve-3d';
-    card.addEventListener('mousemove',e=>{
-      const r=card.getBoundingClientRect();
-      const x=e.clientX-r.left,y=e.clientY-r.top;
-      const cx=r.width/2,cy=r.height/2;
-      const rotX=(y-cy)/cy*-8,rotY=(x-cx)/cx*8;
-      card.style.transform=`perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-3px)`;
-    });
-    card.addEventListener('mouseleave',()=>{
-      card.style.transform='perspective(600px) rotateX(0) rotateY(0) translateY(0)';
-    });
-  });
-}
-
-/* ================================================================
-   MAIN INIT — BUILD ALL SVG LAYERS
-   ================================================================ */
-function init(){
-  console.log('%c SOLARA ENGINE ','background:#fff;color:#000;font-family:serif;font-size:14px;padding:4px 8px;');
-  console.log('%c Procedural SVG Filigree Engine v2.0 — White on Black','color:#888;font-family:serif;');
-  const t0=performance.now();
-
-  generateBloodDrips();
-
-  // Fixed background layer — covers entire page
-  const bg=document.getElementById('svg-bg');
-  if(bg){
-    bg.style.width='100%';bg.style.height=document.documentElement.scrollHeight+'px';
-    const bgc=S(bg);
-    if(bgc){totalSVG++;
-      const n=Math.max(Math.floor((bgc.w*bgc.h)/40000),15);
-      for(let i=0;i<n;i++) GEN[RI(0,GEN.length-1)](bgc,R(0,bgc.w),R(0,bgc.h),R(0.3,1.2),R(0.03,0.09));
-    }
   }
 
-  // Section layers — dense ornaments
-  [
-    {id:'svg-hero',den:35000,lo:0.04,hi:0.14},
-    {id:'svg-about',den:45000,lo:0.03,hi:0.12},
-    {id:'svg-arsenal',den:45000,lo:0.03,hi:0.12},
-    {id:'svg-conquests',den:40000,lo:0.03,hi:0.13},
-    {id:'svg-chronicle',den:50000,lo:0.03,hi:0.11},
-    {id:'svg-creed',den:45000,lo:0.03,hi:0.12},
-    {id:'svg-summon',den:40000,lo:0.04,hi:0.13},
-    {id:'svg-footer',den:55000,lo:0.03,hi:0.10}
-  ].forEach(l=>{
-    const el=document.getElementById(l.id);
-    if(el){
-      populateLayer(el,l.den,l.lo,l.hi);
-      populateCorners(el,R(0.06,0.12));
-      if(Math.random()>0.4) drawOrnateFrame(el);
-    }
-  });
-
-  // Subtle borders on hero only
-  const heroSvg=document.getElementById('svg-hero');
-  if(heroSvg) populateBorders(heroSvg,0.07);
-
-  const elapsed=(performance.now()-t0).toFixed(1);
-  console.log(`%c Stats: ${totalSVG} canvases | ${totalEl} elements | ${elapsed}ms | ${GEN.length} generators`,'color:#fff;font-family:serif;');
-
-  initReveal();initScroll();initNav();init3DTilt();
+  requestAnimationFrame(draw);
 }
 
-/* BOOT */
-if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>runLoading(init));
-else runLoading(init);
-
-})();
+window.addEventListener('resize', () => { resize(); initNodes(); });
+resize();
+initNodes();
+draw();
 </script>
 
-<!-- THREE.JS FLOATING PARTICLES -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-(function(){
-  'use strict';
-  const canvas=document.getElementById('three-canvas');
-  if(!canvas||typeof THREE==='undefined') return;
-
-  const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.1,1000);
-  camera.position.z=300;
-
-  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
-  renderer.setSize(window.innerWidth,window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  renderer.setClearColor(0x000000,0);
-
-  // Create particles
-  const particleCount=600;
-  const geometry=new THREE.BufferGeometry();
-  const positions=new Float32Array(particleCount*3);
-  const velocities=new Float32Array(particleCount*3);
-  const sizes=new Float32Array(particleCount);
-
-  for(let i=0;i<particleCount;i++){
-    const i3=i*3;
-    positions[i3]=  (Math.random()-0.5)*800;
-    positions[i3+1]=(Math.random()-0.5)*800;
-    positions[i3+2]=(Math.random()-0.5)*600;
-    velocities[i3]=  (Math.random()-0.5)*0.15;
-    velocities[i3+1]=(Math.random()-0.5)*0.15;
-    velocities[i3+2]=(Math.random()-0.5)*0.08;
-    sizes[i]=Math.random()*2.5+0.5;
-  }
-
-  geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
-  geometry.setAttribute('size',new THREE.BufferAttribute(sizes,1));
-
-  // Custom shader material for soft glowing dots
-  const material=new THREE.PointsMaterial({
-    color:0xffffff,
-    size:2,
-    transparent:true,
-    opacity:0.35,
-    blending:THREE.AdditiveBlending,
-    sizeAttenuation:true,
-    depthWrite:false
-  });
-
-  const particles=new THREE.Points(geometry,material);
-  scene.add(particles);
-
-  // Add thin connecting lines between close particles
-  const lineMat=new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.04,blending:THREE.AdditiveBlending});
-
-  // Mouse parallax
-  let mouseX=0,mouseY=0;
-  document.addEventListener('mousemove',e=>{
-    mouseX=(e.clientX/window.innerWidth-0.5)*40;
-    mouseY=(e.clientY/window.innerHeight-0.5)*40;
-  },{passive:true});
-
-  // Scroll-based parallax
-  let scrollY=0;
-  window.addEventListener('scroll',()=>{scrollY=window.scrollY},{passive:true});
-
-  function animate(){
-    requestAnimationFrame(animate);
-
-    const pos=geometry.attributes.position.array;
-    for(let i=0;i<particleCount;i++){
-      const i3=i*3;
-      pos[i3]+=velocities[i3];
-      pos[i3+1]+=velocities[i3+1];
-      pos[i3+2]+=velocities[i3+2];
-      // Wrap around
-      if(pos[i3]>400) pos[i3]=-400;
-      if(pos[i3]<-400) pos[i3]=400;
-      if(pos[i3+1]>400) pos[i3+1]=-400;
-      if(pos[i3+1]<-400) pos[i3+1]=400;
-      if(pos[i3+2]>300) pos[i3+2]=-300;
-      if(pos[i3+2]<-300) pos[i3+2]=300;
-    }
-    geometry.attributes.position.needsUpdate=true;
-
-    // Gentle rotation + mouse parallax
-    particles.rotation.y+=0.0003;
-    particles.rotation.x+=0.0001;
-    camera.position.x+=(mouseX-camera.position.x)*0.02;
-    camera.position.y+=(-mouseY+scrollY*0.02-camera.position.y)*0.02;
-    camera.lookAt(scene.position);
-
-    renderer.render(scene,camera);
-  }
-  animate();
-
-  window.addEventListener('resize',()=>{
-    camera.aspect=window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth,window.innerHeight);
-  });
-})();
-</script>
 </body>
 </html>
