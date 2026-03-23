@@ -26,6 +26,7 @@
     <li><a href="#operations">Ops</a></li>
     <li><a href="#designs">Topics</a></li>
     <li><a href="#contact">Connect</a></li>
+    <li><button id="theme-toggle" aria-label="Toggle dark mode">◐</button></li>
   </ul>
 </nav>
 
@@ -45,12 +46,8 @@
         <div class="metric-label">Prod Systems</div>
       </div>
       <div class="metric">
-        <div class="metric-val">10+</div>
-        <div class="metric-label">Containers</div>
-      </div>
-      <div class="metric">
-        <div class="metric-val">13.5k</div>
-        <div class="metric-label">PLN Earned</div>
+        <div class="metric-val">3</div>
+        <div class="metric-label">Active clusters</div>
       </div>
     </div>
   </div>
@@ -192,8 +189,6 @@
     <div class="broker"><div class="broker-name">Redis</div><div class="broker-topic">Database</div></div>
     <div class="broker"><div class="broker-name">NeonDB</div><div class="broker-topic">Database</div></div>
     <div class="broker"><div class="broker-name">Kafka</div><div class="broker-topic">Streaming</div></div>
-    <div class="broker"><div class="broker-name">Cassandra</div><div class="broker-topic">Database</div></div>
-    <div class="broker"><div class="broker-name">CockroachDB</div><div class="broker-topic">Database</div></div>
     <div class="broker"><div class="broker-name">PgBouncer</div><div class="broker-topic">Pooling</div></div>
     <div class="broker"><div class="broker-name">Grafana</div><div class="broker-topic">Observe</div></div>
     <div class="broker"><div class="broker-name">Prometheus</div><div class="broker-topic">Observe</div></div>
@@ -208,7 +203,6 @@
     <div class="broker"><div class="broker-name">Wardent</div><div class="broker-topic">Custom Proxy</div></div>
     <div class="broker"><div class="broker-name">SendGrid</div><div class="broker-topic">Email</div></div>
     <div class="broker"><div class="broker-name">WebSockets</div><div class="broker-topic">Real-time</div></div>
-    <div class="broker"><div class="broker-name">CRDTs</div><div class="broker-topic">Distributed</div></div>
     <div class="broker"><div class="broker-name">ZooKeeper</div><div class="broker-topic">Distributed</div></div>
     <div class="broker"><div class="broker-name">SSH</div><div class="broker-topic">Access</div></div>
     <div class="broker"><div class="broker-name">Let's Encrypt</div><div class="broker-topic">SSL</div></div>
@@ -236,7 +230,7 @@
     <div class="pyramid-row">
       <div class="icon-item" title="Helm"><img src="https://cdn.simpleicons.org/helm" alt="Helm"/></div>
       <div class="icon-item" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"/></div>
-      <div class="icon-item" title="Cassandra"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cassandra/cassandra-original.svg" alt="Cassandra"/></div>
+      <div class="icon-item" title="Terraform"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform"/></div>
     </div>
     <div class="pyramid-row">
       <div class="icon-item" title="Grafana"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" alt="Grafana"/></div>
@@ -262,11 +256,11 @@
     <div class="pyramid-row">
       <div class="icon-item" title="pytest"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytest/pytest-original.svg" alt="pytest"/></div>
       <div class="icon-item" title="GitHub"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"/></div>
-      <div class="icon-item" title="Terraform"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform"/></div>
       <div class="icon-item" title="Gunicorn"><img src="https://cdn.simpleicons.org/gunicorn" alt="Gunicorn"/></div>
       <div class="icon-item" title="JWT"><img src="https://cdn.simpleicons.org/jsonwebtokens" alt="JWT"/></div>
       <div class="icon-item" title="Celery"><img src="https://cdn.simpleicons.org/celery" alt="Celery"/></div>
-      <div class="icon-item" title="DynamoDB"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dynamodb/dynamodb-original.svg" alt="DynamoDB"/></div>
+      <div class="icon-item" title="Java"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"/></div>
+      <div class="icon-item" title="Google OAuth"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google OAuth"/></div>
     </div>
   </div>
 </section>
@@ -314,7 +308,7 @@
     <div class="pipeline-card">
       <div>
         <div class="pipe-status"><span class="s-dot live"></span> Production</div>
-        <div class="pipe-name"><a href="https://github.com/solaraengineer/realestate" target="_blank" style="text-decoration:none;color:inherit;">Homiverse <span style="font-size:12px;color:var(--muted);font-weight:400;">↗</span></a></div>
+        <div class="pipe-name"><a href="https://homiverse.world" target="_blank" style="text-decoration:none;color:inherit;">Homiverse <span style="font-size:12px;color:var(--muted);font-weight:400;">↗</span></a></div>
         <div class="pipe-desc">Real estate platform with Stripe Connect payments, 3D property mapping, real-time chat via WebSockets, and full JWT authentication system.</div>
         <div class="pipe-tags">
           <span class="p-tag">Django</span>
@@ -460,6 +454,16 @@
       <div class="topic-node"></div>
       <div class="topic-name">Cascading OOM & Pod Failures</div>
       <div class="topic-partition">Failure Modes</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">Cassandra — Wide-Column Modeling & Partition Design</div>
+      <div class="topic-partition">Databases</div>
+    </div>
+    <div class="topic">
+      <div class="topic-node"></div>
+      <div class="topic-name">CockroachDB — Distributed SQL & Serializable Isolation</div>
+      <div class="topic-partition">Databases</div>
     </div>
   </div>
 </section>

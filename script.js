@@ -1,3 +1,25 @@
+// ════════ THEME TOGGLE ════════
+const toggle = document.getElementById('theme-toggle');
+const root = document.documentElement;
+
+function getTheme() {
+  return localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+}
+
+function setTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  toggle.textContent = theme === 'dark' ? '◑' : '◐';
+}
+
+setTheme(getTheme());
+
+toggle.addEventListener('click', () => {
+  setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+// ════════ STREAMING CANVAS ════════
 const canvas = document.getElementById('stream-canvas');
 const ctx = canvas.getContext('2d');
 let w, h, nodes = [];
@@ -24,6 +46,10 @@ function initNodes() {
 function draw() {
   ctx.clearRect(0, 0, w, h);
 
+  const isDark = root.getAttribute('data-theme') === 'dark';
+  const dotColor = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.06)';
+  const lineRGB = isDark ? '77,148,255' : '0,102,255';
+
   for (let i = 0; i < nodes.length; i++) {
     const a = nodes[i];
     a.x += a.vx;
@@ -33,7 +59,7 @@ function draw() {
 
     ctx.beginPath();
     ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(0,0,0,0.06)';
+    ctx.fillStyle = dotColor;
     ctx.fill();
 
     for (let j = i + 1; j < nodes.length; j++) {
@@ -45,7 +71,7 @@ function draw() {
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
-        ctx.strokeStyle = `rgba(0,102,255,${0.04 * (1 - dist / 120)})`;
+        ctx.strokeStyle = `rgba(${lineRGB},${0.04 * (1 - dist / 120)})`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
