@@ -6,8 +6,21 @@
 <title>Solara — System Architect</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
 </head>
 <body>
+
+<!-- 3D Intro Overlay -->
+<div id="intro-3d" aria-hidden="true">
+  <canvas id="intro-canvas"></canvas>
+</div>
 
 <!-- Streaming Background -->
 <canvas id="stream-canvas"></canvas>
@@ -714,5 +727,6 @@
 </footer>
 
 <script src="script.js"></script>
+<script type="module" src="intro.js"></script>
 </body>
 </html>

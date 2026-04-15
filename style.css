@@ -1042,6 +1042,46 @@ footer span {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
+/* ════════ 3D INTRO OVERLAY ════════ */
+#intro-3d {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  /* Dark grey pre-paint so there's no light flash before Three.js lands the
+     first frame. JS immediately overrides this with the active theme's --bg
+     so that once the canvas fades, the pixels behind it already match the
+     real page body. */
+  background: #1a1a1d;
+  opacity: 1;
+  filter: blur(0);
+  /* Long, eased crossfade + a soft blur ramp so the rasterized screen
+     texture dissolves into the real DOM instead of popping. At fade time
+     the screen is already ~200% of viewport so only screen pixels blend. */
+  transition:
+    opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  will-change: opacity, filter;
+}
+
+#intro-3d.intro-done {
+  opacity: 0;
+  /* Mild blur during the fade smears away sub-pixel differences between
+     the canvas-rasterized text and the real browser-rendered text, so the
+     handoff reads as one continuous motion rather than two snapping states. */
+  filter: blur(6px);
+}
+
+#intro-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.intro-active {
+  overflow: hidden !important;
+}
+
 @media (max-width: 768px) {
   nav, .hero, section, .contact, footer { padding-left: 24px; padding-right: 24px; }
   .pipeline-card { grid-template-columns: 1fr; }
