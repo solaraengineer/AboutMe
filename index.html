@@ -2,731 +2,153 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="theme-color" content="#080604">
 <title>Solara — System Architect</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="description" content="Interactive system architecture portfolio of Solara — Warsaw-based system architect. Sol-ctl, Wardent, SolaraDocs, and more.">
+<link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'&gt;&lt;rect width='16' height='16' fill='%23080604'/&gt;&lt;circle cx='8' cy='8' r='3' fill='%23d4a04c'/&gt;&lt;/svg&gt;">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
-  }
-}
-</script>
 </head>
 <body>
 
-<!-- 3D Intro Overlay -->
-<div id="intro-3d" aria-hidden="true">
-  <canvas id="intro-canvas"></canvas>
-</div>
-
-<!-- Streaming Background -->
-<canvas id="stream-canvas"></canvas>
-
-<!-- Nav -->
-<nav>
-  <div class="logo">
-    <div class="logo-nodes">
-      <span></span><span></span><span></span>
-    </div>
-    <div class="logo-text">Solara</div>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-dot"></span>
+    <span class="brand-name">SOLARA</span>
+    <span class="brand-sep">//</span>
+    <span class="brand-role">SYSTEM&nbsp;ARCHITECT</span>
   </div>
-  <ul class="nav-links">
-    <li><a href="#stack">Cluster</a></li>
-    <li><a href="#projects">Pipeline</a></li>
-    <li><a href="#operations">Ops</a></li>
-    <li><a href="#designs">Topics</a></li>
-    <li><a href="#contact">Connect</a></li>
-    <li><button id="theme-toggle" aria-label="Toggle dark mode">◐</button></li>
-  </ul>
-</nav>
+  <nav class="quicknav" id="quicknav" aria-label="Project zones"></nav>
+  <div class="topbar-actions">
+    <button class="btn-ghost" id="btn-fit" title="Fit to screen">Fit</button>
+    <button class="btn-ghost btn-primary" id="btn-about">About</button>
+  </div>
+</header>
 
-<!-- Hero -->
-<div class="hero">
-  <div class="hero-content">
-    <div class="hero-label fade-up"><span class="dot"></span> System Architect — Warsaw, PL</div>
-    <h1 class="fade-up d1">Architect.<br><span class="thin">Ship.</span><br>Observe.</h1>
-    <p class="hero-sub fade-up d2">Designing distributed systems, deployment pipelines, and production infrastructure. Every system I build runs in production with real users and full observability.</p>
-    <div class="hero-metrics fade-up d3">
-      <div class="metric">
-        <div class="metric-val">2yr</div>
-        <div class="metric-label">Experience</div>
-      </div>
-      <div class="metric">
-        <div class="metric-val">2</div>
-        <div class="metric-label">Prod Systems</div>
-      </div>
-      <div class="metric">
-        <div class="metric-val">3</div>
-        <div class="metric-label">Active clusters</div>
-      </div>
-    </div>
+<main class="map" id="map" aria-label="System architecture map">
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <div class="stage" id="stage">
+    <svg class="layer-connections" id="connections" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+    <div class="layer-zones" id="zones"></div>
+    <div class="layer-nodes" id="nodes"></div>
   </div>
 
-  <div class="hero-pipe fade-up d4">
-    <div class="pipe-node active"></div>
-    <div class="pipe-line active"></div>
-    <div class="pipe-node active"></div>
-    <div class="pipe-line active"></div>
-    <div class="pipe-node active"></div>
-    <div class="pipe-line"></div>
-    <div class="pipe-node"></div>
-    <div class="pipe-line"></div>
-    <div class="pipe-node"></div>
-  </div>
-</div>
-
-<!-- Stream Divider -->
-<div class="stream-divider">
-  <div class="stream-line">
-    <div class="packet"></div>
-    <div class="packet"></div>
-    <div class="packet"></div>
-  </div>
-</div>
-
-<!-- KAFKA SHRINE -->
-<section id="kafka">
-  <div class="sec-head">
-    <span class="sec-num">00</span>
-    <span class="sec-title">Why Kafka</span>
-    <div class="sec-line"></div>
+  <div class="map-overlay top-left">
+    <div class="hint">drag to pan · scroll / +&minus; to zoom · 0 to fit</div>
   </div>
 
-  <div class="kafka-shrine">
-    <div class="kafka-logo-wrap">
-      <svg class="kafka-logo" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-        <!-- Center broker node -->
-        <circle cx="70" cy="150" r="20" fill="none" stroke="var(--fg)" stroke-width="2.5"/>
-        <circle cx="70" cy="150" r="7" fill="var(--stream)"/>
-        <circle cx="70" cy="150" r="20" fill="none" stroke="var(--stream)" stroke-width="1" opacity="0.4">
-          <animate attributeName="r" from="20" to="34" dur="2.5s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" from="0.4" to="0" dur="2.5s" repeatCount="indefinite"/>
-        </circle>
-
-        <!-- Top right node -->
-        <line x1="86" y1="138" x2="118" y2="78" stroke="var(--fg)" stroke-width="1.8"/>
-        <circle cx="125" cy="65" r="16" fill="none" stroke="var(--fg)" stroke-width="2.2" class="k-node" data-idx="0"/>
-        <circle cx="125" cy="65" r="5.5" fill="var(--fg)" class="k-dot"/>
-        <line x1="138" y1="56" x2="168" y2="28" stroke="var(--fg)" stroke-width="1.3"/>
-        <circle cx="175" cy="22" r="11" fill="none" stroke="var(--fg)" stroke-width="1.8" class="k-node" data-idx="1"/>
-        <circle cx="175" cy="22" r="4" fill="var(--fg)" class="k-dot"/>
-
-        <!-- Middle right node -->
-        <line x1="90" y1="150" x2="120" y2="150" stroke="var(--fg)" stroke-width="1.8"/>
-        <circle cx="135" cy="150" r="16" fill="none" stroke="var(--fg)" stroke-width="2.2" class="k-node" data-idx="2"/>
-        <circle cx="135" cy="150" r="5.5" fill="var(--fg)" class="k-dot"/>
-        <line x1="151" y1="150" x2="178" y2="150" stroke="var(--fg)" stroke-width="1.3"/>
-        <circle cx="186" cy="150" r="11" fill="none" stroke="var(--fg)" stroke-width="1.8" class="k-node" data-idx="3"/>
-        <circle cx="186" cy="150" r="4" fill="var(--fg)" class="k-dot"/>
-
-        <!-- Bottom right node -->
-        <line x1="86" y1="162" x2="118" y2="222" stroke="var(--fg)" stroke-width="1.8"/>
-        <circle cx="125" cy="235" r="16" fill="none" stroke="var(--fg)" stroke-width="2.2" class="k-node" data-idx="4"/>
-        <circle cx="125" cy="235" r="5.5" fill="var(--fg)" class="k-dot"/>
-        <line x1="138" y1="244" x2="168" y2="272" stroke="var(--fg)" stroke-width="1.3"/>
-        <circle cx="175" cy="278" r="11" fill="none" stroke="var(--fg)" stroke-width="1.8" class="k-node" data-idx="5"/>
-        <circle cx="175" cy="278" r="4" fill="var(--fg)" class="k-dot"/>
-      </svg>
-
-      <div class="kafka-title">Apache Kafka</div>
-      <div class="kafka-subtitle">The architecture I respect the most.</div>
-    </div>
-
-    <div class="kafka-takes">
-      <div class="k-take" data-idx="0">
-        <div class="k-take-num">01</div>
-        <div class="k-take-title">Sequential Disk I/O</div>
-        <div class="k-take-body">Kafka writes to disk sequentially — not randomly. This is faster than in-memory random writes on modern hardware. It exploits the OS page cache and the way SSDs and HDDs are physically built. Most people don't realize disk I/O can beat network I/O when you write sequentially. Kafka did.</div>
-      </div>
-      <div class="k-take" data-idx="1">
-        <div class="k-take-num">02</div>
-        <div class="k-take-title">Persistent Recovery</div>
-        <div class="k-take-body">When Kafka goes down, nothing is lost. Messages are persisted to disk volumes. When brokers come back, consumers pick up exactly where they left off using committed offsets. Tasks that arrived during an outage are still there, waiting. No silent drops, no lost work.</div>
-      </div>
-      <div class="k-take" data-idx="2">
-        <div class="k-take-num">03</div>
-        <div class="k-take-title">One Tool, Not Two</div>
-        <div class="k-take-body">Without Kafka you need Redis as a message broker AND Celery as the async task processor — two systems to configure, monitor, and debug. Kafka IS the broker. It handles message queuing, persistence, ordering, and consumer group coordination in a single system. Less moving parts, less failure surface.</div>
-      </div>
-      <div class="k-take" data-idx="3">
-        <div class="k-take-num">04</div>
-        <div class="k-take-title">Distributed by Design</div>
-        <div class="k-take-body">Kafka isn't distributed as an afterthought — it was built for it from day one. Partitioning, replication, ISR sets, leader election via KRaft (bye ZooKeeper). Every design decision assumes multiple nodes, network failures, and split-brain scenarios. It's a distributed systems textbook in production code.</div>
-      </div>
-      <div class="k-take" data-idx="4">
-        <div class="k-take-num">05</div>
-        <div class="k-take-title">The Logo</div>
-        <div class="k-take-body">Look at it. The connected nodes, the central broker, the producer-consumer topology visible in a single glyph. It's not just a logo — it's a system diagram. You can literally explain Kafka's architecture by pointing at different parts of its own logo. No other tool does that.</div>
-      </div>
-      <div class="k-take" data-idx="5">
-        <div class="k-take-num">06</div>
-        <div class="k-take-title">The Name</div>
-        <div class="k-take-body">Named after Franz Kafka — the author who wrote about incomprehensible, labyrinthine systems that trap people inside them. The LinkedIn engineer who created it said he "just liked the name." That's the most engineer thing ever said about naming a distributed messaging system after an existential horror author.</div>
-      </div>
+  <div class="map-overlay bottom-right">
+    <div class="zoom-controls">
+      <button id="zoom-out" aria-label="Zoom out">−</button>
+      <button id="zoom-reset" aria-label="Reset zoom">⊙</button>
+      <button id="zoom-in" aria-label="Zoom in">+</button>
     </div>
   </div>
-</section>
+</main>
 
-<!-- Stream Divider -->
-<div class="stream-divider">
-  <div class="stream-line">
-    <div class="packet"></div>
-    <div class="packet"></div>
-    <div class="packet"></div>
-  </div>
-</div>
+<aside class="panel" id="panel" aria-hidden="true" aria-label="Component details">
+  <button class="panel-close" id="panel-close" aria-label="Close panel">×</button>
+  <div class="panel-body" id="panel-body"></div>
+</aside>
 
-<!-- Stack -->
-<section id="stack">
-  <div class="sec-head">
-    <span class="sec-num">01</span>
-    <span class="sec-title">Cluster</span>
-    <div class="sec-line"></div>
-  </div>
-  <div class="cluster-grid">
-    <div class="broker"><div class="broker-name">Python</div><div class="broker-topic">Language</div></div>
-    <div class="broker"><div class="broker-name">Rust</div><div class="broker-topic">Language</div></div>
-    <div class="broker"><div class="broker-name">SQL</div><div class="broker-topic">Language</div></div>
-    <div class="broker"><div class="broker-name">HTML/CSS</div><div class="broker-topic">Language</div></div>
-    <div class="broker"><div class="broker-name">Django</div><div class="broker-topic">Framework</div></div>
-    <div class="broker"><div class="broker-name">Docker</div><div class="broker-topic">Infra</div></div>
-    <div class="broker"><div class="broker-name">Docker Compose</div><div class="broker-topic">Infra</div></div>
-    <div class="broker"><div class="broker-name">nginx</div><div class="broker-topic">Infra</div></div>
-    <div class="broker"><div class="broker-name">systemd</div><div class="broker-topic">Infra</div></div>
-    <div class="broker"><div class="broker-name">Linux</div><div class="broker-topic">Infra</div></div>
-    <div class="broker"><div class="broker-name">AWS EC2/RDS</div><div class="broker-topic">Cloud</div></div>
-    <div class="broker"><div class="broker-name">PostgreSQL</div><div class="broker-topic">Database</div></div>
-    <div class="broker"><div class="broker-name">Redis</div><div class="broker-topic">Database</div></div>
-    <div class="broker"><div class="broker-name">NeonDB</div><div class="broker-topic">Database</div></div>
-    <div class="broker"><div class="broker-name">Kafka</div><div class="broker-topic">Streaming</div></div>
-    <div class="broker"><div class="broker-name">PgBouncer</div><div class="broker-topic">Pooling</div></div>
-    <div class="broker"><div class="broker-name">Grafana</div><div class="broker-topic">Observe</div></div>
-    <div class="broker"><div class="broker-name">Prometheus</div><div class="broker-topic">Observe</div></div>
-    <div class="broker"><div class="broker-name">Tempo</div><div class="broker-topic">Observe</div></div>
-    <div class="broker"><div class="broker-name">OpenTelemetry</div><div class="broker-topic">Observe</div></div>
-    <div class="broker"><div class="broker-name">Alertmanager</div><div class="broker-topic">Observe</div></div>
-    <div class="broker"><div class="broker-name">Cloudflare</div><div class="broker-topic">Network</div></div>
-    <div class="broker"><div class="broker-name">Cloudflare Tunnels</div><div class="broker-topic">Network</div></div>
-    <div class="broker"><div class="broker-name">Stripe</div><div class="broker-topic">Payments</div></div>
-    <div class="broker"><div class="broker-name">Stripe Connect</div><div class="broker-topic">Payments</div></div>
-    <div class="broker"><div class="broker-name">GitHub Actions</div><div class="broker-topic">CI/CD</div></div>
-    <div class="broker"><div class="broker-name">Wardent</div><div class="broker-topic">Custom Proxy</div></div>
-    <div class="broker"><div class="broker-name">SendGrid</div><div class="broker-topic">Email</div></div>
-    <div class="broker"><div class="broker-name">WebSockets</div><div class="broker-topic">Real-time</div></div>
-    <div class="broker"><div class="broker-name">ZooKeeper</div><div class="broker-topic">Distributed</div></div>
-    <div class="broker"><div class="broker-name">SSH</div><div class="broker-topic">Access</div></div>
-    <div class="broker"><div class="broker-name">Let's Encrypt</div><div class="broker-topic">SSL</div></div>
-    <div class="broker"><div class="broker-name">k3s</div><div class="broker-topic">Orchestration</div></div>
-    <div class="broker"><div class="broker-name">Helm</div><div class="broker-topic">Orchestration</div></div>
-    <div class="broker"><div class="broker-name">Git</div><div class="broker-topic">Version Control</div></div>
-    <div class="broker"><div class="broker-name">AWS RDS</div><div class="broker-topic">Cloud</div></div>
-    <div class="broker"><div class="broker-name">AWS Security Groups</div><div class="broker-topic">Cloud</div></div>
-    <div class="broker"><div class="broker-name">Cloudflare R2</div><div class="broker-topic">Storage</div></div>
-  </div>
+<aside class="panel about-panel" id="about" aria-hidden="true" aria-label="About">
+  <button class="panel-close" id="about-close" aria-label="Close panel">×</button>
+  <div class="panel-body about-body">
+    <div class="panel-eyebrow">About</div>
+    <h2 class="panel-title">Solara</h2>
+    <div class="panel-tag">System Architect · Warsaw, Poland</div>
 
-  <!-- Icon Grid -->
-  <div class="icon-grid-label">
-    <span class="sec-line" style="width:40px;display:inline-block;height:1px;background:var(--border);vertical-align:middle;margin-right:12px;"></span>
-    <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);">Visual Stack</span>
-  </div>
-  <div class="icon-pyramid">
-    <div class="pyramid-row">
-      <div class="icon-item crown" title="Kafka"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" alt="Kafka"/></div>
+    <p class="prose">
+      15 years old. Self-taught. Based in Warsaw. Building for around 16 months.
+      I don't write code directly — I design systems and architectures, hand
+      implementation to AI, and own the review and deploy steps myself.
+    </p>
+
+    <p class="prose">
+      What I care about is the part that doesn't fit in a single file:
+      how requests flow across the network, where state lives, what fails
+      when, and what the operator sees when it does. My codebases live mostly
+      in Rust — a custom container orchestrator, a custom reverse proxy, a
+      custom scheduler, a toy VCS — plus a Django SaaS that exists to pay
+      for the rest of the stack.
+    </p>
+
+    <p class="prose">
+      The web side is deliberately old-fashioned: vanilla HTML, CSS, and
+      JavaScript. No React, no Tailwind, no Node, no build step. The maps
+      and panels you're reading right now are about 700 lines of plain JS.
+    </p>
+
+    <h3 class="panel-h">Repos · github.com/solaraengineer</h3>
+    <ul class="repo-list">
+      <li>
+        <a href="https://github.com/solaraengineer/sol-ctl" target="_blank" rel="noopener">
+          <span class="repo-name">sol-ctl</span>
+          <span class="repo-desc">container orchestrator · VPC mesh networking · Rust</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/solaraengineer/wardent" target="_blank" rel="noopener">
+          <span class="repo-name">wardent</span>
+          <span class="repo-desc">reverse proxy · TLS, rate limit, bot filter · Rust</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/solaraengineer/solaradocs" target="_blank" rel="noopener">
+          <span class="repo-name">solaradocs</span>
+          <span class="repo-desc">document collab SaaS · Django · live at solaradocs.net</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/solaraengineer/solara-scheduler" target="_blank" rel="noopener">
+          <span class="repo-name">solara-scheduler</span>
+          <span class="repo-desc">cron replacement · Rust · runs in prod</span>
+        </a>
+      </li>
+    </ul>
+
+    <h3 class="panel-h">Stack</h3>
+    <p class="prose">
+      Rust for systems work — orchestration, networking, anything long-running.
+      Python and Django for SolaraDocs. Postgres (NeonDB) and Redis. Linux kernel
+      networking — namespaces, veth pairs, bridges, iptables. Docker via bollard.
+      AWS EC2. CI/CD as GitHub Actions → rsync → deploy. Observability with
+      Prometheus, Grafana, Loki, Promtail, Tempo, OpenTelemetry, Alertmanager.
+    </p>
+
+    <h3 class="panel-h">System design</h3>
+    <p class="prose">
+      Reading DDIA, currently through chapter 10. Mock-session reps on URL
+      shortener, Discord messaging, Google Docs (rated senior), and a Stripe
+      payment system. Comfortable with the standard distributed-systems
+      vocabulary — CAP, consensus, BFT, consistent hashing, replication,
+      partitioning, distributed transactions, napkin math.
+    </p>
+
+    <h3 class="panel-h">Honest limits</h3>
+    <p class="prose muted">
+      I can't write code from scratch without AI. I can't read Rust syntax
+      fluently — I understand modules and flow, not line-by-line. No React,
+      no Tailwind, no Node, no npm. No mobile, no ML engineering.
+    </p>
+
+    <h3 class="panel-h">Contact</h3>
+    <div class="panel-links">
+      <a href="#" data-link="github" target="_blank" rel="noopener">github.com/solaraengineer →</a>
+      <a href="mailto:solaradeveloper@gmail.com">solaradeveloper@gmail.com →</a>
+      <a href="https://solaradocs.net" target="_blank" rel="noopener">solaradocs.net →</a>
+      <a href="https://fwaeh.cloud" target="_blank" rel="noopener">fwaeh.cloud →</a>
     </div>
-    <div class="pyramid-row">
-      <div class="icon-item" title="Kubernetes"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="k3s"/></div>
-      <div class="icon-item" title="Rust"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg" alt="Rust"/></div>
-    </div>
-    <div class="pyramid-row">
-      <div class="icon-item" title="Helm"><img src="https://cdn.simpleicons.org/helm" alt="Helm"/></div>
-      <div class="icon-item" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"/></div>
-      <div class="icon-item" title="Terraform"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform"/></div>
-    </div>
-    <div class="pyramid-row">
-      <div class="icon-item" title="Grafana"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" alt="Grafana"/></div>
-      <div class="icon-item" title="Prometheus"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg" alt="Prometheus"/></div>
-      <div class="icon-item" title="OTel"><img src="https://cdn.simpleicons.org/opentelemetry" alt="OpenTelemetry"/></div>
-      <div class="icon-item" title="SendGrid"><img src="https://cdn.simpleicons.org/sendgrid" alt="SendGrid"/></div>
-    </div>
-    <div class="pyramid-row">
-      <div class="icon-item" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"/></div>
-      <div class="icon-item" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"/></div>
-      <div class="icon-item" title="Django"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django"/></div>
-      <div class="icon-item" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"/></div>
-      <div class="icon-item" title="nginx"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx"/></div>
-    </div>
-    <div class="pyramid-row">
-      <div class="icon-item" title="Git"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"/></div>
-      <div class="icon-item" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"/></div>
-      <div class="icon-item" title="GH Actions"><img src="https://cdn.simpleicons.org/githubactions" alt="GitHub Actions"/></div>
-      <div class="icon-item" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"/></div>
-      <div class="icon-item" title="Cloudflare"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"/></div>
-      <div class="icon-item" title="Stripe"><img src="https://cdn.simpleicons.org/stripe" alt="Stripe"/></div>
-    </div>
-    <div class="pyramid-row">
-      <div class="icon-item" title="pytest"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytest/pytest-original.svg" alt="pytest"/></div>
-      <div class="icon-item" title="GitHub"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"/></div>
-      <div class="icon-item" title="Gunicorn"><img src="https://cdn.simpleicons.org/gunicorn" alt="Gunicorn"/></div>
-      <div class="icon-item" title="JWT"><img src="https://cdn.simpleicons.org/jsonwebtokens" alt="JWT"/></div>
-      <div class="icon-item" title="Celery"><img src="https://cdn.simpleicons.org/celery" alt="Celery"/></div>
-      <div class="icon-item" title="Java"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"/></div>
-      <div class="icon-item" title="Google OAuth"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google OAuth"/></div>
+    <div class="panel-meta discord-row" data-link="discord-row">
+      <span class="muted">Discord</span>
+      <span class="meta-sep">·</span>
+      <span data-link="discord-value"></span>
     </div>
   </div>
-</section>
+</aside>
 
-<!-- Stream Divider -->
-<div class="stream-divider">
-  <div class="stream-line">
-    <div class="packet"></div>
-    <div class="packet"></div>
-    <div class="packet"></div>
-  </div>
-</div>
-
-<!-- Projects -->
-<section id="projects">
-  <div class="sec-head">
-    <span class="sec-num">02</span>
-    <span class="sec-title">Pipeline</span>
-    <div class="sec-line"></div>
-  </div>
-  <div class="pipeline">
-    <div class="pipeline-card">
-      <div>
-        <div class="pipe-status"><span class="s-dot live"></span> Production</div>
-        <div class="pipe-name"><a href="https://github.com/solaraengineer/solaradocs" target="_blank" style="text-decoration:none;color:inherit;">SolaraDocs <span style="font-size:12px;color:var(--muted);font-weight:400;">↗</span></a></div>
-        <div class="pipe-desc">Document collaboration platform. Full infra chain: Cloudflare → nginx → Wardent (custom Rust proxy) → Django. Complete observability with Prometheus, Grafana, Tempo, OTel, and automated alerting via Alertmanager → SendGrid.</div>
-        <div class="pipe-tags">
-          <span class="p-tag">Django</span>
-          <span class="p-tag">Rust</span>
-          <span class="p-tag">Docker</span>
-          <span class="p-tag">AWS</span>
-          <span class="p-tag">Stripe</span>
-          <span class="p-tag">OTel</span>
-          <span class="p-tag">NeonDB</span>
-        </div>
-      </div>
-      <div class="pipe-visual">
-        <div class="pv-node"></div>
-        <div class="pv-line"></div>
-        <div class="pv-node"></div>
-        <div class="pv-line"></div>
-        <div class="pv-node"></div>
-      </div>
-    </div>
-    <div class="pipeline-card">
-      <div>
-        <div class="pipe-status"><span class="s-dot live"></span> Production</div>
-        <div class="pipe-name"><a href="https://real-time-trading-system.onrender.com" target="_blank" style="text-decoration:none;color:inherit;">Cryptical <span style="font-size:12px;color:var(--muted);font-weight:400;">↗</span></a></div>
-        <div class="pipe-desc">Real-time cryptocurrency trading simulator with live Binance WebSocket price feeds, 10-second OHLC candlestick charts with EMA 12/26, atomic buy/sell with price quote verification, portfolio dashboard with allocation breakdown, and JWT cookie-based authentication.</div>
-        <div class="pipe-tags">
-          <span class="p-tag">Django</span>
-          <span class="p-tag">Channels</span>
-          <span class="p-tag">PostgreSQL</span>
-          <span class="p-tag">Redis</span>
-          <span class="p-tag">WebSockets</span>
-          <span class="p-tag">Vanilla JS</span>
-        </div>
-        <div class="pipe-links" style="margin-top:10px;display:flex;gap:14px;">
-          <a href="https://real-time-trading-system.onrender.com" target="_blank" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--stream);text-decoration:none;transition:opacity 0.2s;">Live Demo ↗</a>
-          <a href="https://github.com/solaraengineer/real-time-trading-system" target="_blank" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:opacity 0.2s;">Source ↗</a>
-        </div>
-      </div>
-      <div class="pipe-visual">
-        <div class="pv-node"></div>
-        <div class="pv-line"></div>
-        <div class="pv-node"></div>
-        <div class="pv-line"></div>
-        <div class="pv-node"></div>
-      </div>
-    </div>
-    <div class="pipeline-card">
-      <div>
-        <div class="pipe-status"><span class="s-dot live"></span> Production</div>
-        <div class="pipe-name"><a href="https://homiverse.world" target="_blank" style="text-decoration:none;color:inherit;">Homiverse <span style="font-size:12px;color:var(--muted);font-weight:400;">↗</span></a></div>
-        <div class="pipe-desc">Real estate platform with Stripe Connect payments, 3D property mapping, real-time chat via WebSockets, and full JWT authentication system.</div>
-        <div class="pipe-tags">
-          <span class="p-tag">Django</span>
-          <span class="p-tag">Stripe Connect</span>
-          <span class="p-tag">WebSockets</span>
-          <span class="p-tag">3D Mapping</span>
-        </div>
-      </div>
-      <div class="pipe-visual">
-        <div class="pv-node"></div>
-        <div class="pv-line"></div>
-        <div class="pv-node"></div>
-        <div class="pv-line"></div>
-        <div class="pv-node"></div>
-      </div>
-    </div>
-    <div class="pipeline-card">
-      <div>
-        <div class="pipe-status"><span class="s-dot dev"></span> Building</div>
-        <div class="pipe-name"><a href="https://github.com/solaraengineer/solarahub" target="_blank" style="text-decoration:none;color:inherit;">SolaraHub <span style="font-size:12px;color:var(--muted);font-weight:400;">↗</span></a></div>
-        <div class="pipe-desc">Custom deployment orchestrator. Rust CLI (sol) communicates with Python service on Mac Mini via Cloudflare Tunnel. Push to pre-prod → validate → soak test → auto merge to production.</div>
-        <div class="pipe-tags">
-          <span class="p-tag">Rust CLI</span>
-          <span class="p-tag">Python</span>
-          <span class="p-tag">Cloudflare Tunnel</span>
-          <span class="p-tag">CI/CD</span>
-        </div>
-      </div>
-      <div class="pipe-visual">
-        <div class="pv-node"></div>
-        <div class="pv-line"></div>
-        <div class="pv-node"></div>
-        <div class="pv-line"></div>
-        <div class="pv-node"></div>
-      </div>
-    </div>
-    <div class="pipeline-card">
-      <div>
-        <div class="pipe-status"><span class="s-dot tool"></span> Custom Tool</div>
-        <div class="pipe-name"><a href="https://github.com/solaraengineer/wardent" target="_blank" style="text-decoration:none;color:inherit;">Wardent <span style="font-size:12px;color:var(--muted);font-weight:400;">↗</span></a></div>
-        <div class="pipe-desc">Custom reverse proxy in Rust. Rate limiting with real client IP extraction via CF-Connecting-IP, cryptographic secret middleware, and request forwarding to Django.</div>
-        <div class="pipe-tags">
-          <span class="p-tag">Rust</span>
-          <span class="p-tag">systemd</span>
-          <span class="p-tag">Security</span>
-          <span class="p-tag">Networking</span>
-        </div>
-      </div>
-      <div class="pipe-visual">
-        <div class="pv-node"></div>
-        <div class="pv-line"></div>
-        <div class="pv-node"></div>
-        <div class="pv-line"></div>
-        <div class="pv-node"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Stream Divider -->
-<div class="stream-divider">
-  <div class="stream-line">
-    <div class="packet"></div>
-    <div class="packet"></div>
-    <div class="packet"></div>
-  </div>
-</div>
-
-<!-- System Designs -->
-<section id="designs">
-  <div class="sec-head">
-    <span class="sec-num">03</span>
-    <span class="sec-title">Topics</span>
-    <div class="sec-line"></div>
-  </div>
-  <div class="topic-list">
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">Apache Kafka</div>
-      <div class="topic-partition">Streaming</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">CRDTs & Conflict Resolution</div>
-      <div class="topic-partition">Distributed</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">Database Clustering & Sharding</div>
-      <div class="topic-partition">Databases</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">Merge Conflicts & Write Ordering</div>
-      <div class="topic-partition">Consistency</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">WebSocket Architecture</div>
-      <div class="topic-partition">Real-time</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">Concurrent Writes & Race Conditions</div>
-      <div class="topic-partition">Concurrency</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">Leaderless vs Leader-Based Replication</div>
-      <div class="topic-partition">Replication</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">Quorum Reads & Writes</div>
-      <div class="topic-partition">Consensus</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">Byzantine Fault Tolerance</div>
-      <div class="topic-partition">Faults</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">Clock Skew & Sequence Ordering</div>
-      <div class="topic-partition">Ordering</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">ZooKeeper & Split Brain</div>
-      <div class="topic-partition">Coordination</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">Redis Pub/Sub & Cross-Node Delivery</div>
-      <div class="topic-partition">Messaging</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">SSI, MVCC & Transaction Isolation</div>
-      <div class="topic-partition">Transactions</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">Cascading OOM & Pod Failures</div>
-      <div class="topic-partition">Failure Modes</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">Cassandra — Wide-Column Modeling & Partition Design</div>
-      <div class="topic-partition">Databases</div>
-    </div>
-    <div class="topic">
-      <div class="topic-node"></div>
-      <div class="topic-name">CockroachDB — Distributed SQL & Serializable Isolation</div>
-      <div class="topic-partition">Databases</div>
-    </div>
-  </div>
-</section>
-
-<!-- Stream Divider -->
-<div class="stream-divider">
-  <div class="stream-line">
-    <div class="packet"></div>
-    <div class="packet"></div>
-    <div class="packet"></div>
-  </div>
-</div>
-
-<!-- Operations -->
-<section id="operations">
-  <div class="sec-head">
-    <span class="sec-num">04</span>
-    <span class="sec-title">Operations</span>
-    <div class="sec-line"></div>
-  </div>
-  <div class="ops-grid">
-
-    <div class="ops-card">
-      <div class="ops-icon">⎈</div>
-      <div class="ops-content">
-        <div class="ops-label">Orchestration</div>
-        <div class="ops-title">Multi-Cluster Kubernetes</div>
-        <div class="ops-body">Operated independent k3s clusters communicating cross-network — application cluster, Kafka streaming cluster, and dedicated monitoring cluster. StatefulSets for stateful workloads, Traefik ingress routing, secret management, NodePort service exposure for cross-cluster metric scraping.</div>
-      </div>
-    </div>
-
-    <div class="ops-card">
-      <div class="ops-icon">◉</div>
-      <div class="ops-content">
-        <div class="ops-label">Streaming</div>
-        <div class="ops-title">Kafka Cross-Cluster Pipeline</div>
-        <div class="ops-body">Built producer-consumer pipeline spanning two independent clusters. KRaft mode broker (no ZooKeeper), murmur2 partition hashing, consumer group offset tracking, at-least-once delivery semantics. Configured advertised listeners for cross-network broker discovery. Auto-topic creation, persistent message recovery on consumer restart.</div>
-      </div>
-    </div>
-
-    <div class="ops-card">
-      <div class="ops-icon">◈</div>
-      <div class="ops-content">
-        <div class="ops-label">Observability</div>
-        <div class="ops-title">Full-Stack Monitoring</div>
-        <div class="ops-body">Centralized monitoring cluster scraping metrics from application and streaming clusters via cross-network Prometheus. Grafana dashboards with cluster/service/pod drill-down. Tempo for distributed tracing via OpenTelemetry. Alertmanager pipeline routing alerts through SendGrid SMTP. UptimeRobot external health checks.</div>
-      </div>
-    </div>
-
-    <div class="ops-card">
-      <div class="ops-icon">⟁</div>
-      <div class="ops-content">
-        <div class="ops-label">CI/CD</div>
-        <div class="ops-title">Automated Deployment Pipeline</div>
-        <div class="ops-body">GitHub Actions workflow: validate dependencies → run test suite → build containers → deploy with rolling restarts. ~30s deployment window. Dependency verification before merge. Branch protection rules. Automated rollback on health check failure.</div>
-      </div>
-    </div>
-
-    <div class="ops-card">
-      <div class="ops-icon">⊘</div>
-      <div class="ops-content">
-        <div class="ops-label">Custom Tooling</div>
-        <div class="ops-title">Wardent — Production Reverse Proxy</div>
-        <div class="ops-body">Custom Rust reverse proxy running as systemd service. Rate limiting with real client IP extraction via CF-Connecting-IP. Bot detection and AI crawler filtering — confirmed kills on ChatGPT and Gemini crawlers. Cryptographic secret middleware (X-Wardent-Secret). Raw status code responses for nginx error page interception. Ban management with configurable duration and violation thresholds.</div>
-      </div>
-    </div>
-
-    <div class="ops-card">
-      <div class="ops-icon">⬡</div>
-      <div class="ops-content">
-        <div class="ops-label">Async Processing</div>
-        <div class="ops-title">Celery + Redis Task Infrastructure</div>
-        <div class="ops-body">Celery workers with Redis broker for asynchronous task processing. Separate database numbers for broker and cache (Celery /1, Django /0). Task serialization, retry logic, and queue management. Redis-backed Django cache layer for view caching and session storage.</div>
-      </div>
-    </div>
-
-    <div class="ops-card">
-      <div class="ops-icon">▣</div>
-      <div class="ops-content">
-        <div class="ops-label">Containers</div>
-        <div class="ops-title">10-Container Docker Orchestration</div>
-        <div class="ops-body">Production compose stack: Django, Celery, Redis, Prometheus, Grafana, Tempo, OTel Collector, Alertmanager, nginx, Wardent. Log rotation (max-size 10m, max-file 3), restart policies, ghost container cleanup, volume management. Docker image builds with dependency caching and multi-layer optimization.</div>
-      </div>
-    </div>
-
-    <div class="ops-card">
-      <div class="ops-icon">⊡</div>
-      <div class="ops-content">
-        <div class="ops-label">Payments</div>
-        <div class="ops-title">Stripe Webhook Architecture</div>
-        <div class="ops-body">Full webhook chain: Stripe → Cloudflare → nginx → Wardent (signature bypass) → Django. invoice.paid as single source of truth for tier assignment. customer.subscription.created only links Stripe customer ID. invoice.payment_failed returns early on free tier. Stripe Connect for marketplace payments on Homiverse.</div>
-      </div>
-    </div>
-
-    <div class="ops-card">
-      <div class="ops-icon">◇</div>
-      <div class="ops-content">
-        <div class="ops-label">Database</div>
-        <div class="ops-title">PostgreSQL & Data Layer</div>
-        <div class="ops-body">NeonDB managed Postgres with connection pooling. Transaction isolation with READ COMMITTED and targeted select_for_update. Geospatial partitioning concepts (h3_id). MVCC and SSI understanding from DDIA. Django ORM optimization for N+1 query elimination.</div>
-      </div>
-    </div>
-
-    <div class="ops-card">
-      <div class="ops-icon">⊞</div>
-      <div class="ops-content">
-        <div class="ops-label">Networking</div>
-        <div class="ops-title">Request Chain & Error Handling</div>
-        <div class="ops-body">Full request chain: Cloudflare → nginx → Wardent → Django. Static error pages (403, 413, 500, 502, 503, 504) served without Django dependency using Cloudflare =200 bypass trick. SSL/TLS via Let's Encrypt with certbot auto-renewal. Google OAuth redirect URI debugging across www/non-www domains. CSRF configuration across multiple environments.</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- Stream Divider -->
-<div class="stream-divider">
-  <div class="stream-line">
-    <div class="packet"></div>
-    <div class="packet"></div>
-    <div class="packet"></div>
-  </div>
-</div>
-
-<!-- Incidents -->
-<section id="incidents">
-  <div class="sec-head">
-    <span class="sec-num">05</span>
-    <span class="sec-title">Incidents</span>
-    <div class="sec-line"></div>
-  </div>
-  <div class="incident-list">
-
-    <div class="incident">
-      <div class="incident-severity critical">P0</div>
-      <div class="incident-content">
-        <div class="incident-title">Concurrent Deadlock — Silent Production Hang</div>
-        <div class="incident-body">Production reverse proxy (Wardent) silently stopped forwarding requests. No error logs, no crash, process alive, all containers healthy, alertmanager didn't fire. Root cause: DashMap deadlock in rate limiter — request handler thread held banned shard lock while waiting for violations shard, cleanup task simultaneously held violations shard via retain() and attempted to read banned map. Classic concurrent deadlock with no observable symptoms. Fix: made request path read-only on shared maps, cleanup task became sole owner of all mutations.</div>
-        <div class="incident-tags">
-          <span class="p-tag">Rust</span>
-          <span class="p-tag">Concurrency</span>
-          <span class="p-tag">DashMap</span>
-          <span class="p-tag">Zero-Log Failure</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="incident">
-      <div class="incident-severity high">P1</div>
-      <div class="incident-content">
-        <div class="incident-title">Double Base64 — JWT Secret Encoding Trap</div>
-        <div class="incident-body">Kubernetes pods crashing with UnicodeDecodeError on JWT private key. 45 minutes of debugging across stringData vs data in secrets, --from-env-file, --from-literal, and Python secret creation scripts. Actual root cause: web deployment only mounted individual env vars (REDIS_URL, REDIS_PASSWORD) — JWT_PRIVATE_KEY was never mounted. os.getenv returned empty string, base64.b64decode('') produced garbage bytes. One-line fix: envFrom secretRef instead of individual env entries.</div>
-        <div class="incident-tags">
-          <span class="p-tag">Kubernetes</span>
-          <span class="p-tag">Secrets</span>
-          <span class="p-tag">Base64</span>
-          <span class="p-tag">JWT</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="incident">
-      <div class="incident-severity medium">P2</div>
-      <div class="incident-content">
-        <div class="incident-title">OAuth Redirect Mismatch — Weeks Undetected</div>
-        <div class="incident-body">Google OAuth returning "Access blocked: redirect_uri_mismatch" for all social login attempts. App was sending www.solaradocs.net but Google Cloud Console only had non-www registered. Had been broken for weeks — nobody noticed because all active users were already authenticated. Fixed by adding www callback URI to Google Cloud Console.</div>
-        <div class="incident-tags">
-          <span class="p-tag">OAuth</span>
-          <span class="p-tag">DNS</span>
-          <span class="p-tag">Silent Failure</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="incident">
-      <div class="incident-severity medium">P2</div>
-      <div class="incident-content">
-        <div class="incident-title">nginx 413 Bypass — Body Size Interception Failure</div>
-        <div class="incident-body">nginx's built-in 413 response from client_max_body_size completely bypasses error_page directives — custom error pages never served. Fix required disabling nginx body limit entirely (client_max_body_size 0), delegating body size enforcement to Wardent, which returns raw 413 that nginx then intercepts via proxy_intercept_errors and serves the static page.</div>
-        <div class="incident-tags">
-          <span class="p-tag">nginx</span>
-          <span class="p-tag">Error Handling</span>
-          <span class="p-tag">Wardent</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="incident">
-      <div class="incident-severity low">P3</div>
-      <div class="incident-content">
-        <div class="incident-title">Wardent Rate Limiter — Wrong IP Source</div>
-        <div class="incident-body">Rate limiter was using socket address (Cloudflare edge IP) instead of real client IP. Behind Cloudflare, every request appeared to come from the same IP — one user triggering rate limit would ban all users. Fixed by extracting CF-Connecting-IP header for real client identification.</div>
-        <div class="incident-tags">
-          <span class="p-tag">Cloudflare</span>
-          <span class="p-tag">Rate Limiting</span>
-          <span class="p-tag">IP Extraction</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="contact" id="contact">
-  <h2>Let's connect.</h2>
-  <p>Available for freelance architecture and system design work.</p>
-  <div class="contact-row">
-    <a href="https://github.com/solaraengineer" target="_blank" class="c-link">GitHub</a>
-    <a href="#" class="c-link">Email</a>
-    <a href="#" class="c-link">Discord</a>
-    <a href="https://solaradocs.net" class="c-link">SolaraDocs</a>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer>
-  <span>© 2026 Solara</span>
-  <div class="footer-nodes">
-    <span></span><span></span><span></span>
-  </div>
-  <span>Warsaw, PL</span>
-</footer>
-
-<script src="script.js"></script>
-<script type="module" src="intro.js"></script>
+<script src="map.js"></script>
 </body>
 </html>
